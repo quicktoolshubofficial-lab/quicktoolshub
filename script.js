@@ -1,60 +1,87 @@
-// ==========================
-// Quick Tools Official v1.0
+// ===============================
+// Quick Tools Official v2.0
 // script.js
-// ==========================
+// ===============================
 
-document.addEventListener("DOMContentLoaded", () => {
+// Smooth Scroll for Navigation
+document.querySelectorAll("nav a").forEach(link => {
+    link.addEventListener("click", function(e) {
+        const target = this.getAttribute("href");
 
-    console.log("✅ Quick Tools Official Loaded");
+        if (target.startsWith("#")) {
+            e.preventDefault();
 
-    // Hero Button
-    const heroButton = document.querySelector(".hero button");
+            const section = document.querySelector(target);
 
-    if (heroButton) {
-        heroButton.addEventListener("click", () => {
-            alert("🚀 Welcome to Quick Tools Official!\n\n100+ Free Online Tools Coming Soon.");
-        });
-    }
-
-    // Search Box
-    const searchInput = document.querySelector(".hero input");
-
-    if (searchInput) {
-
-        searchInput.addEventListener("keypress", function(event){
-
-            if(event.key === "Enter"){
-
-                let value = searchInput.value.trim();
-
-                if(value === ""){
-
-                    alert("Please enter a tool name.");
-
-                }else{
-
-                    alert("Searching for: " + value + "\n\nSearch feature will be available soon.");
-
-                }
-
+            if (section) {
+                section.scrollIntoView({
+                    behavior: "smooth"
+                });
             }
+        }
+    });
+});
 
-        });
+// Search Function
+const searchInput = document.getElementById("search");
 
-    }
+if (searchInput) {
 
-    // Tool Cards Click
+    searchInput.addEventListener("keyup", function(){
 
-    const cards = document.querySelectorAll(".card");
+        const value = this.value.toLowerCase();
 
-    cards.forEach(card => {
+        const cards = document.querySelectorAll(".tool-card");
 
-        card.addEventListener("click", () => {
+        cards.forEach(card=>{
 
-            alert(card.innerText + "\n\nThis tool is under development.");
+            const text = card.innerText.toLowerCase();
+
+            if(text.includes(value)){
+                card.style.display="block";
+            }else{
+                card.style.display="none";
+            }
 
         });
 
     });
 
+}
+
+// Explore Button
+const heroBtn = document.querySelector(".hero-btn");
+
+if(heroBtn){
+
+heroBtn.addEventListener("click",()=>{
+
+document.getElementById("tools").scrollIntoView({
+behavior:"smooth"
 });
+
+});
+
+}
+
+// Open Tool Buttons
+document.querySelectorAll(".tool-card button").forEach(button=>{
+
+button.addEventListener("click",()=>{
+
+alert("🚀 This tool will be available in the next update.");
+
+});
+
+});
+
+// Footer Year
+const footer=document.querySelector("footer p");
+
+if(footer){
+
+const year=new Date().getFullYear();
+
+footer.innerHTML=`© ${year} Quick Tools Official. All Rights Reserved.`;
+
+}
