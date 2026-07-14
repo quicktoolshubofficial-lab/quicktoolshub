@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Generator | Quick Tools Official</title>
 
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+  <h1>🔐 Password Generator</h1>
+  <p>Create strong and secure passwords instantly.</p>
+
+  <div class="box">
+
+    <input
+      type="text"
+      id="password"
+      placeholder="Your password will appear here"
+      readonly
+    >
+
+    <button id="copyBtn">
+      Copy
+    </button>
+
+  </div>
+
+  <div class="option">
+    <label>Password Length</label>
+
+    <input
+      type="range"
+      id="length"
+      min="8"
+      max="64"
+      value="16"
+    >
+
+    <span id="lengthValue">16</span>
+  </div>
+
+  <div class="checks">
+
+    <label>
+      <input type="checkbox" id="uppercase" checked>
+      Uppercase
+    </label>
+
+    <label>
+      <input type="checkbox" id="lowercase" checked>
+      Lowercase
+    </label>
+
+    <label>
+      <input type="checkbox" id="numbers" checked>
+      Numbers
+    </label>
+
+    <label>
+      <input type="checkbox" id="symbols" checked>
+      Symbols
+    </label>
+
+  </div>
+
+  <button id="generateBtn">
+    Generate Password
+  </button>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
