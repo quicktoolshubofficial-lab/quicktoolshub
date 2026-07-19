@@ -1,87 +1,196 @@
 // ===============================
-// Quick Tools Official v2.0
-// script.js
+// QUICK TOOLS OFFICIAL V3
+// script.js - Part 1
 // ===============================
 
-// Smooth Scroll for Navigation
-document.querySelectorAll("nav a").forEach(link => {
-    link.addEventListener("click", function(e) {
-        const target = this.getAttribute("href");
+// Elements
+const menuBtn = document.getElementById("menu-btn");
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("overlay");
 
-        if (target.startsWith("#")) {
+// ===============================
+// Sidebar Open / Close
+// ===============================
+
+if(menuBtn){
+
+    menuBtn.addEventListener("click",()=>{
+
+        sidebar.classList.toggle("active");
+        overlay.classList.toggle("active");
+
+    });
+
+}
+
+if(overlay){
+
+    overlay.addEventListener("click",()=>{
+
+        sidebar.classList.remove("active");
+        overlay.classList.remove("active");
+
+    });
+
+}
+
+// ===============================
+// Smooth Scroll Navigation
+// ===============================
+
+document.querySelectorAll('a[href^="#"]').forEach(link=>{
+
+    link.addEventListener("click",function(e){
+
+        const target=this.getAttribute("href");
+
+        if(target!=="#"){
+
             e.preventDefault();
 
-            const section = document.querySelector(target);
+            document.querySelector(target).scrollIntoView({
 
-            if (section) {
-                section.scrollIntoView({
-                    behavior: "smooth"
-                });
-            }
+                behavior:"smooth"
+
+            });
+
         }
+
+        sidebar.classList.remove("active");
+        overlay.classList.remove("active");
+
     });
+
 });
 
-// Search Function
-const searchInput = document.getElementById("search");
+// ===============================
+// Search Filter
+// ===============================
 
-if (searchInput) {
+const searchInput=document.querySelector(".search-box input");
 
-    searchInput.addEventListener("keyup", function(){
+if(searchInput){
 
-        const value = this.value.toLowerCase();
+searchInput.addEventListener("keyup",function(){
 
-        const cards = document.querySelectorAll(".tool-card");
+const value=this.value.toLowerCase();
 
-        cards.forEach(card=>{
+document.querySelectorAll(".tool-card").forEach(card=>{
 
-            const text = card.innerText.toLowerCase();
+const text=card.innerText.toLowerCase();
 
-            if(text.includes(value)){
-                card.style.display="block";
-            }else{
-                card.style.display="none";
-            }
+card.style.display=text.includes(value)?"block":"none";
 
-        });
-
-    });
-
-}
-
-// Explore Button
-const heroBtn = document.querySelector(".hero-btn");
-
-if(heroBtn){
-
-heroBtn.addEventListener("click",()=>{
-
-document.getElementById("tools").scrollIntoView({
-behavior:"smooth"
 });
 
 });
 
 }
+// ===============================
+// Active Navigation on Scroll
+// ===============================
 
-// Open Tool Buttons
-document.querySelectorAll(".tool-card button").forEach(button=>{
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll("nav a");
 
-button.addEventListener("click",()=>{
+window.addEventListener("scroll", () => {
 
-alert("🚀 This tool will be available in the next update.");
+    let current = "";
+
+    sections.forEach(section => {
+
+        const sectionTop = section.offsetTop - 120;
+
+        if (window.scrollY >= sectionTop) {
+            current = section.getAttribute("id");
+        }
+
+    });
+
+    navLinks.forEach(link => {
+
+        link.classList.remove("active");
+
+        if (link.getAttribute("href") === "#" + current) {
+            link.classList.add("active");
+        }
+
+    });
 
 });
 
+// ===============================
+// Header Shadow on Scroll
+// ===============================
+
+const header = document.querySelector("header");
+
+window.addEventListener("scroll", () => {
+
+    if (window.scrollY > 20) {
+
+        header.style.boxShadow = "0 10px 25px rgba(0,0,0,.12)";
+
+    } else {
+
+        header.style.boxShadow = "0 6px 20px rgba(0,0,0,.08)";
+
+    }
+
 });
 
+// ===============================
+// Tool Card Animation
+// ===============================
+
+const cards = document.querySelectorAll(".tool-card");
+
+cards.forEach((card, index) => {
+
+    card.style.opacity = "0";
+    card.style.transform = "translateY(40px)";
+    card.style.transition = "all .5s ease";
+
+    setTimeout(() => {
+
+        card.style.opacity = "1";
+        card.style.transform = "translateY(0)";
+
+    }, index * 120);
+
+});
+
+// ===============================
+// Coming Soon Buttons
+// ===============================
+
+document.querySelectorAll(".tool-btn.disabled").forEach(btn => {
+
+    btn.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
+        alert("🚀 This tool is coming soon!");
+
+    });
+
+});
+
+// ===============================
 // Footer Year
-const footer=document.querySelector("footer p");
+// ===============================
 
-if(footer){
+const footer = document.querySelector("footer p");
 
-const year=new Date().getFullYear();
+if (footer) {
 
-footer.innerHTML=`© ${year} Quick Tools Official. All Rights Reserved.`;
+    const year = new Date().getFullYear();
+
+    footer.innerHTML =
+        `&copy; ${year} Quick Tools Official. All Rights Reserved.`;
 
 }
+
+// ===============================
+// End of Script
+// ===============================
