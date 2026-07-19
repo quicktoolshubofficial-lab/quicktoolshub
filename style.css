@@ -576,3 +576,70 @@ nav a.active::after{
 #menu-btn{
     box-shadow:0 10px 25px rgba(37,99,235,.35);
 }
+/* ===================================
+   PHASE 2.2 - PREMIUM HERO
+=================================== */
+
+.hero{
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::before{
+    content:"";
+    position:absolute;
+    width:350px;
+    height:350px;
+    background:rgba(255,255,255,.08);
+    border-radius:50%;
+    top:-120px;
+    left:-80px;
+    animation:float1 8s ease-in-out infinite;
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+    width:280px;
+    height:280px;
+    background:rgba(255,255,255,.06);
+    border-radius:50%;
+    right:-80px;
+    bottom:-80px;
+    animation:float2 10s ease-in-out infinite;
+}
+
+@keyframes float1{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(30px);}
+}
+
+@keyframes float2{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-30px);}
+}
+
+.hero .container{
+    position:relative;
+    z-index:2;
+}
+
+.search-box input{
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+}
+
+.search-box input:focus{
+    outline:none;
+    box-shadow:0 0 0 4px rgba(37,99,235,.25);
+}
+
+.primary-btn,
+.secondary-btn{
+    transition:all .3s ease;
+}
+
+.primary-btn:hover,
+.secondary-btn:hover{
+    transform:translateY(-5px) scale(1.03);
+    box-shadow:0 15px 35px rgba(0,0,0,.20);
+}
