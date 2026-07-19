@@ -747,3 +747,23 @@ nav a.active::after{
 #backToTop.show{
     display:block;
 }
+/* ===================================
+   PHASE 2.5 - STATS ANIMATION
+=================================== */
+
+.stat-box{
+    transition:transform .35s ease, box-shadow .35s ease;
+}
+
+.stat-box:hover{
+    transform:translateY(-8px);
+    box-shadow:0 16px 35px rgba(37,99,235,.18);
+}
+
+.stat-box h2{
+    transition:color .3s ease;
+}
+
+.stat-box:hover h2{
+    color:#0ea5e9;
+}
