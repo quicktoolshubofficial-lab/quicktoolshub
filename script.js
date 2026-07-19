@@ -195,3 +195,18 @@ if (footer) {
 // ===============================
 // End of Script
 // ===============================
+// Close Button
+
+const closeBtn = document.getElementById("close-btn");
+
+if(closeBtn){
+
+closeBtn.addEventListener("click",()=>{
+
+sidebar.classList.remove("active");
+
+overlay.classList.remove("active");
+
+});
+
+}
