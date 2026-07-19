@@ -523,3 +523,56 @@ text-align:center;
 color:#cbd5e1;
 
 }
+/* ===================================
+   PHASE 2.1 - GLASS HEADER
+=================================== */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:rgba(255,255,255,0.75);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(255,255,255,.25);
+    transition:all .35s ease;
+}
+
+header.scrolled{
+    background:rgba(255,255,255,.92);
+    box-shadow:0 12px 30px rgba(0,0,0,.12);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:30px;
+    font-weight:700;
+    letter-spacing:.3px;
+}
+
+nav a{
+    position:relative;
+}
+
+nav a::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-6px;
+    width:0%;
+    height:3px;
+    background:#2563eb;
+    border-radius:10px;
+    transition:.3s;
+}
+
+nav a:hover::after,
+nav a.active::after{
+    width:100%;
+}
+
+#menu-btn{
+    box-shadow:0 10px 25px rgba(37,99,235,.35);
+}
