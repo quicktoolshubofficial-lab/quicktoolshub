@@ -643,3 +643,77 @@ nav a.active::after{
     transform:translateY(-5px) scale(1.03);
     box-shadow:0 15px 35px rgba(0,0,0,.20);
 }
+/* ===================================
+   PHASE 2.3 - PREMIUM TOOL CARDS
+=================================== */
+
+.tool-card{
+    position:relative;
+    overflow:hidden;
+}
+
+.tool-card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-120%;
+    width:70%;
+    height:100%;
+    background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,.45),
+        transparent
+    );
+    transition:.8s;
+}
+
+.tool-card:hover::before{
+    left:170%;
+}
+
+.tool-card:hover{
+    transform:translateY(-10px) scale(1.02);
+}
+
+.tool-card .icon{
+    transition:.35s;
+}
+
+.tool-card:hover .icon{
+    transform:scale(1.15) rotate(8deg);
+    color:#0ea5e9;
+}
+
+.tool-btn{
+    transition:.3s;
+}
+
+.tool-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 24px rgba(37,99,235,.35);
+}
+
+.badge-new{
+    position:absolute;
+    top:15px;
+    right:15px;
+    background:#10b981;
+    color:#fff;
+    font-size:12px;
+    padding:5px 10px;
+    border-radius:20px;
+    font-weight:700;
+}
+
+.badge-popular{
+    position:absolute;
+    top:15px;
+    left:15px;
+    background:#f59e0b;
+    color:#fff;
+    font-size:12px;
+    padding:5px 10px;
+    border-radius:20px;
+    font-weight:700;
+}
