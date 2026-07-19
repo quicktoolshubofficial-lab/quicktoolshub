@@ -225,3 +225,16 @@ window.addEventListener("scroll", () => {
     }
 
 });
+// ===============================
+// Hero Button Ripple Effect
+// ===============================
+
+document.querySelectorAll(".primary-btn, .secondary-btn").forEach(button=>{
+
+    button.addEventListener("mouseenter",()=>{
+
+        button.style.transition="all .3s ease";
+
+    });
+
+});
