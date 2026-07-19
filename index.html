@@ -1,46 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Tools Official | Free Online Tools</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="100+ Free Online Tools - PDF, Image, Text, Developer, Calculator and Security Tools">
+  <meta name="keywords" content="Password Generator, QR Generator, PDF Tools, Image Tools, Quick Tools Official">
 
-<title>Quick Tools Official | Free Online Tools</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<meta name="description"
-content="Quick Tools Official provides free online PDF, Image, Text, Calculator and Developer tools.">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-<meta name="keywords"
-content="Online Tools, PDF Tools, Image Tools, QR Generator, Password Generator">
+  <link rel="stylesheet" href="style.css">
 
-<meta name="author"
-content="Quick Tools Official">
-
-<link rel="stylesheet" href="style.css">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
-<link rel="preconnect"
-href="https://fonts.gstatic.com"
-crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-rel="stylesheet">
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 </head>
 
 <body>
 
-<!-- HEADER START -->
+<!-- Overlay -->
+
+<div class="overlay" id="overlay"></div>
+
+<!-- Sidebar -->
+
+<aside class="sidebar" id="sidebar">
+
+<div class="sidebar-logo">
+
+⚡ Quick Tools Official
+
+</div>
+
+<ul>
+
+<li><a href="#"><i class="fa-solid fa-house"></i> Home</a></li>
+
+<li><a href="#tools"><i class="fa-solid fa-toolbox"></i> All Tools</a></li>
+
+<li><a href="#categories"><i class="fa-solid fa-layer-group"></i> Categories</a></li>
+
+<li><a href="#about"><i class="fa-solid fa-circle-info"></i> About</a></li>
+
+<li><a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+
+</ul>
+
+</aside>
+
+<!-- Header -->
 
 <header>
 
 <div class="container">
 
+<div class="left-nav">
+
+<button id="menu-btn">
+
+<i class="fa-solid fa-bars"></i>
+
+</button>
+
 <div class="logo">
 
 ⚡ Quick Tools Official
+
+</div>
 
 </div>
 
@@ -66,44 +96,58 @@ rel="stylesheet">
 
 </header>
 
-<!-- HEADER END -->
+<!-- Hero -->
 
-<!-- HERO START -->
 <section class="hero">
 
 <div class="container">
 
-<h1>100+ Free Online Tools</h1>
+<span class="badge">
+
+🚀 100+ Powerful Online Tools
+
+</span>
+
+<h1>
+
+Everything You Need In One Place
+
+</h1>
 
 <p>
+
 Fast • Secure • Free • No Registration Required
+
 </p>
 
 <div class="search-box">
 
 <input
 type="text"
-id="search"
-placeholder="Search Password Generator, PDF Tools, QR Code...">
+placeholder="Search Password Generator, QR Generator, PDF Tools...">
 
 <button>
-🔍 Search
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+Search
+
 </button>
 
 </div>
 
 <div class="hero-buttons">
 
-<a href="#tools">
-<button class="hero-btn">
-🚀 Explore Tools
-</button>
+<a href="#tools" class="primary-btn">
+
+Explore Tools
+
 </a>
 
-<a href="#categories">
-<button class="hero-btn secondary-btn">
-📂 Browse Categories
-</button>
+<a href="#categories" class="secondary-btn">
+
+Browse Categories
+
 </a>
 
 </div>
@@ -112,126 +156,90 @@ placeholder="Search Password Generator, PDF Tools, QR Code...">
 
 </section>
 
-<!-- HERO END -->
-    <!-- TOOLS START -->
+<!-- Featured Tools -->
 
-<section id="tools" class="tools">
+<section class="tools" id="tools">
 
 <div class="container">
 
-<h2>Popular Tools</h2>
+<h2>
+
+Popular Tools
+
+</h2>
 
 <div class="tool-grid">
-
+    <!-- Tool Card 1 -->
 <div class="tool-card">
-
-<div class="icon">🔐</div>
-
-<h3>Password Generator</h3>
-
-<p>Create strong and secure passwords instantly.</p>
-
-<a href="tools/password-generator/">
-<button>Open Tool</button>
-</a>
-
+    <div class="icon"><i class="fa-solid fa-key"></i></div>
+    <h3>Password Generator</h3>
+    <p>Create strong and secure passwords instantly.</p>
+    <a href="tools/password-generator/" class="tool-btn">Open Tool</a>
 </div>
 
+<!-- Tool Card 2 -->
 <div class="tool-card">
-
-<div class="icon">📱</div>
-
-<h3>QR Code Generator</h3>
-
-<p>Create QR codes in seconds.</p>
-
-<button>Coming Soon</button>
-
+    <div class="icon"><i class="fa-solid fa-qrcode"></i></div>
+    <h3>QR Code Generator</h3>
+    <p>Create QR codes in seconds.</p>
+    <a href="#" class="tool-btn disabled">Coming Soon</a>
 </div>
 
+<!-- Tool Card 3 -->
 <div class="tool-card">
-
-<div class="icon">🎂</div>
-
-<h3>Age Calculator</h3>
-
-<p>Calculate your exact age.</p>
-
-<button>Coming Soon</button>
-
+    <div class="icon"><i class="fa-solid fa-cake-candles"></i></div>
+    <h3>Age Calculator</h3>
+    <p>Calculate your exact age instantly.</p>
+    <a href="#" class="tool-btn disabled">Coming Soon</a>
 </div>
 
+<!-- Tool Card 4 -->
 <div class="tool-card">
-
-<div class="icon">⚖️</div>
-
-<h3>BMI Calculator</h3>
-
-<p>Check your Body Mass Index.</p>
-
-<button>Coming Soon</button>
-
+    <div class="icon"><i class="fa-solid fa-weight-scale"></i></div>
+    <h3>BMI Calculator</h3>
+    <p>Check your Body Mass Index.</p>
+    <a href="#" class="tool-btn disabled">Coming Soon</a>
 </div>
 
+<!-- Tool Card 5 -->
 <div class="tool-card">
-
-<div class="icon">📄</div>
-
-<h3>PDF Merger</h3>
-
-<p>Merge PDF files online.</p>
-
-<button>Coming Soon</button>
-
+    <div class="icon"><i class="fa-solid fa-file-pdf"></i></div>
+    <h3>PDF Tools</h3>
+    <p>Merge, Split and Compress PDF files.</p>
+    <a href="#" class="tool-btn disabled">Coming Soon</a>
 </div>
 
+<!-- Tool Card 6 -->
 <div class="tool-card">
-
-<div class="icon">🖼️</div>
-
-<h3>Image Compressor</h3>
-
-<p>Compress images without losing quality.</p>
-
-<button>Coming Soon</button>
-
+    <div class="icon"><i class="fa-solid fa-image"></i></div>
+    <h3>Image Tools</h3>
+    <p>Compress, Resize and Convert images.</p>
+    <a href="#" class="tool-btn disabled">Coming Soon</a>
 </div>
 
+<!-- Tool Card 7 -->
 <div class="tool-card">
-
-<div class="icon">📝</div>
-
-<h3>Word Counter</h3>
-
-<p>Count words and characters.</p>
-
-<button>Coming Soon</button>
-
+    <div class="icon"><i class="fa-solid fa-file-lines"></i></div>
+    <h3>Word Counter</h3>
+    <p>Count words and characters instantly.</p>
+    <a href="#" class="tool-btn disabled">Coming Soon</a>
 </div>
 
+<!-- Tool Card 8 -->
 <div class="tool-card">
-
-<div class="icon">🎨</div>
-
-<h3>Color Picker</h3>
-
-<p>Pick and copy colors instantly.</p>
-
-<button>Coming Soon</button>
-
+    <div class="icon"><i class="fa-solid fa-code"></i></div>
+    <h3>Developer Tools</h3>
+    <p>Useful coding and developer utilities.</p>
+    <a href="#" class="tool-btn disabled">Coming Soon</a>
 </div>
 
 </div>
-
 </div>
-
 </section>
 
-<!-- TOOLS END -->
-    <!-- CATEGORIES START -->
+<!-- Categories -->
 
-<section id="categories" class="categories">
-
+<section class="categories" id="categories">
 <div class="container">
 
 <h2>Browse Categories</h2>
@@ -239,27 +247,18 @@ placeholder="Search Password Generator, PDF Tools, QR Code...">
 <div class="category-grid">
 
 <div class="category-card">📄 PDF Tools</div>
-
-<div class="category-card">🖼️ Image Tools</div>
-
+<div class="category-card">🖼 Image Tools</div>
 <div class="category-card">📝 Text Tools</div>
-
 <div class="category-card">🧮 Calculators</div>
-
 <div class="category-card">💻 Developer Tools</div>
-
-<div class="category-card">🔒 Security Tools</div>
-
-</div>
+<div class="category-card">🔐 Security Tools</div>
 
 </div>
 
+</div>
 </section>
 
-<!-- CATEGORIES END -->
-
-
-<!-- STATS START -->
+<!-- Stats -->
 
 <section class="stats">
 
@@ -273,13 +272,13 @@ placeholder="Search Password Generator, PDF Tools, QR Code...">
 </div>
 
 <div class="stat-box">
-<h2>100%</h2>
-<p>Free</p>
+<h2>24/7</h2>
+<p>Available</p>
 </div>
 
 <div class="stat-box">
-<h2>24/7</h2>
-<p>Available</p>
+<h2>100%</h2>
+<p>Free</p>
 </div>
 
 <div class="stat-box">
@@ -293,12 +292,9 @@ placeholder="Search Password Generator, PDF Tools, QR Code...">
 
 </section>
 
-<!-- STATS END -->
+<!-- About -->
 
-
-<!-- ABOUT START -->
-
-<section id="about" class="about">
+<section class="about" id="about">
 
 <div class="container">
 
@@ -306,11 +302,8 @@ placeholder="Search Password Generator, PDF Tools, QR Code...">
 
 <p>
 
-Quick Tools Official is a free online platform that provides secure,
-fast and easy-to-use online tools.
-
-Our mission is to build one place where everyone can access powerful
-web tools without installing any software.
+Quick Tools Official is your all-in-one platform for free online tools.
+Our goal is to provide fast, secure and easy-to-use tools without requiring registration.
 
 </p>
 
@@ -318,41 +311,27 @@ web tools without installing any software.
 
 </section>
 
-<!-- ABOUT END -->
+<!-- Contact -->
 
-
-<!-- CONTACT START -->
-
-<section id="contact" class="contact">
+<section class="contact" id="contact">
 
 <div class="container">
 
-<h2>Contact Us</h2>
+<h2>Contact</h2>
 
-<p>
-
-📧 quicktoolshub.official@gmail.com
-
-</p>
+<p>📧 quicktoolshub.official@gmail.com</p>
 
 </div>
 
 </section>
 
-<!-- CONTACT END -->
-
-
-<!-- FOOTER START -->
+<!-- Footer -->
 
 <footer>
 
 <div class="container">
 
-<p>
-
-© 2026 Quick Tools Official. All Rights Reserved.
-
-</p>
+<p>&copy; 2026 Quick Tools Official. All Rights Reserved.</p>
 
 </div>
 
@@ -361,4 +340,5 @@ web tools without installing any software.
 <script src="script.js"></script>
 
 </body>
-</html>
+        </html>
+    
