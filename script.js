@@ -262,3 +262,62 @@ backToTop.addEventListener("click", () => {
     });
 
 });
+// ===============================
+// Animated Stats Counter
+// ===============================
+
+const statNumbers = document.querySelectorAll(".stat-box h2");
+
+const animateStats = () => {
+
+    statNumbers.forEach(stat => {
+
+        const text = stat.innerText;
+
+        const target = parseInt(text);
+
+        if (isNaN(target)) return;
+
+        let count = 0;
+
+        const speed = Math.max(10, target / 40);
+
+        const update = () => {
+
+            count += speed;
+
+            if (count >= target) {
+
+                stat.innerText = target + "+";
+
+            } else {
+
+                stat.innerText = Math.floor(count) + "+";
+
+                requestAnimationFrame(update);
+
+            }
+
+        };
+
+        update();
+
+    });
+
+};
+
+const statsSection = document.querySelector(".stats");
+
+let statsPlayed = false;
+
+window.addEventListener("scroll", () => {
+
+    if (!statsPlayed && statsSection.getBoundingClientRect().top < window.innerHeight - 100) {
+
+        statsPlayed = true;
+
+        animateStats();
+
+    }
+
+});
