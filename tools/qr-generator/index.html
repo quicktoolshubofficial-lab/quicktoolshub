@@ -1,1 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
 
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Create professional QR codes instantly with Quick Tools Hub's free online QR Code Generator.">
+
+    <meta name="keywords"
+          content="QR Code Generator, Free QR Code, QR Maker, Quick Tools Hub">
+
+    <meta name="author"
+          content="Quick Tools Hub">
+
+    <title>QR Code Generator - Quick Tools Hub</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         ANIMATED BACKGROUND
+    ========================== -->
+
+    <div class="background-animation">
+        <div class="circle circle-one"></div>
+        <div class="circle circle-two"></div>
+        <div class="circle circle-three"></div>
+    </div>
+
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header>
+
+        <div class="logo">
+            <span>⚡</span>
+            Quick Tools Hub
+        </div>
+
+        <a href="../../index.html"
+           class="back-btn">
+            ← Back to Home
+        </a>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="container">
+
+        <section class="tool-title">
+
+            <div class="tool-icon">
+                📱
+            </div>
+
+            <h1>
+                QR Code Generator
+            </h1>
+
+            <p>
+                Create high-quality QR codes instantly.
+                Fast, free and easy to use.
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             TOOL BOX
+        ========================== -->
+
+        <section class="tool-box">
+
+            <div class="input-section">
+
+                <label for="qrInput">
+                    Enter Text or URL
+                </label>
+
+                <textarea
+                    id="qrInput"
+                    rows="4"
+                    placeholder="Enter a website URL, text, phone number or any information..."
+                ></textarea>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="button-group">
+
+                <button
+                    id="generateBtn"
+                    class="primary-btn">
+                    Generate QR Code
+                </button>
+
+                <button
+                    id="clearBtn"
+                    class="secondary-btn">
+                    Clear
+                </button>
+
+            </div>
+
+
+            <!-- =========================
+                 QR RESULT
+            ========================== -->
+
+            <div class="result-section">
+
+                <h2>
+                    Your QR Code
+                </h2>
+
+                <div
+                    id="qrContainer"
+                    class="qr-container">
+
+                    <div class="qr-placeholder">
+
+                        <div class="placeholder-icon">
+                            ▦
+                        </div>
+
+                        <p>
+                            Your QR code will appear here
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DOWNLOAD -->
+
+                <button
+                    id="downloadBtn"
+                    class="download-btn"
+                    style="display: none;">
+
+                    ⬇ Download QR Code
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             FEATURES
+        ========================== -->
+
+        <section class="features">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    ⚡
+                </div>
+
+                <h3>
+                    Fast & Easy
+                </h3>
+
+                <p>
+                    Generate your QR code instantly
+                    without complicated steps.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🔒
+                </div>
+
+                <h3>
+                    Privacy Friendly
+                </h3>
+
+                <p>
+                    Your information stays in your
+                    browser while generating the QR code.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    📱
+                </div>
+
+                <h3>
+                    Mobile Friendly
+                </h3>
+
+                <p>
+                    Works smoothly on mobile,
+                    tablet and desktop devices.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div class="footer-content">
+
+            <div class="footer-logo">
+                ⚡ Quick Tools Hub
+            </div>
+
+            <p>
+                Simple, powerful and free online tools
+                for everyone.
+            </p>
+
+            <div class="footer-links">
+
+                <a href="../../index.html">
+                    Home
+                </a>
+
+                <a href="#">
+                    Privacy
+                </a>
+
+                <a href="#">
+                    Terms
+                </a>
+
+                <a href="#">
+                    Contact
+                </a>
+
+            </div>
+
+            <div class="footer-bottom">
+
+                <p>
+                    © 2026 Quick Tools Hub.
+                    All rights reserved.
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- JavaScript -->
+
+    <script src="script.js"></script>
+
+</body>
+</html>
