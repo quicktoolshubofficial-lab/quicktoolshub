@@ -1,1 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+        content="Calculate your BMI and understand your healthy weight range with Quick Tools Hub.">
+
+    <title>
+        BMI Calculator - Quick Tools Hub
+    </title>
+
+
+    <!-- Google Fonts -->
+
+    <link rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+
+    <!-- Font Awesome -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- BMI CSS -->
+
+    <link
+        rel="stylesheet"
+        href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header class="site-header">
+
+        <div class="header-container">
+
+
+            <!-- Logo -->
+
+            <a
+                href="../index.html"
+                class="logo">
+
+                <span class="logo-icon">
+
+                    <i class="fa-solid fa-bolt"></i>
+
+                </span>
+
+                <span>
+                    Quick Tools Hub
+                </span>
+
+            </a>
+
+
+            <!-- Navigation -->
+
+            <nav class="main-nav">
+
+                <a href="../index.html">
+                    Home
+                </a>
+
+                <a href="../index.html#tools">
+                    All Tools
+                </a>
+
+            </nav>
+
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main>
+
+
+        <!-- =========================
+             HERO SECTION
+        ========================== -->
+
+        <section class="hero-section">
+
+
+            <div class="hero-shape shape-one"></div>
+
+            <div class="hero-shape shape-two"></div>
+
+
+            <div class="hero-content">
+
+
+                <span class="premium-badge">
+
+                    <i class="fa-solid fa-sparkles"></i>
+
+                    Free Health Tool
+
+                </span>
+
+
+                <h1>
+                    BMI Calculator
+                </h1>
+
+
+                <p>
+
+                    Calculate your Body Mass Index,
+                    understand your BMI category,
+                    and discover your estimated
+                    healthy weight range.
+
+                </p>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================
+             CALCULATOR SECTION
+        ========================== -->
+
+        <section class="calculator-section">
+
+
+            <div class="calculator-wrapper">
+
+
+                <!-- CALCULATOR CARD -->
+
+                <div class="calculator-card">
+
+
+                    <!-- Card Header -->
+
+                    <div class="card-header">
+
+
+                        <div class="card-icon">
+
+                            <i class="fa-solid fa-weight-scale"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <h2>
+                                Calculate Your BMI
+                            </h2>
+
+                            <p>
+                                Enter your height and weight
+                                to calculate your BMI.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- UNIT SELECTOR -->
+
+                    <div class="unit-selector">
+
+
+                        <button
+                            type="button"
+                            id="metricBtn"
+                            class="unit-btn active">
+
+                            <i class="fa-solid fa-ruler-combined"></i>
+
+                            Metric
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            id="imperialBtn"
+                            class="unit-btn">
+
+                            <i class="fa-solid fa-globe"></i>
+
+                            Imperial
+
+                        </button>
+
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         METRIC FORM
+                    ========================== -->
+
+                    <div
+                        id="metricForm"
+                        class="form-area">
+
+
+                        <!-- WEIGHT -->
+
+                        <div class="input-group">
+
+
+                            <label for="weight">
+
+                                <i class="fa-solid fa-weight-hanging"></i>
+
+                                Weight
+
+                            </label>
+
+
+                            <div class="input-wrapper">
+
+
+                                <input
+                                    type="number"
+                                    id="weight"
+                                    placeholder="Enter your weight"
+                                    min="1"
+                                    max="500"
+                                    step="0.1">
+
+
+                                <span>
+                                    kg
+                                </span>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- HEIGHT -->
+
+                        <div class="input-group">
+
+
+                            <label for="height">
+
+                                <i class="fa-solid fa-ruler-vertical"></i>
+
+                                Height
+
+                            </label>
+
+
+                            <div class="input-wrapper">
+
+
+                                <input
+                                    type="number"
+                                    id="height"
+                                    placeholder="Enter your height"
+                                    min="50"
+                                    max="300"
+                                    step="0.1">
+
+
+                                <span>
+                                    cm
+                                </span>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         IMPERIAL FORM
+                    ========================== -->
+
+                    <div
+                        id="imperialForm"
+                        class="form-area hidden">
+
+
+                        <!-- WEIGHT -->
+
+                        <div class="input-group">
+
+
+                            <label for="imperialWeight">
+
+                                <i class="fa-solid fa-weight-hanging"></i>
+
+                                Weight
+
+                            </label>
+
+
+                            <div class="input-wrapper">
+
+
+                                <input
+                                    type="number"
+                                    id="imperialWeight"
+                                    placeholder="Enter your weight"
+                                    min="1"
+                                    max="1100"
+                                    step="0.1">
+
+
+                                <span>
+                                    lbs
+                                </span>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- HEIGHT -->
+
+                        <div class="height-imperial-grid">
+
+
+                            <div class="input-group">
+
+
+                                <label for="feet">
+                                    Height
+                                </label>
+
+
+                                <div class="input-wrapper">
+
+
+                                    <input
+                                        type="number"
+                                        id="feet"
+                                        placeholder="Feet"
+                                        min="1"
+                                        max="8">
+
+
+                                    <span>
+                                        ft
+                                    </span>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="input-group">
+
+
+                                <label for="inches">
+                                    &nbsp;
+                                </label>
+
+
+                                <div class="input-wrapper">
+
+
+                                    <input
+                                        type="number"
+                                        id="inches"
+                                        placeholder="Inches"
+                                        min="0"
+                                        max="11">
+
+
+                                    <span>
+                                        in
+                                    </span>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- ERROR MESSAGE -->
+
+                    <div
+                        id="errorMessage"
+                        class="error-message">
+                    </div>
+
+
+                    <!-- CALCULATE BUTTON -->
+
+                    <button
+                        type="button"
+                        id="calculateBtn"
+                        class="calculate-btn">
+
+                        <i class="fa-solid fa-calculator"></i>
+
+                        Calculate My BMI
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </button>
+
+
+                    <!-- RESET BUTTON -->
+
+                    <button
+                        type="button"
+                        id="resetBtn"
+                        class="reset-btn">
+
+                        <i class="fa-solid fa-rotate-left"></i>
+
+                        Reset
+
+                    </button>
+
+
+                </div>
+                <!-- =========================
+                     RESULT CARD
+                ========================== -->
+
+                <div
+                    id="resultSection"
+                    class="result-card hidden">
+
+
+                    <!-- RESULT HEADER -->
+
+                    <div class="result-header">
+
+
+                        <div>
+
+                            <span class="result-label">
+
+                                YOUR BMI RESULT
+
+                            </span>
+
+
+                            <h2>
+
+                                Your Body Mass Index
+
+                            </h2>
+
+                        </div>
+
+
+                        <div class="result-check-icon">
+
+                            <i class="fa-solid fa-check"></i>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         BMI SCORE
+                    ========================== -->
+
+                    <div class="bmi-score-container">
+
+
+                        <div class="bmi-score">
+
+
+                            <span id="bmiValue">
+
+                                0.0
+
+                            </span>
+
+
+                            <small>
+
+                                BMI
+
+                            </small>
+
+
+                        </div>
+
+
+
+                        <div class="bmi-status">
+
+
+                            <span>
+
+                                Your Category
+
+                            </span>
+
+
+                            <strong id="bmiCategory">
+
+                                --
+
+                            </strong>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         BMI SCALE
+                    ========================== -->
+
+                    <div class="bmi-scale">
+
+
+                        <div class="scale-labels">
+
+
+                            <span>
+                                Underweight
+                            </span>
+
+
+                            <span>
+                                Normal
+                            </span>
+
+
+                            <span>
+                                Overweight
+                            </span>
+
+
+                            <span>
+                                Obese
+                            </span>
+
+
+                        </div>
+
+
+                        <div class="scale-bar">
+
+
+                            <div
+                                class="scale-indicator"
+                                id="scaleIndicator">
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         RESULT DETAILS
+                    ========================== -->
+
+                    <div class="result-details">
+
+
+                        <!-- BMI CATEGORY -->
+
+                        <div class="detail-box">
+
+
+                            <div class="detail-icon">
+
+                                <i class="fa-solid fa-heart-pulse"></i>
+
+                            </div>
+
+
+                            <div>
+
+
+                                <span>
+
+                                    BMI Category
+
+                                </span>
+
+
+                                <strong id="categoryText">
+
+                                    --
+
+                                </strong>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- HEALTHY WEIGHT -->
+
+                        <div class="detail-box">
+
+
+                            <div class="detail-icon">
+
+                                <i class="fa-solid fa-scale-balanced"></i>
+
+                            </div>
+
+
+                            <div>
+
+
+                                <span>
+
+                                    Healthy Weight Range
+
+                                </span>
+
+
+                                <strong id="healthyRange">
+
+                                    --
+
+                                </strong>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         RECOMMENDATION
+                    ========================== -->
+
+                    <div class="recommendation-box">
+
+
+                        <div class="recommendation-icon">
+
+                            <i class="fa-solid fa-lightbulb"></i>
+
+                        </div>
+
+
+                        <div>
+
+
+                            <h3>
+
+                                What This Means
+
+                            </h3>
+
+
+                            <p id="recommendationText">
+
+                                Your personalized BMI
+                                interpretation will appear here.
+
+                            </p>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================
+             INFORMATION SECTION
+        ========================== -->
+
+        <section class="information-section">
+
+
+            <div class="information-container">
+
+
+                <!-- SECTION HEADING -->
+
+                <div class="section-heading">
+
+
+                    <span class="section-badge">
+
+                        BMI GUIDE
+
+                    </span>
+
+
+                    <h2>
+
+                        Understanding Your BMI
+
+                    </h2>
+
+
+                    <p>
+
+                        BMI is a simple screening measurement
+                        that compares your weight with your height.
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- =========================
+                     BMI CATEGORIES
+                ========================== -->
+
+                <div class="category-grid">
+
+
+                    <!-- UNDERWEIGHT -->
+
+                    <div class="category-card">
+
+
+                        <div class="category-icon">
+
+                            <i class="fa-solid fa-arrow-down"></i>
+
+                        </div>
+
+
+                        <h3>
+
+                            Underweight
+
+                        </h3>
+
+
+                        <span>
+
+                            Below 18.5
+
+                        </span>
+
+
+                        <p>
+
+                            Your BMI is below the typical
+                            healthy range.
+
+                        </p>
+
+
+                    </div>
+
+
+
+                    <!-- NORMAL -->
+
+                    <div class="category-card">
+
+
+                        <div class="category-icon">
+
+                            <i class="fa-solid fa-check"></i>
+
+                        </div>
+
+
+                        <h3>
+
+                            Normal Weight
+
+                        </h3>
+
+
+                        <span>
+
+                            18.5 – 24.9
+
+                        </span>
+
+
+                        <p>
+
+                            Your BMI falls within the typical
+                            healthy range.
+
+                        </p>
+
+
+                    </div>
+
+
+
+                    <!-- OVERWEIGHT -->
+
+                    <div class="category-card">
+
+
+                        <div class="category-icon">
+
+                            <i class="fa-solid fa-arrow-up"></i>
+
+                        </div>
+
+
+                        <h3>
+
+                            Overweight
+
+                        </h3>
+
+
+                        <span>
+
+                            25.0 – 29.9
+
+                        </span>
+
+
+                        <p>
+
+                            Your BMI is above the typical
+                            healthy range.
+
+                        </p>
+
+
+                    </div>
+
+
+
+                    <!-- OBESE -->
+
+                    <div class="category-card">
+
+
+                        <div class="category-icon">
+
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+
+                        </div>
+
+
+                        <h3>
+
+                            Obesity
+
+                        </h3>
+
+
+                        <span>
+
+                            30.0 or higher
+
+                        </span>
+
+
+                        <p>
+
+                            Your BMI is in the obesity range.
+
+                        </p>
+
+
+                    </div>
+
+
+                </div>
+                              <!-- =========================
+                     HOW IT WORKS
+                ========================== -->
+
+                <div class="how-it-works">
+
+
+                    <div class="section-heading">
+
+
+                        <span class="section-badge">
+
+                            SIMPLE & EASY
+
+                        </span>
+
+
+                        <h2>
+
+                            How Does the BMI Calculator Work?
+
+                        </h2>
+
+
+                        <p>
+
+                            Get your BMI result in three simple steps.
+
+                        </p>
+
+
+                    </div>
+
+
+
+                    <!-- STEPS -->
+
+                    <div class="steps-grid">
+
+
+                        <!-- STEP 1 -->
+
+                        <div class="step-card">
+
+
+                            <div class="step-number">
+
+                                01
+
+                            </div>
+
+
+                            <div class="step-icon">
+
+                                <i class="fa-solid fa-pen-to-square"></i>
+
+                            </div>
+
+
+                            <h3>
+
+                                Enter Your Details
+
+                            </h3>
+
+
+                            <p>
+
+                                Enter your height and weight
+                                using metric or imperial units.
+
+                            </p>
+
+
+                        </div>
+
+
+
+                        <!-- STEP 2 -->
+
+                        <div class="step-card">
+
+
+                            <div class="step-number">
+
+                                02
+
+                            </div>
+
+
+                            <div class="step-icon">
+
+                                <i class="fa-solid fa-calculator"></i>
+
+                            </div>
+
+
+                            <h3>
+
+                                Calculate Your BMI
+
+                            </h3>
+
+
+                            <p>
+
+                                Our calculator processes your
+                                information and calculates your BMI.
+
+                            </p>
+
+
+                        </div>
+
+
+
+                        <!-- STEP 3 -->
+
+                        <div class="step-card">
+
+
+                            <div class="step-number">
+
+                                03
+
+                            </div>
+
+
+                            <div class="step-icon">
+
+                                <i class="fa-solid fa-chart-line"></i>
+
+                            </div>
+
+
+                            <h3>
+
+                                Understand Your Result
+
+                            </h3>
+
+
+                            <p>
+
+                                See your BMI category and estimated
+                                healthy weight range.
+
+                            </p>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =========================
+                     DISCLAIMER
+                ========================== -->
+
+                <div class="disclaimer-box">
+
+
+                    <div class="disclaimer-icon">
+
+                        <i class="fa-solid fa-circle-info"></i>
+
+                    </div>
+
+
+                    <div>
+
+
+                        <h3>
+
+                            Important Information
+
+                        </h3>
+
+
+                        <p>
+
+                            BMI is a general screening tool and does
+                            not directly measure body fat or overall
+                            health. Results may not be accurate for
+                            athletes, children, older adults, pregnant
+                            individuals, or people with high muscle mass.
+                            For personalized health advice, consult a
+                            qualified healthcare professional.
+
+                        </p>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="site-footer">
+
+
+        <div class="footer-container">
+
+
+            <!-- FOOTER BRAND -->
+
+            <div class="footer-brand">
+
+
+                <a
+                    href="../index.html"
+                    class="logo">
+
+
+                    <span class="logo-icon">
+
+                        <i class="fa-solid fa-bolt"></i>
+
+                    </span>
+
+
+                    <span>
+
+                        Quick Tools Hub
+
+                    </span>
+
+
+                </a>
+
+
+                <p>
+
+                    Smart tools. Simple solutions.
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- FOOTER LINKS -->
+
+            <div class="footer-links">
+
+
+                <a href="../index.html">
+
+                    Home
+
+                </a>
+
+
+                <a href="../index.html#tools">
+
+                    All Tools
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- FOOTER BOTTOM -->
+
+        <div class="footer-bottom">
+
+
+            <p>
+
+                © 2026 Quick Tools Hub.
+                All Rights Reserved.
+
+            </p>
+
+
+        </div>
+
+
+    </footer>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script src="script.js"></script>
+
+
+</body>
+
+</html>
