@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
     <meta name="description"
-          content="Create professional QR codes instantly with Quick Tools Hub's free online QR Code Generator.">
+          content="Create unique branded QR codes with custom colors, shapes and logo using Quick Tools Official Brand QR Studio.">
 
     <meta name="keywords"
-          content="QR Code Generator, Free QR Code, QR Maker, Quick Tools Hub">
+          content="Brand QR Studio, QR Code Generator, Custom QR Code, Logo QR Code">
 
     <meta name="author"
-          content="Quick Tools Hub">
+          content="Quick Tools Official">
 
-    <title>QR Code Generator - Quick Tools Hub</title>
+    <title>Brand QR Studio | Quick Tools Official</title>
+
 
     <!-- Google Font -->
+
     <link rel="preconnect"
           href="https://fonts.googleapis.com">
 
@@ -28,272 +32,679 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
           rel="stylesheet">
 
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+
     <!-- QR Code Library -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
+
     <!-- Main CSS -->
-    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet"
+          href="style.css">
+
 </head>
+
 
 <body>
 
-    <!-- =========================
-         ANIMATED BACKGROUND
-    ========================== -->
 
-    <div class="background-animation">
-        <div class="circle circle-one"></div>
-        <div class="circle circle-two"></div>
-        <div class="circle circle-three"></div>
-    </div>
+<!-- =========================
+     ANIMATED BACKGROUND
+========================= -->
+
+<div class="background-animation">
+
+    <div class="gradient-orb orb-one"></div>
+
+    <div class="gradient-orb orb-two"></div>
+
+    <div class="gradient-orb orb-three"></div>
+
+</div>
 
 
-    <!-- =========================
-         HEADER
-    ========================== -->
 
-    <header>
+<!-- =========================
+     HEADER
+========================= -->
 
-        <div class="logo">
-            <span>⚡</span>
-            Quick Tools Hub
-        </div>
+<header>
+
+    <div class="header-container">
+
 
         <a href="../../index.html"
-           class="back-btn">
-            ← Back to Home
+           class="brand-logo">
+
+            <span class="logo-icon">
+                ⚡
+            </span>
+
+            <span>
+                Quick Tools Official
+            </span>
+
         </a>
 
-    </header>
+
+        <a href="../../index.html"
+           class="back-button">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Back to Tools
+
+        </a>
+
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="main-container">
+
+
+    <!-- PAGE INTRO -->
+
+    <section class="page-intro">
+
+
+        <div class="studio-icon">
+
+            <i class="fa-solid fa-qrcode"></i>
+
+        </div>
+
+
+        <div class="premium-badge">
+
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+            AI-Inspired Brand QR Design
+
+        </div>
+
+
+        <h1>
+
+            Brand QR Studio
+
+        </h1>
+
+
+        <p>
+
+            Create beautiful branded QR codes
+            using your logo, colors and custom style.
+
+        </p>
+
+
+    </section>
+
 
 
     <!-- =========================
-         MAIN CONTENT
-    ========================== -->
+         STUDIO
+    ========================= -->
 
-    <main class="container">
-
-        <section class="tool-title">
-
-            <div class="tool-icon">
-                📱
-            </div>
-
-            <h1>
-                QR Code Generator
-            </h1>
-
-            <p>
-                Create high-quality QR codes instantly.
-                Fast, free and easy to use.
-            </p>
-
-        </section>
+    <section class="studio-container">
 
 
         <!-- =========================
-             TOOL BOX
-        ========================== -->
+             LEFT PANEL
+        ========================= -->
 
-        <section class="tool-box">
-
-            <div class="input-section">
-
-                <label for="qrInput">
-                    Enter Text or URL
-                </label>
-
-                <textarea
-                    id="qrInput"
-                    rows="4"
-                    placeholder="Enter a website URL, text, phone number or any information..."
-                ></textarea>
-
-            </div>
+        <div class="control-panel">
 
 
-            <!-- BUTTONS -->
+            <div class="panel-heading">
 
-            <div class="button-group">
+                <div>
 
-                <button
-                    id="generateBtn"
-                    class="primary-btn">
-                    Generate QR Code
-                </button>
+                    <h2>
+                        Customize Your QR
+                    </h2>
 
-                <button
-                    id="clearBtn"
-                    class="secondary-btn">
-                    Clear
-                </button>
+                    <p>
+                        Build your unique branded QR code.
+                    </p>
+
+                </div>
 
             </div>
+
 
 
             <!-- =========================
-                 QR RESULT
-            ========================== -->
+                 QR CONTENT
+            ========================= -->
 
-            <div class="result-section">
+            <div class="form-group">
 
-                <h2>
-                    Your QR Code
-                </h2>
+                <label for="qrInput">
+
+                    <i class="fa-solid fa-link"></i>
+
+                    Text or Website URL
+
+                </label>
+
+
+                <textarea
+                    id="qrInput"
+                    placeholder="https://yourwebsite.com"
+                    rows="4"></textarea>
+
+            </div>
+
+
+
+            <!-- =========================
+                 LOGO UPLOAD
+            ========================= -->
+
+            <div class="form-group">
+
+                <label>
+
+                    <i class="fa-solid fa-image"></i>
+
+                    Upload Brand Logo
+
+                </label>
+
+
+                <div class="logo-upload-box">
+
+
+                    <input
+                        type="file"
+                        id="logoInput"
+                        accept="image/png,image/jpeg,image/webp">
+
+
+                    <label
+                        for="logoInput"
+                        class="upload-label">
+
+
+                        <div class="upload-icon">
+
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                        </div>
+
+
+                        <strong>
+                            Upload Your Logo
+                        </strong>
+
+
+                        <span>
+                            PNG, JPG or WebP
+                        </span>
+
+
+                    </label>
+
+
+                </div>
+
+
+                <div
+                    id="logoPreview"
+                    class="logo-preview">
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 QR STYLE
+            ========================= -->
+
+            <div class="form-group">
+
+                <label>
+
+                    <i class="fa-solid fa-shapes"></i>
+
+                    QR Style
+
+                </label>
+
+
+                <div class="style-options">
+
+
+                    <button
+                        type="button"
+                        class="style-option active"
+                        data-style="square">
+
+                        <span class="style-preview square-style"></span>
+
+                        Square
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="style-option"
+                        data-style="rounded">
+
+                        <span class="style-preview rounded-style"></span>
+
+                        Rounded
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="style-option"
+                        data-style="dots">
+
+                        <span class="style-preview dots-style"></span>
+
+                        Dots
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="style-option"
+                        data-style="diamond">
+
+                        <span class="style-preview diamond-style"></span>
+
+                        Diamond
+
+                    </button>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 COLORS
+            ========================= -->
+
+            <div class="color-controls">
+
+
+                <div class="color-control">
+
+                    <label for="qrColor">
+
+                        QR Color
+
+                    </label>
+
+                    <input
+                        type="color"
+                        id="qrColor"
+                        value="#0f172a">
+
+                </div>
+
+
+                <div class="color-control">
+
+                    <label for="bgColor">
+
+                        Background
+
+                    </label>
+
+                    <input
+                        type="color"
+                        id="bgColor"
+                        value="#ffffff">
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =========================
+                 BUTTONS
+            ========================= -->
+
+            <div class="action-buttons">
+
+
+                <button
+                    id="generateBtn"
+                    class="generate-btn">
+
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                    Generate Brand QR
+
+                </button>
+
+
+                <button
+                    id="clearBtn"
+                    class="clear-btn">
+
+                    <i class="fa-solid fa-rotate-left"></i>
+
+                    Reset
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             RIGHT PREVIEW
+        ========================= -->
+
+        <div class="preview-panel">
+
+
+            <div class="preview-header">
+
+                <div>
+
+                    <h2>
+                        Live Preview
+                    </h2>
+
+                    <p>
+                        Your branded QR code will appear here.
+                    </p>
+
+                </div>
+
+
+                <span class="live-status">
+
+                    <span class="status-dot"></span>
+
+                    Live
+
+                </span>
+
+            </div>
+
+
+
+            <!-- QR PREVIEW -->
+
+            <div class="qr-preview-area">
+
 
                 <div
                     id="qrContainer"
                     class="qr-container">
 
+
                     <div class="qr-placeholder">
 
                         <div class="placeholder-icon">
-                            ▦
+
+                            <i class="fa-solid fa-qrcode"></i>
+
                         </div>
 
+
+                        <h3>
+                            Your QR Code
+                        </h3>
+
+
                         <p>
-                            Your QR code will appear here
+                            Enter your URL or text
+                            to generate your QR code.
                         </p>
 
                     </div>
 
+
                 </div>
 
 
-                <!-- DOWNLOAD -->
+            </div>
+
+
+
+            <!-- DOWNLOAD -->
+
+            <div class="download-area">
+
 
                 <button
                     id="downloadBtn"
                     class="download-btn"
                     style="display: none;">
 
-                    ⬇ Download QR Code
+                    <i class="fa-solid fa-download"></i>
+
+                    Download PNG
 
                 </button>
 
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             FEATURES
-        ========================== -->
-
-        <section class="features">
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    ⚡
-                </div>
-
-                <h3>
-                    Fast & Easy
-                </h3>
-
-                <p>
-                    Generate your QR code instantly
-                    without complicated steps.
-                </p>
 
             </div>
 
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    🔒
-                </div>
-
-                <h3>
-                    Privacy Friendly
-                </h3>
-
-                <p>
-                    Your information stays in your
-                    browser while generating the QR code.
-                </p>
-
-            </div>
-
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    📱
-                </div>
-
-                <h3>
-                    Mobile Friendly
-                </h3>
-
-                <p>
-                    Works smoothly on mobile,
-                    tablet and desktop devices.
-                </p>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- =========================
-         FOOTER
-    ========================== -->
-
-    <footer>
-
-        <div class="footer-content">
-
-            <div class="footer-logo">
-                ⚡ Quick Tools Hub
-            </div>
-
-            <p>
-                Simple, powerful and free online tools
-                for everyone.
-            </p>
-
-            <div class="footer-links">
-
-                <a href="../../index.html">
-                    Home
-                </a>
-
-                <a href="#">
-                    Privacy
-                </a>
-
-                <a href="#">
-                    Terms
-                </a>
-
-                <a href="#">
-                    Contact
-                </a>
-
-            </div>
-
-            <div class="footer-bottom">
-
-                <p>
-                    © 2026 Quick Tools Hub.
-                    All rights reserved.
-                </p>
-
-            </div>
 
         </div>
 
-    </footer>
+
+    </section>
 
 
-    <!-- JavaScript -->
 
-    <script src="script.js"></script>
+    <!-- =========================
+         FEATURES
+    ========================= -->
+
+    <section class="features-section">
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+
+                <i class="fa-solid fa-palette"></i>
+
+            </div>
+
+            <h3>
+                Brand Colors
+            </h3>
+
+            <p>
+                Customize QR colors
+                to match your brand identity.
+            </p>
+
+        </div>
+
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+
+                <i class="fa-solid fa-image"></i>
+
+            </div>
+
+            <h3>
+                Add Your Logo
+            </h3>
+
+            <p>
+                Place your brand logo
+                inside your QR code.
+            </p>
+
+        </div>
+
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+
+                <i class="fa-solid fa-shapes"></i>
+
+            </div>
+
+            <h3>
+                Unique Styles
+            </h3>
+
+            <p>
+                Choose different QR
+                styles for your brand.
+            </p>
+
+        </div>
+
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+
+                <i class="fa-solid fa-bolt"></i>
+
+            </div>
+
+            <h3>
+                Fast & Free
+            </h3>
+
+            <p>
+                Create branded QR codes
+                quickly without registration.
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+
+    <div class="footer-container">
+
+
+        <div class="footer-logo">
+
+            ⚡ Quick Tools Official
+
+        </div>
+
+
+        <p>
+
+            Powerful, simple and free online tools
+            for everyone.
+
+        </p>
+
+
+        <div class="footer-links">
+
+
+            <a href="../../index.html">
+                Home
+            </a>
+
+
+            <a href="../../index.html#tools">
+                All Tools
+            </a>
+
+
+            <a href="../../index.html#categories">
+                Categories
+            </a>
+
+
+            <a href="../../index.html#about">
+                About
+            </a>
+
+
+            <a href="../../index.html#contact">
+                Contact
+            </a>
+
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+
+                © 2026 Quick Tools Official.
+                All Rights Reserved.
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</footer>
+
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script src="script.js"></script>
+
 
 </body>
+
 </html>
