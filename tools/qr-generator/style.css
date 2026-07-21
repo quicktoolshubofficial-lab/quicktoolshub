@@ -1,13 +1,12 @@
-/* =========================
+/* =====================================================
    QUICK TOOLS OFFICIAL
-   BRAND QR STUDIO
-   PROFESSIONAL CSS
-========================= */
+   BRAND QR STUDIO — PROFESSIONAL CSS
+===================================================== */
 
 
-/* =========================
+/* =====================================================
    GLOBAL RESET
-========================= */
+===================================================== */
 
 * {
     margin: 0;
@@ -28,9 +27,9 @@ body {
 }
 
 
-/* =========================
+/* =====================================================
    ANIMATED BACKGROUND
-========================= */
+===================================================== */
 
 .background-animation {
     position: fixed;
@@ -78,8 +77,8 @@ body {
 }
 
 .orb-three {
-    width: 200px;
-    height: 200px;
+    width: 220px;
+    height: 220px;
     top: 45%;
     right: 15%;
     background: rgba(14, 165, 233, 0.08);
@@ -102,9 +101,9 @@ body {
 }
 
 
-/* =========================
+/* =====================================================
    HEADER
-========================= */
+===================================================== */
 
 header {
     position: sticky;
@@ -124,25 +123,29 @@ header {
     width: 92%;
     max-width: 1200px;
 
-    margin: auto;
-
     min-height: 72px;
+
+    margin: auto;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     gap: 20px;
 }
 
 .brand-logo {
     display: flex;
     align-items: center;
+
     gap: 10px;
 
     color: white;
+
     text-decoration: none;
 
     font-size: 20px;
+
     font-weight: 800;
 }
 
@@ -153,21 +156,25 @@ header {
 .back-button {
     display: inline-flex;
     align-items: center;
+
     gap: 8px;
 
     padding: 10px 17px;
 
     color: white;
+
     text-decoration: none;
+
+    background:
+        rgba(255, 255, 255, 0.08);
 
     border: 1px solid
         rgba(255, 255, 255, 0.14);
 
-    background: rgba(255, 255, 255, 0.08);
-
     border-radius: 10px;
 
     font-size: 14px;
+
     font-weight: 600;
 
     transition: 0.3s ease;
@@ -175,14 +182,16 @@ header {
 
 .back-button:hover {
     background: #2563eb;
+
     border-color: #2563eb;
+
     transform: translateY(-2px);
 }
 
 
-/* =========================
-   MAIN
-========================= */
+/* =====================================================
+   MAIN CONTAINER
+===================================================== */
 
 .main-container {
     width: 92%;
@@ -194,9 +203,9 @@ header {
 }
 
 
-/* =========================
+/* =====================================================
    PAGE INTRO
-========================= */
+===================================================== */
 
 .page-intro {
     text-align: center;
@@ -233,13 +242,15 @@ header {
         0 18px 40px
         rgba(37, 99, 235, 0.25);
 
-    animation: iconFloat 4s ease-in-out infinite;
+    animation:
+        iconFloat 4s ease-in-out infinite;
 }
 
 .premium-badge {
     display: inline-flex;
 
     align-items: center;
+
     gap: 7px;
 
     padding: 8px 14px;
@@ -248,7 +259,8 @@ header {
 
     color: #4338ca;
 
-    background: rgba(99, 102, 241, 0.08);
+    background:
+        rgba(99, 102, 241, 0.08);
 
     border: 1px solid
         rgba(99, 102, 241, 0.15);
@@ -256,11 +268,13 @@ header {
     border-radius: 50px;
 
     font-size: 12px;
+
     font-weight: 700;
 }
 
 .page-intro h1 {
-    font-size: clamp(34px, 6vw, 52px);
+    font-size:
+        clamp(34px, 6vw, 52px);
 
     font-weight: 800;
 
@@ -277,11 +291,13 @@ header {
         );
 
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+
+    -webkit-text-fill-color:
+        transparent;
 }
 
 .page-intro p {
-    max-width: 650px;
+    max-width: 680px;
 
     margin: auto;
 
@@ -293,9 +309,9 @@ header {
 }
 
 
-/* =========================
-   STUDIO CONTAINER
-========================= */
+/* =====================================================
+   STUDIO GRID
+===================================================== */
 
 .studio-container {
     display: grid;
@@ -306,46 +322,50 @@ header {
 
     gap: 25px;
 
-    align-items: stretch;
+    align-items: start;
 }
 
 
-/* =========================
-   PANELS
-========================= */
+/* =====================================================
+   GLASS PANELS
+===================================================== */
 
 .control-panel,
 .preview-panel {
+    padding: 30px;
+
     background:
-        rgba(255, 255, 255, 0.78);
+        rgba(255, 255, 255, 0.80);
 
     backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+
+    -webkit-backdrop-filter:
+        blur(20px);
 
     border: 1px solid
-        rgba(255, 255, 255, 0.9);
+        rgba(255, 255, 255, 0.90);
 
     border-radius: 24px;
 
     box-shadow:
         0 25px 70px
         rgba(15, 23, 42, 0.08);
-
-    padding: 30px;
 }
 
 .control-panel {
-    animation: fadeUp 0.8s ease;
+    animation:
+        fadeUp 0.8s ease;
 }
 
 .preview-panel {
-    animation: fadeUp 1s ease;
+    animation:
+        fadeUp 1s ease;
 }
 
 
-/* =========================
-   PANEL HEADING
-========================= */
+/* =====================================================
+   PANEL HEADINGS
+===================================================== */
 
 .panel-heading {
     margin-bottom: 28px;
@@ -353,9 +373,19 @@ header {
 
 .panel-heading h2,
 .preview-header h2 {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
     font-size: 21px;
 
-    margin-bottom: 6px;
+    margin-bottom: 7px;
+}
+
+.panel-heading h2 i {
+    color: #2563eb;
 }
 
 .panel-heading p,
@@ -366,18 +396,19 @@ header {
 }
 
 
-/* =========================
+/* =====================================================
    FORM GROUP
-========================= */
+===================================================== */
 
 .form-group {
-    margin-bottom: 25px;
+    margin-bottom: 24px;
 }
 
-.form-group label {
+.form-group > label {
     display: flex;
 
     align-items: center;
+
     gap: 8px;
 
     margin-bottom: 10px;
@@ -385,22 +416,23 @@ header {
     color: #1e293b;
 
     font-size: 14px;
+
     font-weight: 700;
 }
 
-.form-group label i {
+.form-group > label i {
     color: #2563eb;
 }
 
 
-/* =========================
+/* =====================================================
    TEXTAREA
-========================= */
+===================================================== */
 
 textarea {
     width: 100%;
 
-    min-height: 110px;
+    min-height: 105px;
 
     resize: vertical;
 
@@ -409,7 +441,7 @@ textarea {
     color: #0f172a;
 
     background:
-        rgba(255, 255, 255, 0.9);
+        rgba(255, 255, 255, 0.90);
 
     border: 2px solid #e2e8f0;
 
@@ -439,9 +471,9 @@ textarea:focus {
 }
 
 
-/* =========================
+/* =====================================================
    LOGO UPLOAD
-========================= */
+===================================================== */
 
 .logo-upload-box {
     position: relative;
@@ -459,7 +491,7 @@ textarea:focus {
 }
 
 .upload-label {
-    min-height: 125px;
+    min-height: 120px;
 
     display: flex !important;
 
@@ -474,7 +506,7 @@ textarea:focus {
     color: #475569 !important;
 
     background:
-        rgba(248, 250, 252, 0.8);
+        rgba(248, 250, 252, 0.80);
 
     border: 2px dashed #cbd5e1;
 
@@ -489,15 +521,16 @@ textarea:focus {
     border-color: #2563eb;
 
     background:
-        rgba(239, 246, 255, 0.8);
+        rgba(239, 246, 255, 0.80);
 
-    transform: translateY(-2px);
+    transform:
+        translateY(-2px);
 }
 
 .upload-icon {
-    font-size: 28px;
-
     color: #2563eb;
+
+    font-size: 28px;
 
     margin-bottom: 4px;
 }
@@ -529,8 +562,9 @@ textarea:focus {
 }
 
 .logo-preview img {
-    max-width: 80px;
-    max-height: 80px;
+    max-width: 90px;
+
+    max-height: 90px;
 
     object-fit: contain;
 
@@ -538,21 +572,21 @@ textarea:focus {
 }
 
 
-/* =========================
-   STYLE OPTIONS
-========================= */
+/* =====================================================
+   QR STYLE OPTIONS
+===================================================== */
 
 .style-options {
     display: grid;
 
     grid-template-columns:
-        repeat(4, 1fr);
+        repeat(3, 1fr);
 
-    gap: 9px;
+    gap: 10px;
 }
 
 .style-option {
-    min-height: 85px;
+    min-height: 82px;
 
     display: flex;
 
@@ -579,6 +613,7 @@ textarea:focus {
     font-family: inherit;
 
     font-size: 11px;
+
     font-weight: 700;
 
     transition: 0.3s ease;
@@ -587,7 +622,8 @@ textarea:focus {
 .style-option:hover {
     border-color: #93c5fd;
 
-    transform: translateY(-2px);
+    transform:
+        translateY(-2px);
 }
 
 .style-option.active {
@@ -596,7 +632,7 @@ textarea:focus {
     border-color: #2563eb;
 
     background:
-        rgba(239, 246, 255, 0.8);
+        rgba(239, 246, 255, 0.80);
 
     box-shadow:
         0 6px 15px
@@ -604,12 +640,13 @@ textarea:focus {
 }
 
 
-/* =========================
+/* =====================================================
    STYLE PREVIEWS
-========================= */
+===================================================== */
 
 .style-preview {
     width: 28px;
+
     height: 28px;
 
     display: block;
@@ -629,19 +666,61 @@ textarea:focus {
     border-radius: 50%;
 }
 
-.diamond-style {
-    transform: rotate(45deg);
+.classy-style {
+    border-radius: 4px 12px 4px 12px;
+}
 
-    width: 22px;
-    height: 22px;
+.classy-rounded-style {
+    border-radius: 12px 4px 12px 4px;
+}
 
-    border-radius: 4px;
+.extra-rounded-style {
+    border-radius: 50%;
 }
 
 
-/* =========================
-   COLOR CONTROLS
-========================= */
+/* =====================================================
+   SELECT
+===================================================== */
+
+.select-control {
+    width: 100%;
+
+    padding: 13px 15px;
+
+    color: #334155;
+
+    background: white;
+
+    border: 2px solid #e2e8f0;
+
+    border-radius: 12px;
+
+    outline: none;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+.select-control:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(37, 99, 235, 0.08);
+}
+
+
+/* =====================================================
+   COLORS
+===================================================== */
 
 .color-controls {
     display: grid;
@@ -649,9 +728,9 @@ textarea:focus {
     grid-template-columns:
         1fr 1fr;
 
-    gap: 15px;
+    gap: 12px;
 
-    margin-bottom: 25px;
+    margin-bottom: 22px;
 }
 
 .color-control {
@@ -660,6 +739,8 @@ textarea:focus {
     align-items: center;
 
     justify-content: space-between;
+
+    gap: 10px;
 
     padding: 12px 14px;
 
@@ -673,12 +754,16 @@ textarea:focus {
 .color-control label {
     margin: 0;
 
-    font-size: 13px;
-    font-weight: 600;
+    color: #475569;
+
+    font-size: 12px;
+
+    font-weight: 700;
 }
 
-.color-control input {
+.color-control input[type="color"] {
     width: 42px;
+
     height: 32px;
 
     padding: 2px;
@@ -693,14 +778,106 @@ textarea:focus {
 }
 
 
-/* =========================
+/* =====================================================
+   GRADIENT
+===================================================== */
+
+.gradient-section {
+    padding: 15px;
+
+    background:
+        rgba(248, 250, 252, 0.80);
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 14px;
+}
+
+.checkbox-label {
+    display: flex !important;
+
+    align-items: center !important;
+
+    gap: 10px !important;
+
+    margin: 0 !important;
+
+    cursor: pointer;
+}
+
+.checkbox-label input {
+    width: 18px;
+
+    height: 18px;
+
+    accent-color: #2563eb;
+
+    cursor: pointer;
+}
+
+.gradient-controls {
+    display: none;
+
+    margin-top: 14px;
+}
+
+.gradient-controls.active {
+    display: block;
+}
+
+
+/* =====================================================
+   RANGE CONTROLS
+===================================================== */
+
+.range-control {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+.range-control input[type="range"] {
+    flex: 1;
+
+    height: 5px;
+
+    accent-color: #2563eb;
+
+    cursor: pointer;
+}
+
+.range-control span {
+    min-width: 52px;
+
+    padding: 7px 9px;
+
+    text-align: center;
+
+    color: #2563eb;
+
+    background:
+        rgba(37, 99, 235, 0.08);
+
+    border-radius: 8px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+
+/* =====================================================
    ACTION BUTTONS
-========================= */
+===================================================== */
 
 .action-buttons {
     display: flex;
 
     gap: 10px;
+
+    margin-top: 28px;
 }
 
 .generate-btn,
@@ -739,7 +916,8 @@ textarea:focus {
 }
 
 .generate-btn:hover {
-    transform: translateY(-3px);
+    transform:
+        translateY(-3px);
 
     box-shadow:
         0 15px 30px
@@ -757,13 +935,14 @@ textarea:focus {
 .clear-btn:hover {
     background: #cbd5e1;
 
-    transform: translateY(-2px);
+    transform:
+        translateY(-2px);
 }
 
 
-/* =========================
+/* =====================================================
    PREVIEW HEADER
-========================= */
+===================================================== */
 
 .preview-header {
     display: flex;
@@ -794,27 +973,30 @@ textarea:focus {
     border-radius: 50px;
 
     font-size: 11px;
+
     font-weight: 700;
 }
 
 .status-dot {
     width: 7px;
+
     height: 7px;
 
     border-radius: 50%;
 
     background: #10b981;
 
-    animation: pulse 2s infinite;
+    animation:
+        pulse 2s infinite;
 }
 
 
-/* =========================
-   QR PREVIEW AREA
-========================= */
+/* =====================================================
+   QR PREVIEW
+===================================================== */
 
 .qr-preview-area {
-    min-height: 430px;
+    min-height: 500px;
 
     display: flex;
 
@@ -822,23 +1004,26 @@ textarea:focus {
 
     justify-content: center;
 
-    padding: 25px;
+    padding: 30px;
 
     background:
         linear-gradient(
             135deg,
-            rgba(248, 250, 252, 0.9),
-            rgba(239, 246, 255, 0.7)
+            rgba(248, 250, 252, 0.90),
+            rgba(239, 246, 255, 0.70)
         );
 
     border: 1px solid #e2e8f0;
 
     border-radius: 18px;
+
+    overflow: auto;
 }
 
 .qr-container {
-    width: 280px;
-    height: 280px;
+    min-width: 300px;
+
+    min-height: 300px;
 
     padding: 25px;
 
@@ -860,24 +1045,26 @@ textarea:focus {
 }
 
 .qr-container:hover {
-    transform: translateY(-5px);
+    transform:
+        translateY(-5px);
 
     box-shadow:
         0 25px 55px
         rgba(15, 23, 42, 0.14);
 }
 
-.qr-container canvas,
-.qr-container img {
+.qr-container canvas {
+    display: block;
+
     max-width: 100%;
 
     height: auto;
 }
 
 
-/* =========================
-   PLACEHOLDER
-========================= */
+/* =====================================================
+   QR PLACEHOLDER
+===================================================== */
 
 .qr-placeholder {
     text-align: center;
@@ -887,6 +1074,7 @@ textarea:focus {
 
 .placeholder-icon {
     width: 65px;
+
     height: 65px;
 
     margin: 0 auto 15px;
@@ -894,15 +1082,16 @@ textarea:focus {
     display: flex;
 
     align-items: center;
-    justify-content: center;
 
-    font-size: 32px;
+    justify-content: center;
 
     color: #64748b;
 
     background: #f1f5f9;
 
     border-radius: 16px;
+
+    font-size: 32px;
 }
 
 .qr-placeholder h3 {
@@ -914,7 +1103,7 @@ textarea:focus {
 }
 
 .qr-placeholder p {
-    max-width: 190px;
+    max-width: 200px;
 
     margin: auto;
 
@@ -924,19 +1113,22 @@ textarea:focus {
 }
 
 
-/* =========================
-   DOWNLOAD
-========================= */
+/* =====================================================
+   DOWNLOAD BUTTONS
+===================================================== */
 
 .download-area {
-    text-align: center;
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
 
     margin-top: 20px;
 }
 
 .download-btn {
-    width: 100%;
-
     color: white;
 
     background:
@@ -952,17 +1144,68 @@ textarea:focus {
 }
 
 .download-btn:hover {
-    transform: translateY(-3px);
+    transform:
+        translateY(-3px);
 
     box-shadow:
         0 15px 30px
         rgba(5, 150, 105, 0.28);
 }
 
+.svg-download-btn {
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #9333ea
+        );
 
-/* =========================
+    box-shadow:
+        0 10px 25px
+        rgba(124, 58, 237, 0.18);
+}
+
+
+/* =====================================================
+   SCAN STATUS
+===================================================== */
+
+.scan-status {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 18px;
+
+    padding: 13px 15px;
+
+    color: #047857;
+
+    background:
+        rgba(16, 185, 129, 0.07);
+
+    border: 1px solid
+        rgba(16, 185, 129, 0.15);
+
+    border-radius: 12px;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+.scan-status i {
+    font-size: 17px;
+
+    flex-shrink: 0;
+}
+
+
+/* =====================================================
    FEATURES
-========================= */
+===================================================== */
 
 .features-section {
     display: grid;
@@ -986,7 +1229,7 @@ textarea:focus {
     backdrop-filter: blur(15px);
 
     border: 1px solid
-        rgba(255, 255, 255, 0.9);
+        rgba(255, 255, 255, 0.90);
 
     border-radius: 18px;
 
@@ -998,7 +1241,8 @@ textarea:focus {
 }
 
 .feature-card:hover {
-    transform: translateY(-6px);
+    transform:
+        translateY(-6px);
 
     box-shadow:
         0 20px 45px
@@ -1007,6 +1251,7 @@ textarea:focus {
 
 .feature-icon {
     width: 48px;
+
     height: 48px;
 
     margin: 0 auto 14px;
@@ -1014,6 +1259,7 @@ textarea:focus {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     color: #2563eb;
@@ -1041,9 +1287,9 @@ textarea:focus {
 }
 
 
-/* =========================
+/* =====================================================
    FOOTER
-========================= */
+===================================================== */
 
 footer {
     margin-top: 20px;
@@ -1121,9 +1367,9 @@ footer {
 }
 
 
-/* =========================
+/* =====================================================
    ANIMATIONS
-========================= */
+===================================================== */
 
 @keyframes fadeUp {
 
@@ -1178,11 +1424,11 @@ footer {
 }
 
 
-/* =========================
+/* =====================================================
    TABLET
-========================= */
+===================================================== */
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
 
     .studio-container {
         grid-template-columns: 1fr;
@@ -1192,12 +1438,16 @@ footer {
         grid-template-columns:
             repeat(2, 1fr);
     }
+
+    .preview-panel {
+        order: -1;
+    }
 }
 
 
-/* =========================
+/* =====================================================
    MOBILE
-========================= */
+===================================================== */
 
 @media (max-width: 600px) {
 
@@ -1266,10 +1516,15 @@ footer {
     }
 
     .qr-container {
-        width: 240px;
-        height: 240px;
+        min-width: 240px;
 
-        padding: 20px;
+        min-height: 240px;
+
+        padding: 18px;
+    }
+
+    .download-area {
+        grid-template-columns: 1fr;
     }
 
     .features-section {
@@ -1286,9 +1541,9 @@ footer {
 }
 
 
-/* =========================
+/* =====================================================
    SMALL MOBILE
-========================= */
+===================================================== */
 
 @media (max-width: 380px) {
 
@@ -1305,7 +1560,8 @@ footer {
     }
 
     .qr-container {
-        width: 210px;
-        height: 210px;
+        min-width: 210px;
+
+        min-height: 210px;
     }
 }
