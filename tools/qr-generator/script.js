@@ -1,12 +1,12 @@
-/* =========================
-   BRAND QR STUDIO
+/* =====================================================
    QUICK TOOLS OFFICIAL
-========================= */
+   BRAND QR STUDIO — MAIN JAVASCRIPT
+===================================================== */
 
 
-/* =========================
+/* =====================================================
    ELEMENTS
-========================= */
+===================================================== */
 
 const qrInput = document.getElementById("qrInput");
 
@@ -18,107 +18,508 @@ const qrColor = document.getElementById("qrColor");
 
 const bgColor = document.getElementById("bgColor");
 
-const qrContainer = document.getElementById("qrContainer");
+const gradientToggle =
+    document.getElementById("gradientToggle");
 
-const generateBtn = document.getElementById("generateBtn");
+const gradientControls =
+    document.getElementById("gradientControls");
 
-const clearBtn = document.getElementById("clearBtn");
+const gradientColor =
+    document.getElementById("gradientColor");
 
-const downloadBtn = document.getElementById("downloadBtn");
+const qrSize =
+    document.getElementById("qrSize");
+
+const qrSizeValue =
+    document.getElementById("qrSizeValue");
+
+const logoSize =
+    document.getElementById("logoSize");
+
+const logoSizeValue =
+    document.getElementById("logoSizeValue");
+
+const cornerStyle =
+    document.getElementById("cornerStyle");
+
+const qrContainer =
+    document.getElementById("qrContainer");
+
+const generateBtn =
+    document.getElementById("generateBtn");
+
+const clearBtn =
+    document.getElementById("clearBtn");
+
+const downloadPngBtn =
+    document.getElementById("downloadPngBtn");
+
+const downloadSvgBtn =
+    document.getElementById("downloadSvgBtn");
+
+const scanStatus =
+    document.getElementById("scanStatus");
 
 const styleOptions =
     document.querySelectorAll(".style-option");
 
 
-/* =========================
+/* =====================================================
    VARIABLES
-========================= */
+===================================================== */
 
-let uploadedLogo = null;
+let selectedDotStyle = "square";
 
-let selectedStyle = "square";
+let uploadedLogo = "";
 
-let currentQR = null;
+let qrCode = null;
 
 
-/* =========================
+/* =====================================================
+   QR STYLE MAPPING
+===================================================== */
+
+const dotStyleMap = {
+
+    square: "square",
+
+    rounded: "rounded",
+
+    dots: "dots",
+
+    classy: "classy",
+
+    "classy-rounded":
+        "classy-rounded",
+
+    "extra-rounded":
+        "extra-rounded"
+
+};
+
+
+/* =====================================================
+   INITIAL QR CODE
+===================================================== */
+
+function createQR() {
+
+
+    qrCode =
+        new QRCodeStyling({
+
+            width:
+                Number(qrSize.value),
+
+            height:
+                Number(qrSize.value),
+
+            type:
+                "canvas",
+
+            data:
+                qrInput.value.trim() ||
+                "https://quicktoolsofficial.com",
+
+            image:
+                uploadedLogo || undefined,
+
+            margin:
+                15,
+
+            qrOptions: {
+
+                errorCorrectionLevel:
+                    "H"
+
+            },
+
+            dotsOptions: {
+
+                color:
+                    qrColor.value,
+
+                type:
+                    selectedDotStyle
+
+            },
+
+            backgroundOptions: {
+
+                color:
+                    bgColor.value
+
+            },
+
+            cornersSquareOptions: {
+
+                type:
+                    cornerStyle.value,
+
+                color:
+                    qrColor.value
+
+            },
+
+            cornersDotOptions: {
+
+                type:
+                    cornerStyle.value === "square"
+                        ? "square"
+                        : "dot",
+
+                color:
+                    qrColor.value
+
+            },
+
+            imageOptions: {
+
+                crossOrigin:
+                    "anonymous",
+
+                margin:
+                    8,
+
+                imageSize:
+                    Number(logoSize.value) / 100,
+
+                hideBackgroundDots:
+                    true
+
+            }
+
+        });
+
+
+    renderQR();
+
+}
+
+
+/* =====================================================
+   RENDER QR
+===================================================== */
+
+function renderQR() {
+
+
+    if (!qrCode) {
+
+        return;
+
+    }
+
+
+    qrContainer.innerHTML =
+        "";
+
+
+    qrCode.append(
+        qrContainer
+    );
+
+
+    downloadPngBtn.style.display =
+        "inline-flex";
+
+
+    downloadSvgBtn.style.display =
+        "inline-flex";
+
+
+    updateScanStatus();
+
+}
+
+
+/* =====================================================
+   GENERATE QR
+===================================================== */
+
+function generateQR() {
+
+
+    const text =
+        qrInput.value.trim();
+
+
+    if (!text) {
+
+        alert(
+            "Please enter a website URL or text first."
+        );
+
+        qrInput.focus();
+
+        return;
+
+    }
+
+
+    updateQRCode();
+
+}
+
+
+/* =====================================================
+   UPDATE QR
+===================================================== */
+
+function updateQRCode() {
+
+
+    if (!qrCode) {
+
+        createQR();
+
+        return;
+
+    }
+
+
+    let dotsOptions = {
+
+        color:
+            qrColor.value,
+
+        type:
+            selectedDotStyle
+
+    };
+
+
+    /* =================================================
+       GRADIENT MODE
+    ================================================= */
+
+    if (
+        gradientToggle.checked
+    ) {
+
+        dotsOptions = {
+
+            type:
+                selectedDotStyle,
+
+            gradient: {
+
+                type:
+                    "linear",
+
+                rotation:
+                    0.8,
+
+                colorStops: [
+
+                    {
+                        offset: 0,
+                        color:
+                            qrColor.value
+                    },
+
+                    {
+                        offset: 1,
+                        color:
+                            gradientColor.value
+                    }
+
+                ]
+
+            }
+
+        };
+
+    }
+
+
+    /* =================================================
+       UPDATE QR
+    ================================================= */
+
+    qrCode.update({
+
+        width:
+            Number(qrSize.value),
+
+        height:
+            Number(qrSize.value),
+
+        data:
+            qrInput.value.trim() ||
+            "https://quicktoolsofficial.com",
+
+        image:
+            uploadedLogo || undefined,
+
+        dotsOptions:
+            dotsOptions,
+
+        backgroundOptions: {
+
+            color:
+                bgColor.value
+
+        },
+
+        cornersSquareOptions: {
+
+            type:
+                cornerStyle.value,
+
+            color:
+                qrColor.value
+
+        },
+
+        cornersDotOptions: {
+
+            type:
+                cornerStyle.value ===
+                "square"
+
+                    ? "square"
+
+                    : "dot",
+
+            color:
+                qrColor.value
+
+        },
+
+        imageOptions: {
+
+            crossOrigin:
+                "anonymous",
+
+            margin:
+                8,
+
+            imageSize:
+                Number(logoSize.value) / 100,
+
+            hideBackgroundDots:
+                true
+
+        }
+
+    });
+
+
+    renderQR();
+
+}
+
+
+/* =====================================================
    LOGO UPLOAD
-========================= */
+===================================================== */
 
 logoInput.addEventListener(
     "change",
     function () {
 
-        const file = this.files[0];
+
+        const file =
+            this.files[0];
+
 
         if (!file) {
+
             return;
+
         }
 
 
-        /* Check image type */
+        /* Check image */
 
-        if (!file.type.startsWith("image/")) {
+        if (
+            !file.type.startsWith(
+                "image/"
+            )
+        ) {
 
             alert(
                 "Please upload a valid image file."
             );
 
+            this.value =
+                "";
+
             return;
+
         }
 
 
-        /* Check file size */
+        /* File size limit */
 
-        if (file.size > 5 * 1024 * 1024) {
+        if (
+            file.size >
+            5 * 1024 * 1024
+        ) {
 
             alert(
                 "Logo size must be less than 5MB."
             );
 
+            this.value =
+                "";
+
             return;
+
         }
 
 
-        const reader = new FileReader();
+        const reader =
+            new FileReader();
 
 
-        reader.onload = function (event) {
-
-            uploadedLogo =
-                event.target.result;
+        reader.onload =
+            function (event) {
 
 
-            /* Show logo preview */
-
-            logoPreview.style.display =
-                "block";
+                uploadedLogo =
+                    event.target.result;
 
 
-            logoPreview.innerHTML = `
+                /* Logo Preview */
 
-                <img
-                    src="${uploadedLogo}"
-                    alt="Brand Logo Preview"
-                >
-
-            `;
-
-        };
+                logoPreview.style.display =
+                    "block";
 
 
-        reader.readAsDataURL(file);
+                logoPreview.innerHTML = `
+
+                    <img
+                        src="${uploadedLogo}"
+                        alt="Brand Logo Preview"
+                    >
+
+                `;
+
+
+                /* Update QR */
+
+                updateQRCode();
+
+            };
+
+
+        reader.readAsDataURL(
+            file
+        );
 
     }
 );
 
 
-/* =========================
-   STYLE SELECTOR
-========================= */
+/* =====================================================
+   STYLE BUTTONS
+===================================================== */
 
 styleOptions.forEach(
     function (button) {
+
 
         button.addEventListener(
             "click",
@@ -145,19 +546,18 @@ styleOptions.forEach(
                 );
 
 
-                /* Save selected style */
+                /* Save style */
 
-                selectedStyle =
-                    this.dataset.style;
+                selectedDotStyle =
+                    dotStyleMap[
+                        this.dataset.dot
+                    ] ||
+                    "square";
 
 
-                /* Regenerate */
+                /* Update QR */
 
-                if (qrInput.value.trim()) {
-
-                    generateQR();
-
-                }
+                updateQRCode();
 
             }
         );
@@ -166,314 +566,9 @@ styleOptions.forEach(
 );
 
 
-/* =========================
-   GENERATE QR
-========================= */
-
-function generateQR() {
-
-
-    const text =
-        qrInput.value.trim();
-
-
-    /* Empty check */
-
-    if (!text) {
-
-        alert(
-            "Please enter text or a website URL first."
-        );
-
-        qrInput.focus();
-
-        return;
-    }
-
-
-    /* Clear old QR */
-
-    qrContainer.innerHTML = "";
-
-
-    /* Create QR wrapper */
-
-    const qrWrapper =
-        document.createElement("div");
-
-
-    qrWrapper.className =
-        "generated-qr";
-
-
-    qrContainer.appendChild(
-        qrWrapper
-    );
-
-
-    /* Create QR */
-
-    currentQR =
-        new QRCode(
-            qrWrapper,
-            {
-
-                text: text,
-
-                width: 220,
-
-                height: 220,
-
-                colorDark:
-                    qrColor.value,
-
-                colorLight:
-                    bgColor.value,
-
-                correctLevel:
-                    QRCode.CorrectLevel.H
-
-            }
-        );
-
-
-    /* Wait for QR image */
-
-    setTimeout(
-        function () {
-
-            addLogoToQR();
-
-            applyQRStyle();
-
-            downloadBtn.style.display =
-                "block";
-
-        },
-        300
-    );
-
-}
-
-
-/* =========================
-   ADD LOGO TO QR
-========================= */
-
-function addLogoToQR() {
-
-
-    if (!uploadedLogo) {
-
-        return;
-    }
-
-
-    const qrImage =
-        qrContainer.querySelector(
-            "img"
-        );
-
-
-    if (!qrImage) {
-
-        return;
-    }
-
-
-    /* Create canvas */
-
-    const canvas =
-        document.createElement(
-            "canvas"
-        );
-
-
-    const size =
-        qrImage.naturalWidth ||
-        220;
-
-
-    canvas.width =
-        size;
-
-    canvas.height =
-        size;
-
-
-    const ctx =
-        canvas.getContext(
-            "2d"
-        );
-
-
-    /* Draw QR */
-
-    ctx.drawImage(
-        qrImage,
-        0,
-        0,
-        size,
-        size
-    );
-
-
-    /* Load logo */
-
-    const logo =
-        new Image();
-
-
-    logo.onload =
-        function () {
-
-
-            const logoSize =
-                size * 0.22;
-
-
-            const x =
-                (size -
-                    logoSize) / 2;
-
-
-            const y =
-                (size -
-                    logoSize) / 2;
-
-
-            /* White logo background */
-
-            ctx.fillStyle =
-                "#ffffff";
-
-
-            ctx.beginPath();
-
-            ctx.roundRect(
-                x - 8,
-                y - 8,
-                logoSize + 16,
-                logoSize + 16,
-                12
-            );
-
-            ctx.fill();
-
-
-            /* Draw logo */
-
-            ctx.drawImage(
-                logo,
-                x,
-                y,
-                logoSize,
-                logoSize
-            );
-
-
-            /* Replace QR */
-
-            qrContainer.innerHTML =
-                "";
-
-
-            qrContainer.appendChild(
-                canvas
-            );
-
-
-            currentQR =
-                canvas;
-
-        };
-
-
-    logo.src =
-        uploadedLogo;
-
-}
-
-
-/* =========================
-   QR STYLE
-========================= */
-
-function applyQRStyle() {
-
-
-    const qrImage =
-        qrContainer.querySelector(
-            "img"
-        );
-
-
-    if (!qrImage) {
-
-        return;
-    }
-
-
-    /* Rounded */
-
-    if (
-        selectedStyle ===
-        "rounded"
-    ) {
-
-        qrImage.style.borderRadius =
-            "18px";
-
-    }
-
-
-    /* Dots */
-
-    else if (
-        selectedStyle ===
-        "dots"
-    ) {
-
-        qrImage.style.borderRadius =
-            "50%";
-
-    }
-
-
-    /* Diamond */
-
-    else if (
-        selectedStyle ===
-        "diamond"
-    ) {
-
-        qrImage.style.transform =
-            "rotate(45deg) scale(0.72)";
-
-        qrImage.style.borderRadius =
-            "8px";
-
-    }
-
-
-    /* Square */
-
-    else {
-
-        qrImage.style.borderRadius =
-            "0";
-
-        qrImage.style.transform =
-            "none";
-
-    }
-
-}
-
-
-/* =========================
+/* =====================================================
    GENERATE BUTTON
-========================= */
+===================================================== */
 
 generateBtn.addEventListener(
     "click",
@@ -485,19 +580,20 @@ generateBtn.addEventListener(
 );
 
 
-/* =========================
-   LIVE QR GENERATION
-========================= */
+/* =====================================================
+   LIVE TEXT UPDATE
+===================================================== */
 
 qrInput.addEventListener(
     "input",
     function () {
 
+
         if (
             qrInput.value.trim()
         ) {
 
-            generateQR();
+            updateQRCode();
 
         }
 
@@ -505,158 +601,230 @@ qrInput.addEventListener(
 );
 
 
-/* =========================
-   COLOR CHANGE
-========================= */
+/* =====================================================
+   QR COLOR
+===================================================== */
 
 qrColor.addEventListener(
     "input",
     function () {
 
-        if (
-            qrInput.value.trim()
-        ) {
-
-            generateQR();
-
-        }
+        updateQRCode();
 
     }
 );
 
+
+/* =====================================================
+   BACKGROUND COLOR
+===================================================== */
 
 bgColor.addEventListener(
     "input",
     function () {
 
-        if (
-            qrInput.value.trim()
-        ) {
-
-            generateQR();
-
-        }
+        updateQRCode();
 
     }
 );
 
 
-/* =========================
-   DOWNLOAD QR
-========================= */
+/* =====================================================
+   GRADIENT TOGGLE
+===================================================== */
 
-downloadBtn.addEventListener(
+gradientToggle.addEventListener(
+    "change",
+    function () {
+
+
+        if (
+            this.checked
+        ) {
+
+            gradientControls.classList.add(
+                "active"
+            );
+
+        }
+
+        else {
+
+            gradientControls.classList.remove(
+                "active"
+            );
+
+        }
+
+
+        updateQRCode();
+
+    }
+);
+
+
+/* =====================================================
+   GRADIENT COLOR
+===================================================== */
+
+gradientColor.addEventListener(
+    "input",
+    function () {
+
+        updateQRCode();
+
+    }
+);
+
+
+/* =====================================================
+   QR SIZE SLIDER
+===================================================== */
+
+qrSize.addEventListener(
+    "input",
+    function () {
+
+
+        qrSizeValue.textContent =
+            this.value +
+            "px";
+
+
+        updateQRCode();
+
+    }
+);
+
+
+/* =====================================================
+   LOGO SIZE SLIDER
+===================================================== */
+
+logoSize.addEventListener(
+    "input",
+    function () {
+
+
+        logoSizeValue.textContent =
+            this.value +
+            "%";
+
+
+        updateQRCode();
+
+    }
+);
+
+
+/* =====================================================
+   CORNER STYLE
+===================================================== */
+
+cornerStyle.addEventListener(
+    "change",
+    function () {
+
+        updateQRCode();
+
+    }
+);
+
+
+/* =====================================================
+   DOWNLOAD PNG
+===================================================== */
+
+downloadPngBtn.addEventListener(
     "click",
     function () {
 
 
-        const canvas =
-            qrContainer.querySelector(
-                "canvas"
-            );
-
-
-        const image =
-            qrContainer.querySelector(
-                "img"
-            );
-
-
-        let downloadURL;
-
-
-        /* Canvas download */
-
-        if (canvas) {
-
-            downloadURL =
-                canvas.toDataURL(
-                    "image/png"
-                );
-
-        }
-
-
-        /* Image download */
-
-        else if (image) {
-
-            downloadURL =
-                image.src;
-
-        }
-
-
-        else {
+        if (!qrCode) {
 
             alert(
                 "Please generate a QR code first."
             );
 
             return;
+
         }
 
 
-        /* Create download link */
+        qrCode.download({
 
-        const link =
-            document.createElement(
-                "a"
-            );
+            name:
+                "quick-tools-brand-qr",
 
+            extension:
+                "png"
 
-        link.href =
-            downloadURL;
-
-
-        link.download =
-            "brand-qr-code.png";
-
-
-        document.body.appendChild(
-            link
-        );
-
-
-        link.click();
-
-
-        document.body.removeChild(
-            link
-        );
+        });
 
     }
 );
 
 
-/* =========================
+/* =====================================================
+   DOWNLOAD SVG
+===================================================== */
+
+downloadSvgBtn.addEventListener(
+    "click",
+    function () {
+
+
+        if (!qrCode) {
+
+            alert(
+                "Please generate a QR code first."
+            );
+
+            return;
+
+        }
+
+
+        qrCode.download({
+
+            name:
+                "quick-tools-brand-qr",
+
+            extension:
+                "svg"
+
+        });
+
+    }
+);
+
+
+/* =====================================================
    RESET
-========================= */
+===================================================== */
 
 clearBtn.addEventListener(
     "click",
     function () {
 
 
-        /* Clear input */
+        /* Reset input */
 
         qrInput.value =
             "";
 
 
-        /* Clear logo */
+        /* Reset logo */
 
         logoInput.value =
             "";
 
-
         uploadedLogo =
-            null;
+            "";
 
 
         logoPreview.innerHTML =
             "";
-
 
         logoPreview.style.display =
             "none";
@@ -667,14 +835,50 @@ clearBtn.addEventListener(
         qrColor.value =
             "#0f172a";
 
-
         bgColor.value =
             "#ffffff";
 
+        gradientColor.value =
+            "#7c3aed";
 
-        /* Reset style */
 
-        selectedStyle =
+        /* Disable gradient */
+
+        gradientToggle.checked =
+            false;
+
+        gradientControls.classList.remove(
+            "active"
+        );
+
+
+        /* Reset size */
+
+        qrSize.value =
+            "300";
+
+        qrSizeValue.textContent =
+            "300px";
+
+
+        /* Reset logo size */
+
+        logoSize.value =
+            "25";
+
+        logoSizeValue.textContent =
+            "25%";
+
+
+        /* Reset corner */
+
+        cornerStyle.value =
+            "square";
+
+
+        /* Reset dot style */
+
+        selectedDotStyle =
             "square";
 
 
@@ -694,7 +898,7 @@ clearBtn.addEventListener(
         );
 
 
-        /* Reset preview */
+        /* Clear QR */
 
         qrContainer.innerHTML = `
 
@@ -707,12 +911,16 @@ clearBtn.addEventListener(
                 </div>
 
                 <h3>
+
                     Your QR Code
+
                 </h3>
 
                 <p>
-                    Enter your URL or text
-                    to generate your QR code.
+
+                    Enter your website or text
+                    to create your branded QR code.
+
                 </p>
 
             </div>
@@ -722,43 +930,85 @@ clearBtn.addEventListener(
 
         /* Hide download */
 
-        downloadBtn.style.display =
+        downloadPngBtn.style.display =
+            "none";
+
+        downloadSvgBtn.style.display =
             "none";
 
 
-        currentQR =
+        /* Reset status */
+
+        scanStatus.innerHTML = `
+
+            <i class="fa-solid fa-shield-check"></i>
+
+            <span>
+
+                Your QR code will be generated
+                with high error correction.
+
+            </span>
+
+        `;
+
+
+        qrCode =
             null;
 
     }
 );
 
 
-/* =========================
-   ENTER KEY
-========================= */
+/* =====================================================
+   SCAN STATUS
+===================================================== */
 
-qrInput.addEventListener(
-    "keydown",
-    function (event) {
+function updateScanStatus() {
+
+
+    scanStatus.innerHTML = `
+
+        <i class="fa-solid fa-shield-check"></i>
+
+        <span>
+
+            High error correction enabled.
+            Your branded QR is optimized
+            for reliable scanning.
+
+        </span>
+
+    `;
+
+}
+
+
+/* =====================================================
+   INITIALIZATION
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        /* Make sure first style is active */
 
         if (
-            event.key ===
-            "Enter" &&
-            event.ctrlKey
+            styleOptions.length > 0
         ) {
 
-            generateQR();
+            styleOptions[0].classList.add(
+                "active"
+            );
 
         }
 
+
+        console.log(
+            "Brand QR Studio loaded successfully 🚀"
+        );
+
     }
-);
-
-
-/* =========================
-   INITIAL LOG
-========================= */
-
-console.log(
-    "Brand QR Studio Loaded Successfully 🚀"
 );
