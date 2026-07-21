@@ -9,7 +9,7 @@
           content="width=device-width, initial-scale=1.0">
 
     <meta name="description"
-          content="Create professional branded QR codes with custom shapes, colors, gradients and logos using Brand QR Studio by Quick Tools Official.">
+          content="Create professional branded QR codes with custom shapes, colors, gradients, logos and premium templates using Brand QR Studio by Quick Tools Official.">
 
     <meta name="keywords"
           content="Brand QR Studio, Custom QR Code, QR Code Generator, Logo QR Code, Branded QR">
@@ -70,7 +70,6 @@
 </div>
 
 
-
 <!-- =========================
      HEADER
 ========================= -->
@@ -109,9 +108,8 @@
 </header>
 
 
-
 <!-- =========================
-     MAIN
+     MAIN CONTENT
 ========================= -->
 
 <main class="main-container">
@@ -122,7 +120,6 @@
     ========================= -->
 
     <section class="page-intro">
-
 
         <div class="studio-icon">
 
@@ -154,9 +151,7 @@
 
         </p>
 
-
     </section>
-
 
 
     <!-- =========================
@@ -185,13 +180,12 @@
 
                 <p>
 
-                    Design your QR code
-                    according to your brand.
+                    Design your QR code according
+                    to your brand identity.
 
                 </p>
 
             </div>
-
 
 
             <!-- =========================
@@ -217,9 +211,8 @@
             </div>
 
 
-
             <!-- =========================
-                 LOGO UPLOAD
+                 BRAND LOGO
             ========================= -->
 
             <div class="form-group">
@@ -234,7 +227,6 @@
 
 
                 <div class="logo-upload-box">
-
 
                     <input
                         type="file"
@@ -270,7 +262,6 @@
 
                     </label>
 
-
                 </div>
 
 
@@ -282,6 +273,58 @@
 
             </div>
 
+
+            <!-- =========================
+                 AUTO BRAND COLOR
+            ========================= -->
+
+            <div class="form-group brand-color-section">
+
+                <label>
+
+                    <i class="fa-solid fa-droplet"></i>
+
+                    Brand Color
+
+                </label>
+
+
+                <div class="brand-color-options">
+
+
+                    <button
+                        type="button"
+                        id="autoBrandColorBtn"
+                        class="auto-brand-btn">
+
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                        Auto Detect From Logo
+
+                    </button>
+
+
+                    <div class="detected-color">
+
+
+                        <span
+                            id="detectedColorPreview"
+                            class="detected-color-preview">
+                        </span>
+
+
+                        <span id="detectedColorText">
+
+                            No brand color detected
+
+                        </span>
+
+
+                    </div>
+
+                </div>
+
+            </div>
 
 
             <!-- =========================
@@ -379,14 +422,126 @@
             </div>
 
 
-
             <!-- =========================
-                 CORNER STYLE
+                 PREMIUM QR TEMPLATES
             ========================= -->
 
             <div class="form-group">
 
                 <label>
+
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                    Premium QR Template
+
+                </label>
+
+
+                <div class="template-grid">
+
+
+                    <button
+                        type="button"
+                        class="template-option active"
+                        data-template="corporate">
+
+                        <span class="template-preview corporate-preview">
+
+                            <i class="fa-solid fa-building"></i>
+
+                        </span>
+
+                        <span>
+                            Corporate
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="template-option"
+                        data-template="luxury">
+
+                        <span class="template-preview luxury-preview">
+
+                            <i class="fa-solid fa-gem"></i>
+
+                        </span>
+
+                        <span>
+                            Luxury
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="template-option"
+                        data-template="modern">
+
+                        <span class="template-preview modern-preview">
+
+                            <i class="fa-solid fa-bolt"></i>
+
+                        </span>
+
+                        <span>
+                            Modern
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="template-option"
+                        data-template="minimal">
+
+                        <span class="template-preview minimal-preview">
+
+                            <i class="fa-solid fa-minus"></i>
+
+                        </span>
+
+                        <span>
+                            Minimal
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="template-option"
+                        data-template="neon">
+
+                        <span class="template-preview neon-preview">
+
+                            <i class="fa-solid fa-star"></i>
+
+                        </span>
+
+                        <span>
+                            Neon
+                        </span>
+
+                    </button>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 QR CORNER STYLE
+            ========================= -->
+
+            <div class="form-group">
+
+                <label for="cornerStyle">
 
                     <i class="fa-solid fa-crop-simple"></i>
 
@@ -401,23 +556,17 @@
 
 
                     <option value="square">
-
                         Square
-
                     </option>
 
 
                     <option value="dot">
-
                         Dot
-
                     </option>
 
 
                     <option value="extra-rounded">
-
                         Extra Rounded
-
                     </option>
 
 
@@ -426,9 +575,8 @@
             </div>
 
 
-
             <!-- =========================
-                 COLORS
+                 QR COLORS
             ========================= -->
 
             <div class="color-controls">
@@ -441,6 +589,7 @@
                         QR Color
 
                     </label>
+
 
                     <input
                         type="color"
@@ -458,6 +607,7 @@
 
                     </label>
 
+
                     <input
                         type="color"
                         id="bgColor"
@@ -465,8 +615,8 @@
 
                 </div>
 
-            </div>
 
+            </div>
 
 
             <!-- =========================
@@ -505,6 +655,7 @@
 
                         </label>
 
+
                         <input
                             type="color"
                             id="gradientColor"
@@ -518,13 +669,81 @@
             </div>
 
 
+            <!-- =========================
+                 QR FRAME
+            ========================= -->
+
+            <div class="form-group">
+
+                <label for="qrFrame">
+
+                    <i class="fa-solid fa-border-all"></i>
+
+                    QR Frame
+
+                </label>
+
+
+                <select
+                    id="qrFrame"
+                    class="select-control">
+
+
+                    <option value="none">
+                        No Frame
+                    </option>
+
+
+                    <option value="scan-me">
+                        Scan Me
+                    </option>
+
+
+                    <option value="scan-here">
+                        Scan Here
+                    </option>
+
+
+                    <option value="visit-us">
+                        Visit Us
+                    </option>
+
+
+                    <option value="follow-us">
+                        Follow Us
+                    </option>
+
+
+                    <option value="custom">
+                        Custom Text
+                    </option>
+
+
+                </select>
+
+
+                <div
+                    id="customFrameBox"
+                    class="custom-frame-box">
+
+
+                    <input
+                        type="text"
+                        id="customFrameText"
+                        maxlength="30"
+                        placeholder="Enter your custom text">
+
+
+                </div>
+
+            </div>
+
 
             <!-- =========================
                  QR SIZE
             ========================= -->
 
             <div class="form-group">
-
 
                 <label for="qrSize">
 
@@ -558,13 +777,11 @@
             </div>
 
 
-
             <!-- =========================
                  LOGO SIZE
             ========================= -->
 
             <div class="form-group">
-
 
                 <label for="logoSize">
 
@@ -596,7 +813,6 @@
                 </div>
 
             </div>
-
 
 
             <!-- =========================
@@ -634,7 +850,6 @@
         </div>
 
 
-
         <!-- =========================
              PREVIEW PANEL
         ========================= -->
@@ -652,6 +867,7 @@
                         Live Preview
 
                     </h2>
+
 
                     <p>
 
@@ -672,7 +888,6 @@
 
 
             </div>
-
 
 
             <!-- =========================
@@ -721,6 +936,26 @@
             </div>
 
 
+            <!-- =========================
+                 QR FRAME PREVIEW
+            ========================= -->
+
+            <div
+                id="qrFramePreview"
+                class="qr-frame-preview">
+
+
+                <div
+                    id="frameText"
+                    class="frame-text">
+
+                    Scan Me
+
+                </div>
+
+
+            </div>
+
 
             <!-- =========================
                  DOWNLOAD BUTTONS
@@ -756,244 +991,9 @@
             </div>
 
 
-
             <!-- =========================
-                 SCAN TEST
+                 SCAN STATUS
             ========================= -->
 
             <div
-                id="scanStatus"
-                class="scan-status">
-
-
-                <i class="fa-solid fa-shield-check"></i>
-
-
-                <span>
-
-                    Your QR code will be generated
-                    with high error correction.
-
-                </span>
-
-
-            </div>
-
-
-        </div>
-
-
-    </section>
-
-
-
-    <!-- =========================
-         FEATURES
-    ========================= -->
-
-    <section class="features-section">
-
-
-        <div class="feature-card">
-
-            <div class="feature-icon">
-
-                <i class="fa-solid fa-palette"></i>
-
-            </div>
-
-            <h3>
-
-                Brand Colors
-
-            </h3>
-
-            <p>
-
-                Match your QR code
-                with your brand identity.
-
-            </p>
-
-        </div>
-
-
-
-        <div class="feature-card">
-
-            <div class="feature-icon">
-
-                <i class="fa-solid fa-image"></i>
-
-            </div>
-
-            <h3>
-
-                Logo Integration
-
-            </h3>
-
-            <p>
-
-                Add your brand logo
-                directly into your QR.
-
-            </p>
-
-        </div>
-
-
-
-        <div class="feature-card">
-
-            <div class="feature-icon">
-
-                <i class="fa-solid fa-shapes"></i>
-
-            </div>
-
-            <h3>
-
-                Custom Shapes
-
-            </h3>
-
-            <p>
-
-                Choose from multiple
-                professional QR styles.
-
-            </p>
-
-        </div>
-
-
-
-        <div class="feature-card">
-
-            <div class="feature-icon">
-
-                <i class="fa-solid fa-file-arrow-down"></i>
-
-            </div>
-
-            <h3>
-
-                PNG & SVG
-
-            </h3>
-
-            <p>
-
-                Download high-quality
-                QR codes for any project.
-
-            </p>
-
-        </div>
-
-
-    </section>
-
-
-</main>
-
-
-
-<!-- =========================
-     FOOTER
-========================= -->
-
-<footer>
-
-
-    <div class="footer-container">
-
-
-        <div class="footer-logo">
-
-            ⚡ Quick Tools Official
-
-        </div>
-
-
-        <p>
-
-            Powerful, simple and free online tools
-            for everyone.
-
-        </p>
-
-
-        <div class="footer-links">
-
-
-            <a href="../../index.html">
-
-                Home
-
-            </a>
-
-
-            <a href="../../index.html#tools">
-
-                All Tools
-
-            </a>
-
-
-            <a href="../../index.html#categories">
-
-                Categories
-
-            </a>
-
-
-            <a href="../../index.html#about">
-
-                About
-
-            </a>
-
-
-            <a href="../../index.html#contact">
-
-                Contact
-
-            </a>
-
-
-        </div>
-
-
-        <div class="footer-bottom">
-
-
-            <p>
-
-                © 2026 Quick Tools Official.
-                All Rights Reserved.
-
-            </p>
-
-
-        </div>
-
-
-    </div>
-
-
-</footer>
-
-
-
-<!-- =========================
-     JAVASCRIPT
-========================= -->
-
-<script src="script.js"></script>
-
-
-</body>
-
-</html>
+           
