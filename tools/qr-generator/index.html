@@ -9,10 +9,10 @@
           content="width=device-width, initial-scale=1.0">
 
     <meta name="description"
-          content="Create unique branded QR codes with custom colors, shapes and logo using Quick Tools Official Brand QR Studio.">
+          content="Create professional branded QR codes with custom shapes, colors, gradients and logos using Brand QR Studio by Quick Tools Official.">
 
     <meta name="keywords"
-          content="Brand QR Studio, QR Code Generator, Custom QR Code, Logo QR Code">
+          content="Brand QR Studio, Custom QR Code, QR Code Generator, Logo QR Code, Branded QR">
 
     <meta name="author"
           content="Quick Tools Official">
@@ -39,9 +39,9 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 
-    <!-- QR Code Library -->
+    <!-- QR Code Styling Library -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://unpkg.com/qr-code-styling/lib/qr-code-styling.js"></script>
 
 
     <!-- Main CSS -->
@@ -117,7 +117,9 @@
 <main class="main-container">
 
 
-    <!-- PAGE INTRO -->
+    <!-- =========================
+         INTRO
+    ========================= -->
 
     <section class="page-intro">
 
@@ -133,7 +135,7 @@
 
             <i class="fa-solid fa-wand-magic-sparkles"></i>
 
-            AI-Inspired Brand QR Design
+            Professional Brand QR Creator
 
         </div>
 
@@ -147,8 +149,8 @@
 
         <p>
 
-            Create beautiful branded QR codes
-            using your logo, colors and custom style.
+            Transform your brand identity into
+            beautiful, custom and scan-friendly QR codes.
 
         </p>
 
@@ -158,14 +160,14 @@
 
 
     <!-- =========================
-         STUDIO
+         QR STUDIO
     ========================= -->
 
     <section class="studio-container">
 
 
         <!-- =========================
-             LEFT PANEL
+             CONTROL PANEL
         ========================= -->
 
         <div class="control-panel">
@@ -173,17 +175,20 @@
 
             <div class="panel-heading">
 
-                <div>
+                <h2>
 
-                    <h2>
-                        Customize Your QR
-                    </h2>
+                    <i class="fa-solid fa-sliders"></i>
 
-                    <p>
-                        Build your unique branded QR code.
-                    </p>
+                    Customize Your QR
 
-                </div>
+                </h2>
+
+                <p>
+
+                    Design your QR code
+                    according to your brand.
+
+                </p>
 
             </div>
 
@@ -199,15 +204,15 @@
 
                     <i class="fa-solid fa-link"></i>
 
-                    Text or Website URL
+                    Website URL or Text
 
                 </label>
 
 
                 <textarea
                     id="qrInput"
-                    placeholder="https://yourwebsite.com"
-                    rows="4"></textarea>
+                    rows="4"
+                    placeholder="https://yourwebsite.com"></textarea>
 
             </div>
 
@@ -223,7 +228,7 @@
 
                     <i class="fa-solid fa-image"></i>
 
-                    Upload Brand Logo
+                    Brand Logo
 
                 </label>
 
@@ -250,12 +255,16 @@
 
 
                         <strong>
-                            Upload Your Logo
+
+                            Upload Brand Logo
+
                         </strong>
 
 
                         <span>
-                            PNG, JPG or WebP
+
+                            PNG, JPG or WebP • Max 5MB
+
                         </span>
 
 
@@ -276,7 +285,7 @@
 
 
             <!-- =========================
-                 QR STYLE
+                 QR DOT STYLE
             ========================= -->
 
             <div class="form-group">
@@ -285,7 +294,7 @@
 
                     <i class="fa-solid fa-shapes"></i>
 
-                    QR Style
+                    QR Dot Style
 
                 </label>
 
@@ -296,7 +305,7 @@
                     <button
                         type="button"
                         class="style-option active"
-                        data-style="square">
+                        data-dot="square">
 
                         <span class="style-preview square-style"></span>
 
@@ -308,7 +317,7 @@
                     <button
                         type="button"
                         class="style-option"
-                        data-style="rounded">
+                        data-dot="rounded">
 
                         <span class="style-preview rounded-style"></span>
 
@@ -320,7 +329,7 @@
                     <button
                         type="button"
                         class="style-option"
-                        data-style="dots">
+                        data-dot="dots">
 
                         <span class="style-preview dots-style"></span>
 
@@ -332,16 +341,87 @@
                     <button
                         type="button"
                         class="style-option"
-                        data-style="diamond">
+                        data-dot="classy">
 
-                        <span class="style-preview diamond-style"></span>
+                        <span class="style-preview classy-style"></span>
 
-                        Diamond
+                        Classy
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="style-option"
+                        data-dot="classy-rounded">
+
+                        <span class="style-preview classy-rounded-style"></span>
+
+                        Soft
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="style-option"
+                        data-dot="extra-rounded">
+
+                        <span class="style-preview extra-rounded-style"></span>
+
+                        Extra Round
 
                     </button>
 
 
                 </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 CORNER STYLE
+            ========================= -->
+
+            <div class="form-group">
+
+                <label>
+
+                    <i class="fa-solid fa-crop-simple"></i>
+
+                    QR Corner Style
+
+                </label>
+
+
+                <select
+                    id="cornerStyle"
+                    class="select-control">
+
+
+                    <option value="square">
+
+                        Square
+
+                    </option>
+
+
+                    <option value="dot">
+
+                        Dot
+
+                    </option>
+
+
+                    <option value="extra-rounded">
+
+                        Extra Rounded
+
+                    </option>
+
+
+                </select>
 
             </div>
 
@@ -356,7 +436,7 @@
 
                 <div class="color-control">
 
-                    <label for="qrColor">
+                    <label>
 
                         QR Color
 
@@ -372,7 +452,7 @@
 
                 <div class="color-control">
 
-                    <label for="bgColor">
+                    <label>
 
                         Background
 
@@ -385,13 +465,142 @@
 
                 </div>
 
+            </div>
+
+
+
+            <!-- =========================
+                 GRADIENT
+            ========================= -->
+
+            <div class="form-group gradient-section">
+
+
+                <label class="checkbox-label">
+
+                    <input
+                        type="checkbox"
+                        id="gradientToggle">
+
+
+                    <span>
+
+                        Enable Brand Gradient
+
+                    </span>
+
+                </label>
+
+
+                <div
+                    id="gradientControls"
+                    class="gradient-controls">
+
+
+                    <div class="color-control">
+
+                        <label>
+
+                            Gradient Color
+
+                        </label>
+
+                        <input
+                            type="color"
+                            id="gradientColor"
+                            value="#7c3aed">
+
+                    </div>
+
+
+                </div>
 
             </div>
 
 
 
             <!-- =========================
-                 BUTTONS
+                 QR SIZE
+            ========================= -->
+
+            <div class="form-group">
+
+
+                <label for="qrSize">
+
+                    <i class="fa-solid fa-expand"></i>
+
+                    QR Size
+
+                </label>
+
+
+                <div class="range-control">
+
+
+                    <input
+                        type="range"
+                        id="qrSize"
+                        min="180"
+                        max="500"
+                        value="300">
+
+
+                    <span id="qrSizeValue">
+
+                        300px
+
+                    </span>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 LOGO SIZE
+            ========================= -->
+
+            <div class="form-group">
+
+
+                <label for="logoSize">
+
+                    <i class="fa-solid fa-maximize"></i>
+
+                    Logo Size
+
+                </label>
+
+
+                <div class="range-control">
+
+
+                    <input
+                        type="range"
+                        id="logoSize"
+                        min="15"
+                        max="35"
+                        value="25">
+
+
+                    <span id="logoSizeValue">
+
+                        25%
+
+                    </span>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 ACTION BUTTONS
             ========================= -->
 
             <div class="action-buttons">
@@ -427,7 +636,7 @@
 
 
         <!-- =========================
-             RIGHT PREVIEW
+             PREVIEW PANEL
         ========================= -->
 
         <div class="preview-panel">
@@ -435,14 +644,19 @@
 
             <div class="preview-header">
 
+
                 <div>
 
                     <h2>
+
                         Live Preview
+
                     </h2>
 
                     <p>
-                        Your branded QR code will appear here.
+
+                        Your branded QR code appears here.
+
                     </p>
 
                 </div>
@@ -456,11 +670,14 @@
 
                 </span>
 
+
             </div>
 
 
 
-            <!-- QR PREVIEW -->
+            <!-- =========================
+                 QR PREVIEW
+            ========================= -->
 
             <div class="qr-preview-area">
 
@@ -472,6 +689,7 @@
 
                     <div class="qr-placeholder">
 
+
                         <div class="placeholder-icon">
 
                             <i class="fa-solid fa-qrcode"></i>
@@ -480,14 +698,19 @@
 
 
                         <h3>
+
                             Your QR Code
+
                         </h3>
 
 
                         <p>
-                            Enter your URL or text
-                            to generate your QR code.
+
+                            Enter your website or text
+                            to create your branded QR code.
+
                         </p>
+
 
                     </div>
 
@@ -499,21 +722,59 @@
 
 
 
-            <!-- DOWNLOAD -->
+            <!-- =========================
+                 DOWNLOAD BUTTONS
+            ========================= -->
 
             <div class="download-area">
 
 
                 <button
-                    id="downloadBtn"
+                    id="downloadPngBtn"
                     class="download-btn"
                     style="display: none;">
 
-                    <i class="fa-solid fa-download"></i>
+                    <i class="fa-solid fa-image"></i>
 
                     Download PNG
 
                 </button>
+
+
+                <button
+                    id="downloadSvgBtn"
+                    class="download-btn svg-download-btn"
+                    style="display: none;">
+
+                    <i class="fa-solid fa-file-code"></i>
+
+                    Download SVG
+
+                </button>
+
+
+            </div>
+
+
+
+            <!-- =========================
+                 SCAN TEST
+            ========================= -->
+
+            <div
+                id="scanStatus"
+                class="scan-status">
+
+
+                <i class="fa-solid fa-shield-check"></i>
+
+
+                <span>
+
+                    Your QR code will be generated
+                    with high error correction.
+
+                </span>
 
 
             </div>
@@ -542,12 +803,16 @@
             </div>
 
             <h3>
+
                 Brand Colors
+
             </h3>
 
             <p>
-                Customize QR colors
-                to match your brand identity.
+
+                Match your QR code
+                with your brand identity.
+
             </p>
 
         </div>
@@ -563,12 +828,16 @@
             </div>
 
             <h3>
-                Add Your Logo
+
+                Logo Integration
+
             </h3>
 
             <p>
-                Place your brand logo
-                inside your QR code.
+
+                Add your brand logo
+                directly into your QR.
+
             </p>
 
         </div>
@@ -584,12 +853,16 @@
             </div>
 
             <h3>
-                Unique Styles
+
+                Custom Shapes
+
             </h3>
 
             <p>
-                Choose different QR
-                styles for your brand.
+
+                Choose from multiple
+                professional QR styles.
+
             </p>
 
         </div>
@@ -600,17 +873,21 @@
 
             <div class="feature-icon">
 
-                <i class="fa-solid fa-bolt"></i>
+                <i class="fa-solid fa-file-arrow-down"></i>
 
             </div>
 
             <h3>
-                Fast & Free
+
+                PNG & SVG
+
             </h3>
 
             <p>
-                Create branded QR codes
-                quickly without registration.
+
+                Download high-quality
+                QR codes for any project.
+
             </p>
 
         </div>
@@ -652,27 +929,37 @@
 
 
             <a href="../../index.html">
+
                 Home
+
             </a>
 
 
             <a href="../../index.html#tools">
+
                 All Tools
+
             </a>
 
 
             <a href="../../index.html#categories">
+
                 Categories
+
             </a>
 
 
             <a href="../../index.html#about">
+
                 About
+
             </a>
 
 
             <a href="../../index.html#contact">
+
                 Contact
+
             </a>
 
 
@@ -681,12 +968,14 @@
 
         <div class="footer-bottom">
 
+
             <p>
 
                 © 2026 Quick Tools Official.
                 All Rights Reserved.
 
             </p>
+
 
         </div>
 
