@@ -1,1 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+        content="Calculate your exact age in years, months, days, hours, minutes and seconds with our free online Age Calculator.">
+
+    <meta name="keywords"
+        content="age calculator, calculate age, date of birth calculator, exact age calculator">
+
+    <meta name="author" content="Quick Tools Hub">
+
+    <title>Age Calculator - Calculate Your Exact Age | Quick Tools Hub</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Age Calculator CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header class="site-header">
+
+        <div class="header-container">
+
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">⚡</span>
+                <span>Quick Tools Hub</span>
+            </a>
+
+            <nav class="main-nav">
+
+                <a href="../index.html">Home</a>
+
+                <a href="../index.html#tools">All Tools</a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main>
+
+        <!-- Hero Section -->
+
+        <section class="hero-section">
+
+            <div class="hero-content">
+
+                <span class="badge">
+                    ✨ Free Online Tool
+                </span>
+
+                <h1>
+                    Age Calculator
+                </h1>
+
+                <p>
+                    Calculate your exact age in years, months, and days.
+                    Find out how much time you have lived and discover
+                    your next birthday countdown.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CALCULATOR SECTION
+        ========================== -->
+
+        <section class="calculator-section">
+
+            <div class="calculator-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Calculate Your Age
+                    </h2>
+
+                    <p>
+                        Enter your date of birth to calculate your exact age.
+                    </p>
+
+                </div>
+
+
+                <!-- Date Input -->
+
+                <div class="form-group">
+
+                    <label for="birthDate">
+                        Date of Birth
+                    </label>
+
+                    <input
+                        type="date"
+                        id="birthDate"
+                        name="birthDate"
+                        max=""
+                    >
+
+                    <small id="dateError" class="error-message"></small>
+
+                </div>
+
+
+                <!-- Calculate Button -->
+
+                <button
+                    type="button"
+                    id="calculateBtn"
+                    class="calculate-btn">
+
+                    Calculate My Age
+
+                </button>
+
+
+                <!-- Reset Button -->
+
+                <button
+                    type="button"
+                    id="resetBtn"
+                    class="reset-btn">
+
+                    Reset
+
+                </button>
+
+
+                <!-- =========================
+                     RESULT SECTION
+                ========================== -->
+
+                <div
+                    id="resultSection"
+                    class="result-section"
+                    style="display: none;">
+
+                    <h3>
+                        Your Exact Age
+                    </h3>
+
+
+                    <!-- Main Age Result -->
+
+                    <div class="age-result">
+
+                        <div class="age-box">
+
+                            <span id="yearsResult">
+                                0
+                            </span>
+
+                            <small>
+                                Years
+                            </small>
+
+                        </div>
+
+
+                        <div class="age-box">
+
+                            <span id="monthsResult">
+                                0
+                            </span>
+
+                            <small>
+                                Months
+                            </small>
+
+                        </div>
+
+
+                        <div class="age-box">
+
+                            <span id="daysResult">
+                                0
+                            </span>
+
+                            <small>
+                                Days
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Detailed Statistics -->
+
+                    <div class="details-grid">
+
+                        <div class="detail-card">
+
+                            <span class="detail-icon">
+                                📅
+                            </span>
+
+                            <div>
+
+                                <strong id="totalDays">
+                                    0
+                                </strong>
+
+                                <p>
+                                    Total Days
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="detail-card">
+
+                            <span class="detail-icon">
+                                🗓️
+                            </span>
+
+                            <div>
+
+                                <strong id="totalWeeks">
+                                    0
+                                </strong>
+
+                                <p>
+                                    Total Weeks
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="detail-card">
+
+                            <span class="detail-icon">
+                                ⏰
+                            </span>
+
+                            <div>
+
+                                <strong id="totalHours">
+                                    0
+                                </strong>
+
+                                <p>
+                                    Total Hours
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="detail-card">
+
+                            <span class="detail-icon">
+                                ⏱️
+                            </span>
+
+                            <div>
+
+                                <strong id="totalMinutes">
+                                    0
+                                </strong>
+
+                                <p>
+                                    Total Minutes
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Next Birthday -->
+
+                    <div class="birthday-card">
+
+                        <span class="birthday-icon">
+                            🎂
+                        </span>
+
+                        <div>
+
+                            <h4>
+                                Next Birthday
+                            </h4>
+
+                            <p id="nextBirthday">
+                                Your next birthday information will appear here.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             INFORMATION SECTION
+        ========================== -->
+
+        <section class="info-section">
+
+            <div class="info-container">
+
+                <h2>
+                    How Does the Age Calculator Work?
+                </h2>
+
+                <p>
+                    Our Age Calculator calculates your exact age based on
+                    your date of birth and today's date. It provides your
+                    age in years, months, and days along with additional
+                    information such as total days, weeks, and hours.
+                </p>
+
+
+                <div class="info-grid">
+
+                    <div class="info-card">
+
+                        <div class="info-number">
+                            01
+                        </div>
+
+                        <h3>
+                            Enter Your Birth Date
+                        </h3>
+
+                        <p>
+                            Select your date of birth using the date picker.
+                        </p>
+
+                    </div>
+
+
+                    <div class="info-card">
+
+                        <div class="info-number">
+                            02
+                        </div>
+
+                        <h3>
+                            Click Calculate
+                        </h3>
+
+                        <p>
+                            Press the calculate button to process your age.
+                        </p>
+
+                    </div>
+
+
+                    <div class="info-card">
+
+                        <div class="info-number">
+                            03
+                        </div>
+
+                        <h3>
+                            See Your Results
+                        </h3>
+
+                        <p>
+                            Get your exact age and detailed time statistics.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="site-footer">
+
+        <div class="footer-container">
+
+            <p>
+                © 2026 Quick Tools Hub. All Rights Reserved.
+            </p>
+
+            <div class="footer-links">
+
+                <a href="../index.html">
+                    Home
+                </a>
+
+                <a href="../index.html#tools">
+                    All Tools
+                </a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- Age Calculator JavaScript -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
