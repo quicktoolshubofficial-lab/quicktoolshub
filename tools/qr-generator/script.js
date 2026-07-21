@@ -1,11 +1,12 @@
 /* =====================================================
    QUICK TOOLS OFFICIAL
-   BRAND QR STUDIO — MAIN JAVASCRIPT
+   BRAND QR STUDIO — JAVASCRIPT
+   PART 1
 ===================================================== */
 
 
 /* =====================================================
-   ELEMENTS
+   GET HTML ELEMENTS
 ===================================================== */
 
 const qrInput = document.getElementById("qrInput");
@@ -65,6 +66,20 @@ const styleOptions =
 
 
 /* =====================================================
+   BRAND COLOR DETECTION ELEMENTS
+===================================================== */
+
+const autoBrandColorBtn =
+    document.getElementById("autoBrandColorBtn");
+
+const detectedColorPreview =
+    document.getElementById("detectedColorPreview");
+
+const detectedColorText =
+    document.getElementById("detectedColorText");
+
+
+/* =====================================================
    VARIABLES
 ===================================================== */
 
@@ -74,9 +89,11 @@ let uploadedLogo = "";
 
 let qrCode = null;
 
+let detectedBrandColor = null;
+
 
 /* =====================================================
-   QR STYLE MAPPING
+   QR DOT STYLE MAP
 ===================================================== */
 
 const dotStyleMap = {
@@ -99,10 +116,31 @@ const dotStyleMap = {
 
 
 /* =====================================================
-   INITIAL QR CODE
+   DEFAULT QR DATA
+===================================================== */
+
+const defaultQRData =
+    "https://quicktoolsofficial.com";
+
+
+/* =====================================================
+   CREATE QR CODE
 ===================================================== */
 
 function createQR() {
+
+    if (
+        typeof QRCodeStyling ===
+        "undefined"
+    ) {
+
+        alert(
+            "QR Code library failed to load. Please refresh the page."
+        );
+
+        return;
+
+    }
 
 
     qrCode =
@@ -119,10 +157,11 @@ function createQR() {
 
             data:
                 qrInput.value.trim() ||
-                "https://quicktoolsofficial.com",
+                defaultQRData,
 
             image:
-                uploadedLogo || undefined,
+                uploadedLogo ||
+                undefined,
 
             margin:
                 15,
@@ -164,8 +203,11 @@ function createQR() {
             cornersDotOptions: {
 
                 type:
-                    cornerStyle.value === "square"
+                    cornerStyle.value ===
+                    "square"
+
                         ? "square"
+
                         : "dot",
 
                 color:
@@ -182,7 +224,9 @@ function createQR() {
                     8,
 
                 imageSize:
-                    Number(logoSize.value) / 100,
+                    Number(
+                        logoSize.value
+                    ) / 100,
 
                 hideBackgroundDots:
                     true
@@ -198,11 +242,10 @@ function createQR() {
 
 
 /* =====================================================
-   RENDER QR
+   RENDER QR CODE
 ===================================================== */
 
 function renderQR() {
-
 
     if (!qrCode) {
 
@@ -239,7 +282,6 @@ function renderQR() {
 
 function generateQR() {
 
-
     const text =
         qrInput.value.trim();
 
@@ -263,11 +305,10 @@ function generateQR() {
 
 
 /* =====================================================
-   UPDATE QR
+   UPDATE QR CODE
 ===================================================== */
 
 function updateQRCode() {
-
 
     if (!qrCode) {
 
@@ -313,15 +354,23 @@ function updateQRCode() {
                 colorStops: [
 
                     {
-                        offset: 0,
+
+                        offset:
+                            0,
+
                         color:
                             qrColor.value
+
                     },
 
                     {
-                        offset: 1,
+
+                        offset:
+                            1,
+
                         color:
                             gradientColor.value
+
                     }
 
                 ]
@@ -334,7 +383,7 @@ function updateQRCode() {
 
 
     /* =================================================
-       UPDATE QR
+       UPDATE EXISTING QR
     ================================================= */
 
     qrCode.update({
@@ -347,10 +396,11 @@ function updateQRCode() {
 
         data:
             qrInput.value.trim() ||
-            "https://quicktoolsofficial.com",
+            defaultQRData,
 
         image:
-            uploadedLogo || undefined,
+            uploadedLogo ||
+            undefined,
 
         dotsOptions:
             dotsOptions,
@@ -396,7 +446,9 @@ function updateQRCode() {
                 8,
 
             imageSize:
-                Number(logoSize.value) / 100,
+                Number(
+                    logoSize.value
+                ) / 100,
 
             hideBackgroundDots:
                 true
@@ -408,9 +460,7 @@ function updateQRCode() {
 
     renderQR();
 
-}
-
-
+                           }
 /* =====================================================
    LOGO UPLOAD
 ===================================================== */
@@ -418,7 +468,6 @@ function updateQRCode() {
 logoInput.addEventListener(
     "change",
     function () {
-
 
         const file =
             this.files[0];
@@ -431,27 +480,24 @@ logoInput.addEventListener(
         }
 
 
-        /* Check image */
+        /* Check file type */
 
         if (
-            !file.type.startsWith(
-                "image/"
-            )
+            !file.type.startsWith("image/")
         ) {
 
             alert(
                 "Please upload a valid image file."
             );
 
-            this.value =
-                "";
+            this.value = "";
 
             return;
 
         }
 
 
-        /* File size limit */
+        /* Check file size */
 
         if (
             file.size >
@@ -462,13 +508,14 @@ logoInput.addEventListener(
                 "Logo size must be less than 5MB."
             );
 
-            this.value =
-                "";
+            this.value = "";
 
             return;
 
         }
 
+
+        /* Read uploaded logo */
 
         const reader =
             new FileReader();
@@ -477,12 +524,11 @@ logoInput.addEventListener(
         reader.onload =
             function (event) {
 
-
                 uploadedLogo =
                     event.target.result;
 
 
-                /* Logo Preview */
+                /* Show logo preview */
 
                 logoPreview.style.display =
                     "block";
@@ -505,28 +551,25 @@ logoInput.addEventListener(
             };
 
 
-        reader.readAsDataURL(
-            file
-        );
+        reader.readAsDataURL(file);
 
     }
 );
 
 
 /* =====================================================
-   STYLE BUTTONS
+   QR DOT STYLE BUTTONS
 ===================================================== */
 
 styleOptions.forEach(
     function (button) {
-
 
         button.addEventListener(
             "click",
             function () {
 
 
-                /* Remove active */
+                /* Remove active class */
 
                 styleOptions.forEach(
                     function (item) {
@@ -539,14 +582,14 @@ styleOptions.forEach(
                 );
 
 
-                /* Add active */
+                /* Add active class */
 
                 this.classList.add(
                     "active"
                 );
 
 
-                /* Save style */
+                /* Save selected style */
 
                 selectedDotStyle =
                     dotStyleMap[
@@ -587,7 +630,6 @@ generateBtn.addEventListener(
 qrInput.addEventListener(
     "input",
     function () {
-
 
         if (
             qrInput.value.trim()
@@ -685,7 +727,6 @@ qrSize.addEventListener(
     "input",
     function () {
 
-
         qrSizeValue.textContent =
             this.value +
             "px";
@@ -704,7 +745,6 @@ qrSize.addEventListener(
 logoSize.addEventListener(
     "input",
     function () {
-
 
         logoSizeValue.textContent =
             this.value +
@@ -732,13 +772,271 @@ cornerStyle.addEventListener(
 
 
 /* =====================================================
+   AUTO BRAND COLOR BUTTON
+===================================================== */
+
+if (
+    autoBrandColorBtn
+) {
+
+    autoBrandColorBtn.addEventListener(
+        "click",
+        function () {
+
+            if (!uploadedLogo) {
+
+                alert(
+                    "Please upload your brand logo first."
+                );
+
+                return;
+
+            }
+
+
+            detectBrandColor();
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   DETECT BRAND COLOR
+===================================================== */
+
+function detectBrandColor() {
+
+    const image =
+        new Image();
+
+
+    image.onload =
+        function () {
+
+            const canvas =
+                document.createElement(
+                    "canvas"
+                );
+
+
+            const context =
+                canvas.getContext(
+                    "2d"
+                );
+
+
+            canvas.width =
+                100;
+
+            canvas.height =
+                100;
+
+
+            context.drawImage(
+                image,
+                0,
+                0,
+                100,
+                100
+            );
+
+
+            const imageData =
+                context.getImageData(
+                    0,
+                    0,
+                    100,
+                    100
+                ).data;
+
+
+            let red =
+                0;
+
+            let green =
+                0;
+
+            let blue =
+                0;
+
+            let count =
+                0;
+
+
+            /* Analyze logo pixels */
+
+            for (
+                let i = 0;
+                i < imageData.length;
+                i += 4
+            ) {
+
+                const r =
+                    imageData[i];
+
+                const g =
+                    imageData[i + 1];
+
+                const b =
+                    imageData[i + 2];
+
+                const alpha =
+                    imageData[i + 3];
+
+
+                /* Ignore transparent pixels */
+
+                if (
+                    alpha < 100
+                ) {
+
+                    continue;
+
+                }
+
+
+                /* Ignore almost white pixels */
+
+                if (
+                    r > 240 &&
+                    g > 240 &&
+                    b > 240
+                ) {
+
+                    continue;
+
+                }
+
+
+                red += r;
+
+                green += g;
+
+                blue += b;
+
+                count++;
+
+            }
+
+
+            if (
+                count === 0
+            ) {
+
+                alert(
+                    "Could not detect a suitable brand color."
+                );
+
+                return;
+
+            }
+
+
+            /* Calculate average color */
+
+            red =
+                Math.round(
+                    red / count
+                );
+
+            green =
+                Math.round(
+                    green / count
+                );
+
+            blue =
+                Math.round(
+                    blue / count
+                );
+
+
+            detectedBrandColor =
+                rgbToHex(
+                    red,
+                    green,
+                    blue
+                );
+
+
+            /* Apply detected color */
+
+            qrColor.value =
+                detectedBrandColor;
+
+
+            /* Update color preview */
+
+            if (
+                detectedColorPreview
+            ) {
+
+                detectedColorPreview.style.background =
+                    detectedBrandColor;
+
+            }
+
+
+            /* Show color text */
+
+            if (
+                detectedColorText
+            ) {
+
+                detectedColorText.textContent =
+                    detectedBrandColor;
+
+            }
+
+
+            /* Update QR */
+
+            updateQRCode();
+
+        };
+
+
+    image.src =
+        uploadedLogo;
+
+}
+
+
+/* =====================================================
+   RGB TO HEX
+===================================================== */
+
+function rgbToHex(
+    r,
+    g,
+    b
+) {
+
+    return "#" +
+        [r, g, b]
+            .map(
+                function (value) {
+
+                    return value
+                        .toString(16)
+                        .padStart(
+                            2,
+                            "0"
+                        );
+
+                }
+            )
+            .join("");
+
+       }
+/* =====================================================
    DOWNLOAD PNG
 ===================================================== */
 
 downloadPngBtn.addEventListener(
     "click",
     function () {
-
 
         if (!qrCode) {
 
@@ -773,7 +1071,6 @@ downloadSvgBtn.addEventListener(
     "click",
     function () {
 
-
         if (!qrCode) {
 
             alert(
@@ -800,7 +1097,7 @@ downloadSvgBtn.addEventListener(
 
 
 /* =====================================================
-   RESET
+   RESET BUTTON
 ===================================================== */
 
 clearBtn.addEventListener(
@@ -808,7 +1105,7 @@ clearBtn.addEventListener(
     function () {
 
 
-        /* Reset input */
+        /* Reset QR input */
 
         qrInput.value =
             "";
@@ -823,11 +1120,39 @@ clearBtn.addEventListener(
             "";
 
 
+        /* Reset logo preview */
+
         logoPreview.innerHTML =
             "";
 
         logoPreview.style.display =
             "none";
+
+
+        /* Reset detected brand color */
+
+        detectedBrandColor =
+            null;
+
+
+        if (
+            detectedColorPreview
+        ) {
+
+            detectedColorPreview.style.background =
+                "transparent";
+
+        }
+
+
+        if (
+            detectedColorText
+        ) {
+
+            detectedColorText.textContent =
+                "No brand color detected";
+
+        }
 
 
         /* Reset colors */
@@ -842,20 +1167,22 @@ clearBtn.addEventListener(
             "#7c3aed";
 
 
-        /* Disable gradient */
+        /* Reset gradient */
 
         gradientToggle.checked =
             false;
+
 
         gradientControls.classList.remove(
             "active"
         );
 
 
-        /* Reset size */
+        /* Reset QR size */
 
         qrSize.value =
             "300";
+
 
         qrSizeValue.textContent =
             "300px";
@@ -866,11 +1193,12 @@ clearBtn.addEventListener(
         logoSize.value =
             "25";
 
+
         logoSizeValue.textContent =
             "25%";
 
 
-        /* Reset corner */
+        /* Reset corner style */
 
         cornerStyle.value =
             "square";
@@ -893,12 +1221,18 @@ clearBtn.addEventListener(
         );
 
 
-        styleOptions[0].classList.add(
-            "active"
-        );
+        if (
+            styleOptions.length > 0
+        ) {
+
+            styleOptions[0].classList.add(
+                "active"
+            );
+
+        }
 
 
-        /* Clear QR */
+        /* Reset QR container */
 
         qrContainer.innerHTML = `
 
@@ -928,16 +1262,17 @@ clearBtn.addEventListener(
         `;
 
 
-        /* Hide download */
+        /* Hide download buttons */
 
         downloadPngBtn.style.display =
             "none";
+
 
         downloadSvgBtn.style.display =
             "none";
 
 
-        /* Reset status */
+        /* Reset scan status */
 
         scanStatus.innerHTML = `
 
@@ -953,6 +1288,8 @@ clearBtn.addEventListener(
         `;
 
 
+        /* Destroy current QR */
+
         qrCode =
             null;
 
@@ -965,7 +1302,6 @@ clearBtn.addEventListener(
 ===================================================== */
 
 function updateScanStatus() {
-
 
     scanStatus.innerHTML = `
 
@@ -993,15 +1329,97 @@ document.addEventListener(
     function () {
 
 
-        /* Make sure first style is active */
+        /* Set first style active */
 
         if (
             styleOptions.length > 0
         ) {
 
+            styleOptions.forEach(
+                function (item) {
+
+                    item.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+
             styleOptions[0].classList.add(
                 "active"
             );
+
+        }
+
+
+        /* Set initial slider values */
+
+        if (
+            qrSizeValue
+        ) {
+
+            qrSizeValue.textContent =
+                qrSize.value +
+                "px";
+
+        }
+
+
+        if (
+            logoSizeValue
+        ) {
+
+            logoSizeValue.textContent =
+                logoSize.value +
+                "%";
+
+        }
+
+
+        /* Hide gradient controls */
+
+        if (
+            gradientControls
+        ) {
+
+            gradientControls.classList.remove(
+                "active"
+            );
+
+        }
+
+
+        /* Hide logo preview */
+
+        if (
+            logoPreview
+        ) {
+
+            logoPreview.style.display =
+                "none";
+
+        }
+
+
+        /* Hide download buttons */
+
+        if (
+            downloadPngBtn
+        ) {
+
+            downloadPngBtn.style.display =
+                "none";
+
+        }
+
+
+        if (
+            downloadSvgBtn
+        ) {
+
+            downloadSvgBtn.style.display =
+                "none";
 
         }
 
@@ -1011,4 +1429,30 @@ document.addEventListener(
         );
 
     }
+);
+
+
+/* =====================================================
+   ERROR HANDLING
+===================================================== */
+
+window.addEventListener(
+    "error",
+    function (event) {
+
+        console.error(
+            "Brand QR Studio Error:",
+            event.error
+        );
+
+    }
+);
+
+
+/* =====================================================
+   BRAND QR STUDIO READY
+===================================================== */
+
+console.log(
+    "⚡ Quick Tools Official — Brand QR Studio Ready"
 );
