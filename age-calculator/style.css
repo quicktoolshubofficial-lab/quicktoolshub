@@ -1,1 +1,1440 @@
+/* =====================================================
+   QUICK TOOLS OFFICIAL
+   AGE CALCULATOR — MAIN CSS
+   PART 1
+===================================================== */
 
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    font-family: "Inter", sans-serif;
+    background: #f8fafc;
+    color: #0f172a;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+
+/* =====================================================
+   ANIMATED BACKGROUND
+===================================================== */
+
+.background-animation {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+    background:
+        linear-gradient(
+            135deg,
+            #f8fafc 0%,
+            #eef2ff 50%,
+            #f8fafc 100%
+        );
+}
+
+
+.gradient-orb {
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.25;
+    animation: floatOrb 12s ease-in-out infinite;
+}
+
+
+.orb-one {
+    top: -150px;
+    left: -100px;
+    background: #7c3aed;
+}
+
+
+.orb-two {
+    top: 35%;
+    right: -180px;
+    background: #2563eb;
+    animation-delay: -4s;
+}
+
+
+.orb-three {
+    bottom: -200px;
+    left: 35%;
+    background: #06b6d4;
+    animation-delay: -8s;
+}
+
+
+@keyframes floatOrb {
+
+    0% {
+        transform: translate(
+            0,
+            0
+        ) scale(1);
+    }
+
+    50% {
+        transform: translate(
+            40px,
+            -30px
+        ) scale(1.08);
+    }
+
+    100% {
+        transform: translate(
+            0,
+            0
+        ) scale(1);
+    }
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    background: rgba(
+        255,
+        255,
+        255,
+        0.82
+    );
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(
+        148,
+        163,
+        184,
+        0.25
+    );
+}
+
+
+.header-container {
+    width: min(
+        1200px,
+        92%
+    );
+    min-height: 72px;
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+
+.brand-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    color: #0f172a;
+    text-decoration: none;
+
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+}
+
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #2563eb
+        );
+
+    color: #ffffff;
+
+    box-shadow:
+        0 8px 25px
+        rgba(
+            99,
+            102,
+            241,
+            0.25
+        );
+}
+
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 17px;
+
+    border-radius: 10px;
+
+    color: #334155;
+    background: rgba(
+        255,
+        255,
+        255,
+        0.75
+    );
+
+    border: 1px solid #e2e8f0;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition:
+        0.25s ease;
+}
+
+
+.back-button:hover {
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #2563eb
+        );
+
+    border-color: transparent;
+
+    transform: translateY(
+        -2px
+    );
+
+    box-shadow:
+        0 10px 25px
+        rgba(
+            79,
+            70,
+            229,
+            0.2
+        );
+}
+
+
+/* =====================================================
+   MAIN CONTAINER
+===================================================== */
+
+.main-container {
+    width: min(
+        1200px,
+        92%
+    );
+
+    margin: auto;
+    padding: 70px 0 80px;
+}
+
+
+/* =====================================================
+   PAGE INTRO
+===================================================== */
+
+.page-intro {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 50px;
+}
+
+
+.studio-icon {
+    width: 76px;
+    height: 76px;
+
+    display: grid;
+    place-items: center;
+
+    margin: 0 auto 20px;
+
+    border-radius: 22px;
+
+    color: #ffffff;
+
+    font-size: 30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #2563eb
+        );
+
+    box-shadow:
+        0 18px 45px
+        rgba(
+            79,
+            70,
+            229,
+            0.25
+        );
+
+    animation:
+        iconFloat 4s ease-in-out infinite;
+}
+
+
+@keyframes iconFloat {
+
+    0%,
+    100% {
+        transform:
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(-8px);
+    }
+
+}
+
+
+.premium-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px 14px;
+
+    margin-bottom: 18px;
+
+    border-radius: 999px;
+
+    color: #5b21b6;
+
+    background:
+        rgba(
+            237,
+            233,
+            254,
+            0.8
+        );
+
+    border: 1px solid
+        rgba(
+            196,
+            181,
+            253,
+            0.7
+        );
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+.page-intro h1 {
+    margin-bottom: 16px;
+
+    font-size:
+        clamp(
+            38px,
+            6vw,
+            64px
+        );
+
+    line-height: 1.05;
+
+    letter-spacing: -2.5px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0f172a,
+            #4f46e5,
+            #7c3aed
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color:
+        transparent;
+}
+
+
+.page-intro p {
+    max-width: 650px;
+    margin: auto;
+
+    color: #64748b;
+
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+
+/* =====================================================
+   CALCULATOR CONTAINER
+===================================================== */
+
+.calculator-container {
+    display: grid;
+
+    grid-template-columns:
+        minmax(
+            0,
+            0.9fr
+        )
+        minmax(
+            0,
+            1.1fr
+        );
+
+    gap: 28px;
+
+    align-items: stretch;
+}
+
+
+/* =====================================================
+   COMMON PANEL STYLE
+===================================================== */
+
+.input-panel,
+.result-panel {
+    position: relative;
+
+    padding: 32px;
+
+    border-radius: 24px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.78
+        );
+
+    border: 1px solid
+        rgba(
+            226,
+            232,
+            240,
+            0.9
+        );
+
+    box-shadow:
+        0 20px 60px
+        rgba(
+            15,
+            23,
+            42,
+            0.07
+        );
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+}
+
+
+/* =====================================================
+   PANEL HEADING
+===================================================== */
+
+.panel-heading {
+    margin-bottom: 30px;
+}
+
+
+.panel-heading h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 8px;
+
+    font-size: 22px;
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
+}
+
+
+.panel-heading h2 i {
+    color: #6366f1;
+}
+
+
+.panel-heading p {
+    color: #64748b;
+
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   FORM GROUP
+===================================================== */
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 10px;
+
+    color: #334155;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+.form-group label i {
+    color: #6366f1;
+}
+
+
+.date-input {
+    width: 100%;
+
+    padding: 15px 16px;
+
+    border: 1px solid #dbe3ef;
+
+    border-radius: 12px;
+
+    outline: none;
+
+    background:
+        rgba(
+            248,
+            250,
+            252,
+            0.85
+        );
+
+    color: #0f172a;
+
+    font-family:
+        "Inter",
+        sans-serif;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    transition:
+        0.25s ease;
+}
+
+
+.date-input:hover {
+    border-color: #a5b4fc;
+}
+
+
+.date-input:focus {
+    border-color: #6366f1;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(
+            99,
+            102,
+            241,
+            0.1
+        );
+}
+
+
+.input-help {
+    display: block;
+
+    margin-top: 8px;
+
+    color: #94a3b8;
+
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   ACTION BUTTONS
+===================================================== */
+
+.action-buttons {
+    display: flex;
+    gap: 12px;
+
+    margin-top: 30px;
+}
+
+
+.calculate-btn,
+.reset-btn {
+    min-height: 50px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    padding: 0 20px;
+
+    border-radius: 12px;
+
+    border: none;
+
+    cursor: pointer;
+
+    font-family:
+        "Inter",
+        sans-serif;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    transition:
+        0.25s ease;
+}
+
+
+.calculate-btn {
+    flex: 1;
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #2563eb
+        );
+
+    box-shadow:
+        0 12px 28px
+        rgba(
+            79,
+            70,
+            229,
+            0.25
+        );
+}
+
+
+.calculate-btn:hover {
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 16px 35px
+        rgba(
+            79,
+            70,
+            229,
+            0.35
+        );
+}
+
+
+.reset-btn {
+    color: #475569;
+
+    background: #f1f5f9;
+
+    border: 1px solid
+        #e2e8f0;
+}
+
+
+.reset-btn:hover {
+    color: #0f172a;
+
+    background: #e2e8f0;
+
+    transform:
+        translateY(-2px);
+}
+/* =====================================================
+   AGE CALCULATOR
+   CSS PART 2
+===================================================== */
+
+
+/* =====================================================
+   CALCULATOR CARD
+===================================================== */
+
+.calculator-card {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 35px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    border-radius: 28px;
+    box-shadow: 0 25px 60px rgba(15, 23, 42, 0.10);
+    backdrop-filter: blur(18px);
+}
+
+
+/* =====================================================
+   CARD HEADER
+===================================================== */
+
+.card-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.card-header h2 {
+    margin: 0 0 10px;
+    color: #0f172a;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.card-header p {
+    margin: 0;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   DATE INPUT SECTION
+===================================================== */
+
+.date-input-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.input-group label {
+    color: #1e293b;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.input-group input {
+    width: 100%;
+    height: 52px;
+    padding: 0 15px;
+    box-sizing: border-box;
+    border: 1px solid #cbd5e1;
+    border-radius: 13px;
+    background: #f8fafc;
+    color: #0f172a;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: #7c3aed;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.10);
+}
+
+
+/* =====================================================
+   CALCULATE BUTTON
+===================================================== */
+
+.calculate-btn {
+    width: 100%;
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(
+        135deg,
+        #7c3aed,
+        #2563eb
+    );
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.calculate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(124, 58, 237, 0.25);
+}
+
+.calculate-btn:active {
+    transform: translateY(0);
+}
+
+
+/* =====================================================
+   RESULT SECTION
+===================================================== */
+
+.result-section {
+    display: none;
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.result-section.show {
+    display: block;
+    animation: resultAppear 0.5s ease;
+}
+
+@keyframes resultAppear {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.result-title {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.result-title h3 {
+    margin: 0 0 6px;
+    color: #0f172a;
+    font-size: 21px;
+}
+
+.result-title p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   AGE RESULT GRID
+===================================================== */
+
+.age-result-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.age-result-box {
+    padding: 22px 15px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    background: #f8fafc;
+    transition: all 0.3s ease;
+}
+
+.age-result-box:hover {
+    transform: translateY(-4px);
+    border-color: #c4b5fd;
+    box-shadow: 0 12px 25px rgba(15, 23, 42, 0.08);
+}
+
+.age-result-box .result-number {
+    display: block;
+    margin-bottom: 6px;
+    color: #7c3aed;
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.age-result-box .result-label {
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   DETAILED AGE
+===================================================== */
+
+.detailed-age {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.detail-item {
+    padding: 15px;
+    border-radius: 13px;
+    background: #f5f3ff;
+    text-align: center;
+}
+
+.detail-item strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #6d28d9;
+    font-size: 16px;
+}
+
+.detail-item span {
+    color: #64748b;
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   NEXT BIRTHDAY
+===================================================== */
+
+.next-birthday {
+    margin-top: 20px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-radius: 16px;
+    background: linear-gradient(
+        135deg,
+        #f5f3ff,
+        #eff6ff
+    );
+    border: 1px solid #ddd6fe;
+}
+
+.next-birthday-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: #7c3aed;
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.next-birthday h4 {
+    margin: 0 0 5px;
+    color: #1e293b;
+    font-size: 15px;
+}
+
+.next-birthday p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   RESET BUTTON
+===================================================== */
+
+.reset-btn {
+    width: 100%;
+    min-height: 48px;
+    margin-top: 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: 13px;
+    background: #ffffff;
+    color: #475569;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.reset-btn:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+    transform: translateY(-1px);
+}
+
+
+/* =====================================================
+   INFO CARDS
+===================================================== */
+
+.info-section {
+    max-width: 900px;
+    margin: 35px auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.info-card {
+    padding: 22px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.90);
+    border: 1px solid #e2e8f0;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(15, 23, 42, 0.08);
+}
+
+.info-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: #f5f3ff;
+    color: #7c3aed;
+    font-size: 20px;
+}
+
+.info-card h3 {
+    margin: 0 0 7px;
+    color: #1e293b;
+    font-size: 15px;
+}
+
+.info-card p {
+    margin: 0;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+/* =====================================================
+   AGE CALCULATOR
+   CSS PART 3
+   FOOTER + ANIMATIONS + RESPONSIVE
+===================================================== */
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+    margin-top: 60px;
+    padding: 35px 20px;
+    background: #0f172a;
+    color: #ffffff;
+}
+
+.footer-container {
+    max-width: 1100px;
+    margin: auto;
+    text-align: center;
+}
+
+.footer-logo {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.footer-container > p {
+    color: #cbd5e1;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 22px;
+    margin-bottom: 25px;
+}
+
+.footer-links a {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #a78bfa;
+}
+
+.footer-bottom {
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.footer-bottom p {
+    margin: 0;
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   BACKGROUND ANIMATION
+===================================================== */
+
+.background-animation {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: -1;
+    background:
+        linear-gradient(
+            135deg,
+            #f8fafc,
+            #eef2ff
+        );
+}
+
+
+.gradient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+    animation: floatingOrb 12s infinite alternate ease-in-out;
+}
+
+
+.orb-one {
+    width: 350px;
+    height: 350px;
+    background: #8b5cf6;
+    top: -120px;
+    left: -120px;
+}
+
+
+.orb-two {
+    width: 300px;
+    height: 300px;
+    background: #2563eb;
+    right: -100px;
+    top: 40%;
+    animation-delay: 2s;
+}
+
+
+.orb-three {
+    width: 280px;
+    height: 280px;
+    background: #06b6d4;
+    bottom: -100px;
+    left: 35%;
+    animation-delay: 4s;
+}
+
+
+@keyframes floatingOrb {
+
+    0% {
+        transform: translate(0,0) scale(1);
+    }
+
+    50% {
+        transform: translate(40px,-30px) scale(1.1);
+    }
+
+    100% {
+        transform: translate(-20px,40px) scale(0.95);
+    }
+
+}
+
+
+/* =====================================================
+   CARD ANIMATION
+===================================================== */
+
+.calculator-card,
+.info-card {
+    animation: slideUp 0.7s ease forwards;
+}
+
+
+@keyframes slideUp {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+/* =====================================================
+   BUTTON GLOW EFFECT
+===================================================== */
+
+.calculate-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+
+.calculate-btn::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -100%;
+
+    width: 100%;
+    height: 100%;
+
+    background:
+    linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.35),
+        transparent
+    );
+
+    transition: 0.6s;
+
+}
+
+
+.calculate-btn:hover::before {
+
+    left: 100%;
+
+}
+
+
+/* =====================================================
+   TABLET RESPONSIVE
+===================================================== */
+
+@media(max-width:900px){
+
+    .calculator-card {
+        padding: 28px;
+    }
+
+
+    .date-input-section {
+        grid-template-columns: 1fr;
+    }
+
+
+    .age-result-grid {
+        grid-template-columns: repeat(3,1fr);
+    }
+
+
+    .info-section {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+}
+
+
+/* =====================================================
+   MOBILE RESPONSIVE
+===================================================== */
+
+@media(max-width:600px){
+
+
+    .calculator-card {
+
+        padding:20px;
+
+        border-radius:20px;
+
+    }
+
+
+    .card-header h2 {
+
+        font-size:22px;
+
+    }
+
+
+    .date-input-section {
+
+        grid-template-columns:1fr;
+
+        gap:15px;
+
+    }
+
+
+    .calculate-btn {
+
+        font-size:14px;
+
+    }
+
+
+    .age-result-grid {
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .age-result-box {
+
+        padding:18px;
+
+    }
+
+
+    .age-result-box .result-number {
+
+        font-size:26px;
+
+    }
+
+
+    .detailed-age {
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .next-birthday {
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+
+    .info-section {
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .footer-links {
+
+        flex-direction:column;
+
+        gap:14px;
+
+    }
+
+
+    .footer-logo {
+
+        font-size:20px;
+
+    }
+
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media(max-width:380px){
+
+
+    .calculator-card {
+
+        padding:15px;
+
+    }
+
+
+    .card-header h2 {
+
+        font-size:20px;
+
+    }
+
+
+    .input-group input {
+
+        height:48px;
+
+    }
+
+
+    .footer {
+
+        padding:25px 15px;
+
+    }
+
+  }
