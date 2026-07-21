@@ -1,6 +1,6 @@
 /* =====================================================
    QUICK TOOLS OFFICIAL
-   AGE CALCULATOR — CLEAN SCRIPT
+   AGE CALCULATOR — CORRECTED JAVASCRIPT
    PART 1
 ===================================================== */
 
@@ -11,6 +11,9 @@
 
 const birthDateInput =
     document.getElementById("birthDate");
+
+const currentDateInput =
+    document.getElementById("currentDate");
 
 const calculateBtn =
     document.getElementById("calculateBtn");
@@ -23,18 +26,18 @@ const resetBtn =
    AGE RESULT ELEMENTS
 ===================================================== */
 
-const ageYears =
-    document.getElementById("ageYears");
+const yearsValue =
+    document.getElementById("yearsValue");
 
-const ageMonths =
-    document.getElementById("ageMonths");
+const monthsValue =
+    document.getElementById("monthsValue");
 
-const ageDays =
-    document.getElementById("ageDays");
+const daysValue =
+    document.getElementById("daysValue");
 
 
 /* =====================================================
-   TOTAL RESULT ELEMENTS
+   DETAILED RESULT ELEMENTS
 ===================================================== */
 
 const totalDays =
@@ -46,78 +49,99 @@ const totalWeeks =
 const totalMonths =
     document.getElementById("totalMonths");
 
+const totalHours =
+    document.getElementById("totalHours");
+
 
 /* =====================================================
    BIRTHDAY ELEMENTS
 ===================================================== */
 
-const nextBirthday =
-    document.getElementById("nextBirthday");
+const birthdayMessage =
+    document.getElementById("birthdayMessage");
 
 const birthdayCountdown =
-    document.getElementById(
-        "birthdayCountdown"
-    );
+    document.getElementById("birthdayCountdown");
 
 
 /* =====================================================
-   OTHER ELEMENTS
+   RESULT ELEMENTS
 ===================================================== */
 
-const resultSection =
-    document.getElementById(
-        "resultSection"
-    );
+const ageResult =
+    document.getElementById("ageResult");
 
-const currentDateElement =
-    document.getElementById(
-        "currentDate"
-    );
+const resultPanel =
+    document.querySelector(".result-panel");
 
-const selectedBirthDate =
-    document.getElementById(
-        "selectedBirthDate"
-    );
-
-const copyAgeBtn =
-    document.getElementById(
-        "copyAgeBtn"
-    );
-
-const shareBtn =
-    document.getElementById(
-        "shareBtn"
-    );
-
-const backToTop =
-    document.getElementById(
-        "backToTop"
-    );
+const resultStatus =
+    document.querySelector(".result-status");
 
 
 /* =====================================================
-   SET MAXIMUM BIRTH DATE
+   VARIABLES
 ===================================================== */
 
-const today =
-    new Date();
+let calculatedBirthDate = null;
+
+let calculatedCurrentDate = null;
 
 
-if (birthDateInput) {
+/* =====================================================
+   GET TODAY'S DATE
+===================================================== */
 
-    birthDateInput.max =
-        today
-        .toISOString()
-        .split("T")[0];
+function getTodayDate() {
+
+    const today =
+        new Date();
+
+    return today;
 
 }
 
 
 /* =====================================================
-   FORMAT DATE
+   FORMAT DATE FOR INPUT
 ===================================================== */
 
-function formatDate(date) {
+function formatInputDate(date) {
+
+    const year =
+        date.getFullYear();
+
+    const month =
+        String(
+            date.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        );
+
+    const day =
+        String(
+            date.getDate()
+        ).padStart(
+            2,
+            "0"
+        );
+
+    return (
+        year +
+        "-" +
+        month +
+        "-" +
+        day
+    );
+
+}
+
+
+/* =====================================================
+   FORMAT DATE FOR DISPLAY
+===================================================== */
+
+function formatDisplayDate(date) {
 
     return date.toLocaleDateString(
         "en-US",
@@ -133,33 +157,84 @@ function formatDate(date) {
 
 
 /* =====================================================
-   DISPLAY CURRENT DATE
+   SET CURRENT DATE
 ===================================================== */
 
-function showCurrentDate() {
+function setCurrentDate() {
 
-    if (!currentDateElement) {
+    if (!currentDateInput) {
 
         return;
 
     }
 
+    const today =
+        getTodayDate();
 
-    currentDateElement.textContent =
-        formatDate(
-            new Date()
+    currentDateInput.value =
+        formatInputDate(
+            today
         );
 
 }
 
 
 /* =====================================================
-   VALIDATE BIRTH DATE
+   SET MAXIMUM BIRTH DATE
 ===================================================== */
 
-function validateBirthDate(value) {
+function setBirthDateLimit() {
 
-    if (!value) {
+    if (!birthDateInput) {
+
+        return;
+
+    }
+
+    const today =
+        getTodayDate();
+
+    birthDateInput.max =
+        formatInputDate(
+            today
+        );
+
+}
+
+
+/* =====================================================
+   VALIDATE DATES
+===================================================== */
+
+function validateDates() {
+
+    if (
+        !birthDateInput ||
+        !currentDateInput
+    ) {
+
+        return {
+
+            valid: false,
+
+            message:
+                "Required date fields were not found."
+
+        };
+
+    }
+
+
+    const birthValue =
+        birthDateInput.value;
+
+    const currentValue =
+        currentDateInput.value;
+
+
+    /* Check birth date */
+
+    if (!birthValue) {
 
         return {
 
@@ -173,94 +248,18 @@ function validateBirthDate(value) {
     }
 
 
-    const birthDate =
-        new Date(
-            value + "T00:00:00"
-        );
+    /* Check calculation date */
 
-
-    const currentDate =
-        new Date();
-
-
-    if (
-        isNaN(
-            birthDate.getTime()
-        )
-    ) {
+    if (!currentValue) {
 
         return {
 
             valid: false,
 
             message:
-                "Please enter a valid date."
+                "Please select the calculation date."
 
         };
-
-    }
-
-
-    if (
-        birthDate >
-        currentDate
-    ) {
-
-        return {
-
-            valid: false,
-
-            message:
-                "Birth date cannot be in the future."
-
-        };
-
-    }
-
-
-    return {
-
-        valid: true,
-
-        message: ""
-
-    };
-
-}
-
-
-/* =====================================================
-   CALCULATE EXACT AGE
-===================================================== */
-
-function calculateAge() {
-
-    if (!birthDateInput) {
-
-        return;
-
-    }
-
-
-    const birthValue =
-        birthDateInput.value;
-
-
-    const validation =
-        validateBirthDate(
-            birthValue
-        );
-
-
-    if (
-        !validation.valid
-    ) {
-
-        alert(
-            validation.message
-        );
-
-        return;
 
     }
 
@@ -273,30 +272,89 @@ function calculateAge() {
 
 
     const currentDate =
-        new Date();
+        new Date(
+            currentValue +
+            "T00:00:00"
+        );
 
 
-    /* =================================================
-       YEARS
-    ================================================= */
+    /* Check valid dates */
+
+    if (
+        isNaN(
+            birthDate.getTime()
+        ) ||
+        isNaN(
+            currentDate.getTime()
+        )
+    ) {
+
+        return {
+
+            valid: false,
+
+            message:
+                "Please enter valid dates."
+
+        };
+
+    }
+
+
+    /* Birth date cannot be after calculation date */
+
+    if (
+        birthDate >
+        currentDate
+    ) {
+
+        return {
+
+            valid: false,
+
+            message:
+                "Date of birth cannot be after the calculation date."
+
+        };
+
+    }
+
+
+    return {
+
+        valid: true,
+
+        message: "",
+
+        birthDate:
+            birthDate,
+
+        currentDate:
+            currentDate
+
+    };
+
+}
+
+
+/* =====================================================
+   CALCULATE EXACT AGE
+===================================================== */
+
+function calculateExactAge(
+    birthDate,
+    currentDate
+) {
 
     let years =
         currentDate.getFullYear() -
         birthDate.getFullYear();
 
 
-    /* =================================================
-       MONTHS
-    ================================================= */
-
     let months =
         currentDate.getMonth() -
         birthDate.getMonth();
 
-
-    /* =================================================
-       DAYS
-    ================================================= */
 
     let days =
         currentDate.getDate() -
@@ -343,48 +401,115 @@ function calculateAge() {
     }
 
 
-    /* =================================================
-       DISPLAY AGE
-    ================================================= */
+    return {
 
-    if (ageYears) {
+        years:
+            years,
 
-        ageYears.textContent =
-            years;
+        months:
+            months,
+
+        days:
+            days
+
+    };
+
+}
+
+
+/* =====================================================
+   DISPLAY EXACT AGE
+===================================================== */
+
+function displayExactAge(
+    age
+) {
+
+    if (yearsValue) {
+
+        yearsValue.textContent =
+            age.years.toLocaleString();
 
     }
 
 
-    if (ageMonths) {
+    if (monthsValue) {
 
-        ageMonths.textContent =
-            months;
-
-    }
-
-
-    if (ageDays) {
-
-        ageDays.textContent =
-            days;
+        monthsValue.textContent =
+            age.months.toLocaleString();
 
     }
 
 
-    /* =================================================
-       TOTAL DAYS LIVED
-    ================================================= */
+    if (daysValue) {
+
+        daysValue.textContent =
+            age.days.toLocaleString();
+
+    }
+
+}
+
+
+/* =====================================================
+   CALCULATE TOTAL DAYS
+===================================================== */
+
+function calculateTotalDays(
+    birthDate,
+    currentDate
+) {
 
     const difference =
         currentDate.getTime() -
         birthDate.getTime();
 
 
+    return Math.floor(
+        difference /
+        (
+            1000 *
+            60 *
+            60 *
+            24
+        )
+    );
+
+}
+
+
+/* =====================================================
+   DISPLAY TOTAL TIME
+===================================================== */
+
+function displayTotalTime(
+    birthDate,
+    currentDate,
+    age
+) {
+
     const daysLived =
-        Math.floor(
-            difference /
-            (1000 * 60 * 60 * 24)
+        calculateTotalDays(
+            birthDate,
+            currentDate
         );
+
+
+    const weeksLived =
+        Math.floor(
+            daysLived / 7
+        );
+
+
+    const monthsLived =
+        (
+            age.years * 12
+        ) +
+        age.months;
+
+
+    const hoursLived =
+        daysLived * 24;
 
 
     if (totalDays) {
@@ -395,32 +520,12 @@ function calculateAge() {
     }
 
 
-    /* =================================================
-       TOTAL WEEKS LIVED
-    ================================================= */
-
-    const weeksLived =
-        Math.floor(
-            daysLived /
-            7
-        );
-
-
     if (totalWeeks) {
 
         totalWeeks.textContent =
             weeksLived.toLocaleString();
 
     }
-
-
-    /* =================================================
-       TOTAL MONTHS LIVED
-    ================================================= */
-
-    const monthsLived =
-        years * 12 +
-        months;
 
 
     if (totalMonths) {
@@ -431,39 +536,10 @@ function calculateAge() {
     }
 
 
-    /* =================================================
-       UPDATE BIRTH DATE
-    ================================================= */
+    if (totalHours) {
 
-    if (selectedBirthDate) {
-
-        selectedBirthDate.textContent =
-            formatDate(
-                birthDate
-            );
-
-    }
-
-
-    /* =================================================
-       CALCULATE NEXT BIRTHDAY
-    ================================================= */
-
-    calculateNextBirthday(
-        birthDate,
-        currentDate
-    );
-
-
-    /* =================================================
-       SHOW RESULTS
-    ================================================= */
-
-    if (resultSection) {
-
-        resultSection.classList.add(
-            "show"
-        );
+        totalHours.textContent =
+            hoursLived.toLocaleString();
 
     }
 
@@ -471,7 +547,147 @@ function calculateAge() {
 
 
 /* =====================================================
-   CALCULATE NEXT BIRTHDAY
+   SHOW RESULT PANEL
+===================================================== */
+
+function showResults() {
+
+    if (resultPanel) {
+
+        resultPanel.classList.add(
+            "active"
+        );
+
+    }
+
+
+    if (ageResult) {
+
+        ageResult.classList.add(
+            "show"
+        );
+
+    }
+
+
+    if (resultStatus) {
+
+        resultStatus.innerHTML = `
+
+            <span class="status-dot"></span>
+
+            Calculated
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   MAIN CALCULATION FUNCTION
+===================================================== */
+
+function calculateAge() {
+
+    const validation =
+        validateDates();
+
+
+    if (
+        !validation.valid
+    ) {
+
+        alert(
+            validation.message
+        );
+
+        return;
+
+    }
+
+
+    const birthDate =
+        validation.birthDate;
+
+
+    const currentDate =
+        validation.currentDate;
+
+
+    const age =
+        calculateExactAge(
+            birthDate,
+            currentDate
+        );
+
+
+    calculatedBirthDate =
+        birthDate;
+
+
+    calculatedCurrentDate =
+        currentDate;
+
+
+    /* Display exact age */
+
+    displayExactAge(
+        age
+    );
+
+
+    /* Display total time */
+
+    displayTotalTime(
+        birthDate,
+        currentDate,
+        age
+    );
+
+
+    /* Show result */
+
+    showResults();
+
+
+    /* Continue with birthday calculation */
+
+    calculateNextBirthday(
+        birthDate,
+        currentDate
+    );
+
+
+    console.log(
+        "Age calculated successfully:",
+        age
+    );
+
+}
+
+
+/* =====================================================
+   INITIAL SETUP
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        setCurrentDate();
+
+        setBirthDateLimit();
+
+        console.log(
+            "Age Calculator loaded successfully 🚀"
+        );
+
+    }
+);
+/* =====================================================
+   NEXT BIRTHDAY CALCULATOR
 ===================================================== */
 
 function calculateNextBirthday(
@@ -479,7 +695,11 @@ function calculateNextBirthday(
     currentDate
 ) {
 
-    let nextBirthdayDate =
+    /* =================================================
+       CREATE NEXT BIRTHDAY
+    ================================================= */
+
+    let nextBirthday =
         new Date(
             currentDate.getFullYear(),
             birthDate.getMonth(),
@@ -487,52 +707,131 @@ function calculateNextBirthday(
         );
 
 
-    /* Birthday already passed */
+    /* =================================================
+       HANDLE FEBRUARY 29
+    ================================================= */
 
     if (
-        nextBirthdayDate <
+        birthDate.getMonth() === 1 &&
+        birthDate.getDate() === 29
+    ) {
+
+        if (
+            !isLeapYear(
+                nextBirthday.getFullYear()
+            )
+        ) {
+
+            nextBirthday =
+                new Date(
+                    nextBirthday.getFullYear(),
+                    1,
+                    28
+                );
+
+        }
+
+    }
+
+
+    /* =================================================
+       IF BIRTHDAY HAS PASSED
+    ================================================= */
+
+    if (
+        nextBirthday <
         currentDate
     ) {
 
-        nextBirthdayDate =
+        nextBirthday =
             new Date(
                 currentDate.getFullYear() + 1,
                 birthDate.getMonth(),
                 birthDate.getDate()
             );
 
+
+        /* Handle February 29 */
+
+        if (
+            birthDate.getMonth() === 1 &&
+            birthDate.getDate() === 29
+        ) {
+
+            if (
+                !isLeapYear(
+                    nextBirthday.getFullYear()
+                )
+            ) {
+
+                nextBirthday =
+                    new Date(
+                        nextBirthday.getFullYear(),
+                        1,
+                        28
+                    );
+
+            }
+
+        }
+
     }
 
 
     /* =================================================
-       DAYS UNTIL NEXT BIRTHDAY
+       CALCULATE DAYS UNTIL BIRTHDAY
     ================================================= */
 
     const difference =
-        nextBirthdayDate.getTime() -
+        nextBirthday.getTime() -
         currentDate.getTime();
 
 
     const daysUntilBirthday =
         Math.ceil(
             difference /
-            (1000 * 60 * 60 * 24)
+            (
+                1000 *
+                60 *
+                60 *
+                24
+            )
         );
 
 
     /* =================================================
-       DISPLAY NEXT BIRTHDAY
+       CHECK IF TODAY IS BIRTHDAY
     ================================================= */
 
-    if (nextBirthday) {
+    const isBirthdayToday =
+        (
+            birthDate.getMonth() ===
+            currentDate.getMonth()
+        ) &&
+        (
+            birthDate.getDate() ===
+            currentDate.getDate()
+        );
 
-        nextBirthday.textContent =
-            nextBirthdayDate.toLocaleDateString(
+
+    /* =================================================
+       DISPLAY BIRTHDAY MESSAGE
+    ================================================= */
+
+    if (birthdayMessage) {
+
+        birthdayMessage.textContent =
+            nextBirthday.toLocaleDateString(
                 "en-US",
                 {
-                    month: "long",
-                    day: "numeric",
-                    year: "numeric"
+                    month:
+                        "long",
+
+                    day:
+                        "numeric",
+
+                    year:
+                        "numeric"
                 }
             );
 
@@ -546,13 +845,15 @@ function calculateNextBirthday(
     if (birthdayCountdown) {
 
         if (
-            daysUntilBirthday === 0
+            isBirthdayToday
         ) {
 
             birthdayCountdown.textContent =
                 "🎉 Happy Birthday! Your birthday is today!";
 
-        } else {
+        }
+
+        else {
 
             birthdayCountdown.textContent =
                 daysUntilBirthday +
@@ -566,10 +867,31 @@ function calculateNextBirthday(
 
 
 /* =====================================================
+   LEAP YEAR CHECK
+===================================================== */
+
+function isLeapYear(
+    year
+) {
+
+    return (
+        (
+            year % 4 === 0 &&
+            year % 100 !== 0
+        ) ||
+        year % 400 === 0
+    );
+
+}
+
+
+/* =====================================================
    CALCULATE BUTTON
 ===================================================== */
 
-if (calculateBtn) {
+if (
+    calculateBtn
+) {
 
     calculateBtn.addEventListener(
         "click",
@@ -584,20 +906,34 @@ if (calculateBtn) {
 
 
 /* =====================================================
-   DATE CHANGE
+   DATE OF BIRTH CHANGE
 ===================================================== */
 
-if (birthDateInput) {
+if (
+    birthDateInput
+) {
 
     birthDateInput.addEventListener(
         "change",
         function() {
 
+            /*
+               Do not calculate automatically.
+               User can select date first
+               and then click Calculate.
+            */
+
             if (
-                this.value
+                resultStatus
             ) {
 
-                calculateAge();
+                resultStatus.innerHTML = `
+
+                    <span class="status-dot"></span>
+
+                    Ready
+
+                `;
 
             }
 
@@ -608,17 +944,82 @@ if (birthDateInput) {
 
 
 /* =====================================================
-   ENTER KEY
+   CALCULATION DATE CHANGE
 ===================================================== */
 
-if (birthDateInput) {
+if (
+    currentDateInput
+) {
+
+    currentDateInput.addEventListener(
+        "change",
+        function() {
+
+            /*
+               Make sure calculation date
+               is not before birth date.
+            */
+
+            if (
+                birthDateInput &&
+                birthDateInput.value &&
+                currentDateInput.value
+            ) {
+
+                const birthDate =
+                    new Date(
+                        birthDateInput.value +
+                        "T00:00:00"
+                    );
+
+
+                const selectedDate =
+                    new Date(
+                        currentDateInput.value +
+                        "T00:00:00"
+                    );
+
+
+                if (
+                    selectedDate <
+                    birthDate
+                ) {
+
+                    alert(
+                        "Calculation date cannot be before your date of birth."
+                    );
+
+
+                    currentDateInput.value =
+                        formatInputDate(
+                            getTodayDate()
+                        );
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   ENTER KEY SUPPORT
+===================================================== */
+
+if (
+    birthDateInput
+) {
 
     birthDateInput.addEventListener(
         "keydown",
         function(event) {
 
             if (
-                event.key === "Enter"
+                event.key ===
+                "Enter"
             ) {
 
                 event.preventDefault();
@@ -633,42 +1034,48 @@ if (birthDateInput) {
 }
 
 
-/* =====================================================
-   INITIALIZE
-===================================================== */
+if (
+    currentDateInput
+) {
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
+    currentDateInput.addEventListener(
+        "keydown",
+        function(event) {
 
-        showCurrentDate();
+            if (
+                event.key ===
+                "Enter"
+            ) {
 
-        console.log(
-            "Age Calculator Part 1 loaded successfully 🚀"
-        );
+                event.preventDefault();
 
-    }
-);
-/* =====================================================
-   QUICK TOOLS OFFICIAL
-   AGE CALCULATOR — CLEAN SCRIPT
-   PART 2
-===================================================== */
+                calculateAge();
 
+            }
 
+        }
+    );
+
+           }
 /* =====================================================
    RESET CALCULATOR
 ===================================================== */
 
-if (resetBtn) {
+if (
+    resetBtn
+) {
 
     resetBtn.addEventListener(
         "click",
         function() {
 
-            /* Clear birth date */
+            /* =========================================
+               CLEAR BIRTH DATE
+            ========================================== */
 
-            if (birthDateInput) {
+            if (
+                birthDateInput
+            ) {
 
                 birthDateInput.value =
                     "";
@@ -676,47 +1083,74 @@ if (resetBtn) {
             }
 
 
-            /* Reset age results */
+            /* =========================================
+               RESET CURRENT DATE
+            ========================================== */
 
-            if (ageYears) {
+            setCurrentDate();
 
-                ageYears.textContent =
+
+            /* =========================================
+               RESET AGE RESULTS
+            ========================================== */
+
+            if (
+                yearsValue
+            ) {
+
+                yearsValue.textContent =
                     "0";
 
             }
 
-            if (ageMonths) {
 
-                ageMonths.textContent =
+            if (
+                monthsValue
+            ) {
+
+                monthsValue.textContent =
                     "0";
 
             }
 
-            if (ageDays) {
 
-                ageDays.textContent =
+            if (
+                daysValue
+            ) {
+
+                daysValue.textContent =
                     "0";
 
             }
 
 
-            /* Reset total results */
+            /* =========================================
+               RESET DETAILED RESULTS
+            ========================================== */
 
-            if (totalDays) {
+            if (
+                totalDays
+            ) {
 
                 totalDays.textContent =
                     "0";
 
             }
 
-            if (totalWeeks) {
+
+            if (
+                totalWeeks
+            ) {
 
                 totalWeeks.textContent =
                     "0";
 
             }
 
-            if (totalMonths) {
+
+            if (
+                totalMonths
+            ) {
 
                 totalMonths.textContent =
                     "0";
@@ -724,52 +1158,143 @@ if (resetBtn) {
             }
 
 
-            /* Reset birthday information */
+            if (
+                totalHours
+            ) {
 
-            if (nextBirthday) {
-
-                nextBirthday.textContent =
-                    "--";
+                totalHours.textContent =
+                    "0";
 
             }
 
-            if (birthdayCountdown) {
+
+            /* =========================================
+               RESET BIRTHDAY MESSAGE
+            ========================================== */
+
+            if (
+                birthdayMessage
+            ) {
+
+                birthdayMessage.textContent =
+                    "Calculate your age to see your next birthday.";
+
+            }
+
+
+            if (
+                birthdayCountdown
+            ) {
 
                 birthdayCountdown.textContent =
-                    "Enter your date of birth to calculate your next birthday.";
+                    "Your birthday countdown will appear here.";
 
             }
 
 
-            /* Reset selected birth date */
+            /* =========================================
+               RESET RESULT STATUS
+            ========================================== */
 
-            if (selectedBirthDate) {
+            if (
+                resultStatus
+            ) {
 
-                selectedBirthDate.textContent =
-                    "--";
+                resultStatus.innerHTML = `
+
+                    <span class="status-dot"></span>
+
+                    Ready
+
+                `;
 
             }
 
 
-            /* Hide result section */
+            /* =========================================
+               RESET RESULT VISIBILITY
+            ========================================== */
 
-            if (resultSection) {
+            if (
+                resultPanel
+            ) {
 
-                resultSection.classList.remove(
-                    "show"
+                resultPanel.classList.remove(
+                    "active"
                 );
 
             }
 
 
-            /* Scroll to top of calculator */
+            if (
+                ageResult
+            ) {
 
-            if (birthDateInput) {
+                ageResult.classList.remove(
+                    "show"
+                );
+
+                ageResult.innerHTML = `
+
+                    <div class="result-placeholder">
+
+                        <div class="placeholder-icon">
+
+                            <i class="fa-solid fa-hourglass-half"></i>
+
+                        </div>
+
+
+                        <h3>
+
+                            Enter Your Date of Birth
+
+                        </h3>
+
+
+                        <p>
+
+                            Select your date of birth
+                            and click Calculate Age.
+
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+
+            /* =========================================
+               RESET VARIABLES
+            ========================================== */
+
+            calculatedBirthDate =
+                null;
+
+
+            calculatedCurrentDate =
+                null;
+
+
+            /* =========================================
+               RESET INPUT FOCUS
+            ========================================== */
+
+            if (
+                birthDateInput
+            ) {
 
                 birthDateInput.focus();
 
             }
 
+
+            console.log(
+                "Age Calculator has been reset."
+            );
+
         }
     );
 
@@ -777,240 +1302,55 @@ if (resetBtn) {
 
 
 /* =====================================================
-   COPY AGE RESULT
+   UPDATE CURRENT DATE DAILY
 ===================================================== */
 
-if (copyAgeBtn) {
+function updateCurrentDateAutomatically() {
 
-    copyAgeBtn.addEventListener(
-        "click",
-        async function() {
+    if (
+        !currentDateInput
+    ) {
 
+        return;
 
-            /* Get displayed values */
-
-            const years =
-                ageYears
-                    ? ageYears.textContent
-                    : "0";
+    }
 
 
-            const months =
-                ageMonths
-                    ? ageMonths.textContent
-                    : "0";
+    const today =
+        getTodayDate();
 
 
-            const days =
-                ageDays
-                    ? ageDays.textContent
-                    : "0";
+    const todayString =
+        formatInputDate(
+            today
+        );
 
 
-            /* Create copy text */
+    /*
+       Only update automatically
+       if user has not changed it.
+    */
 
-            const ageText =
-                `My age is ${years} years, ${months} months and ${days} days.`;
+    if (
+        !calculatedCurrentDate
+    ) {
 
+        currentDateInput.value =
+            todayString;
 
-            try {
-
-                await navigator.clipboard.writeText(
-                    ageText
-                );
-
-
-                /* Change button text */
-
-                const originalText =
-                    copyAgeBtn.innerHTML;
-
-
-                copyAgeBtn.innerHTML =
-                    '<i class="fa-solid fa-check"></i> Copied!';
-
-
-                setTimeout(
-                    function() {
-
-                        copyAgeBtn.innerHTML =
-                            originalText;
-
-                    },
-                    2000
-                );
-
-
-            } catch (error) {
-
-                /* Fallback */
-
-                alert(
-                    "Unable to copy. Please try again."
-                );
-
-            }
-
-        }
-    );
+    }
 
 }
 
 
 /* =====================================================
-   SHARE AGE RESULT
-===================================================== */
-
-if (shareBtn) {
-
-    shareBtn.addEventListener(
-        "click",
-        async function() {
-
-
-            /* Get age values */
-
-            const years =
-                ageYears
-                    ? ageYears.textContent
-                    : "0";
-
-
-            const months =
-                ageMonths
-                    ? ageMonths.textContent
-                    : "0";
-
-
-            const days =
-                ageDays
-                    ? ageDays.textContent
-                    : "0";
-
-
-            /* Share message */
-
-            const shareText =
-                `My exact age is ${years} years, ${months} months and ${days} days. Calculated with Quick Tools Official Age Calculator.`;
-
-
-            /* Native share */
-
-            if (
-                navigator.share
-            ) {
-
-                try {
-
-                    await navigator.share({
-
-                        title:
-                            "My Age",
-
-                        text:
-                            shareText,
-
-                        url:
-                            window.location.href
-
-                    });
-
-                } catch (error) {
-
-                    console.log(
-                        "Share cancelled."
-                    );
-
-                }
-
-            } else {
-
-                /* Browser without Web Share API */
-
-                try {
-
-                    await navigator.clipboard.writeText(
-                        shareText
-                    );
-
-                    alert(
-                        "Age result copied! You can now share it anywhere."
-                    );
-
-                } catch (error) {
-
-                    alert(
-                        shareText
-                    );
-
-                }
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   BACK TO TOP BUTTON
-===================================================== */
-
-if (backToTop) {
-
-    window.addEventListener(
-        "scroll",
-        function() {
-
-
-            if (
-                window.scrollY >
-                400
-            ) {
-
-                backToTop.classList.add(
-                    "show"
-                );
-
-            } else {
-
-                backToTop.classList.remove(
-                    "show"
-                );
-
-            }
-
-        }
-    );
-
-
-    backToTop.addEventListener(
-        "click",
-        function() {
-
-            window.scrollTo({
-
-                top: 0,
-
-                behavior: "smooth"
-
-            });
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   AUTO UPDATE CURRENT DATE
+   SETUP DAILY DATE UPDATE
 ===================================================== */
 
 setInterval(
     function() {
 
-        showCurrentDate();
+        updateCurrentDateAutomatically();
 
     },
     60000
@@ -1018,643 +1358,56 @@ setInterval(
 
 
 /* =====================================================
-   PREVENT FUTURE DATE
-===================================================== */
-
-if (birthDateInput) {
-
-    birthDateInput.addEventListener(
-        "input",
-        function() {
-
-            const selectedDate =
-                new Date(
-                    this.value +
-                    "T00:00:00"
-                );
-
-
-            const currentDate =
-                new Date();
-
-
-            if (
-                selectedDate >
-                currentDate
-            ) {
-
-                this.value =
-                    "";
-
-                alert(
-                    "Please select a valid birth date."
-                );
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   AGE CALCULATOR KEYBOARD SUPPORT
-===================================================== */
-
-document.addEventListener(
-    "keydown",
-    function(event) {
-
-        /* Ctrl + Enter = Calculate */
-
-        if (
-            event.ctrlKey &&
-            event.key === "Enter"
-        ) {
-
-            event.preventDefault();
-
-            calculateAge();
-
-        }
-
-
-        /* Escape = Reset */
-
-        if (
-            event.key === "Escape"
-        ) {
-
-            if (
-                document.activeElement !==
-                birthDateInput
-            ) {
-
-                if (resetBtn) {
-
-                    resetBtn.click();
-
-                }
-
-            }
-
-        }
-
-    }
-);
-
-
-/* =====================================================
-   FINAL INITIALIZATION
+   INITIAL PAGE SETUP
 ===================================================== */
 
 document.addEventListener(
     "DOMContentLoaded",
     function() {
 
-        /* Show current date */
+        /* Set today's date */
 
-        showCurrentDate();
-
-
-        /* Make sure result is hidden */
-
-        if (resultSection) {
-
-            resultSection.classList.remove(
-                "show"
-            );
-
-        }
+        setCurrentDate();
 
 
-        /* Default values */
+        /* Set maximum birth date */
 
-        if (ageYears) {
+        setBirthDateLimit();
 
-            ageYears.textContent =
-                "0";
 
-        }
+        /* Make sure result starts clean */
 
-        if (ageMonths) {
+        if (
+            yearsValue
+        ) {
 
-            ageMonths.textContent =
-                "0";
-
-        }
-
-        if (ageDays) {
-
-            ageDays.textContent =
+            yearsValue.textContent =
                 "0";
 
         }
 
 
-        console.log(
-            "Age Calculator Part 2 loaded successfully 🚀"
-        );
-
-    }
-);
-/* =====================================================
-   QUICK TOOLS OFFICIAL
-   AGE CALCULATOR — CLEAN SCRIPT
-   PART 3
-===================================================== */
-
-
-/* =====================================================
-   RESULT ANIMATION
-===================================================== */
-
-function animateResults() {
-
-    if (!resultSection) {
-        return;
-    }
-
-    resultSection.classList.remove(
-        "show"
-    );
-
-
-    /* Force browser reflow */
-
-    void resultSection.offsetWidth;
-
-
-    resultSection.classList.add(
-        "show"
-    );
-
-}
-
-
-/* =====================================================
-   UPDATE RESULT WITH ANIMATION
-===================================================== */
-
-function showAgeResults() {
-
-    if (!resultSection) {
-        return;
-    }
-
-    animateResults();
-
-}
-
-
-/* =====================================================
-   COPY BUTTON FEEDBACK
-===================================================== */
-
-function showCopyFeedback() {
-
-    if (!copyAgeBtn) {
-        return;
-    }
-
-
-    const originalHTML =
-        copyAgeBtn.innerHTML;
-
-
-    copyAgeBtn.innerHTML = `
-        <i class="fa-solid fa-check"></i>
-        Copied Successfully
-    `;
-
-
-    copyAgeBtn.classList.add(
-        "success"
-    );
-
-
-    setTimeout(
-        function() {
-
-            copyAgeBtn.innerHTML =
-                originalHTML;
-
-            copyAgeBtn.classList.remove(
-                "success"
-            );
-
-        },
-        2000
-    );
-
-}
-
-
-/* =====================================================
-   SAFE COPY AGE FUNCTION
-===================================================== */
-
-async function copyAgeResult() {
-
-    if (
-        !ageYears ||
-        !ageMonths ||
-        !ageDays
-    ) {
-
-        return;
-
-    }
-
-
-    const years =
-        ageYears.textContent;
-
-
-    const months =
-        ageMonths.textContent;
-
-
-    const days =
-        ageDays.textContent;
-
-
-    const text =
-        `My exact age is ${years} years, ${months} months and ${days} days.`;
-
-
-    try {
-
-        await navigator.clipboard.writeText(
-            text
-        );
-
-
-        showCopyFeedback();
-
-
-    } catch (error) {
-
-        /* Fallback for older browsers */
-
-        const textArea =
-            document.createElement(
-                "textarea"
-            );
-
-
-        textArea.value =
-            text;
-
-
-        textArea.style.position =
-            "fixed";
-
-
-        textArea.style.left =
-            "-9999px";
-
-
-        document.body.appendChild(
-            textArea
-        );
-
-
-        textArea.select();
-
-
-        try {
-
-            document.execCommand(
-                "copy"
-            );
-
-            showCopyFeedback();
-
-        } catch (copyError) {
-
-            alert(
-                "Unable to copy age result."
-            );
-
-        }
-
-
-        document.body.removeChild(
-            textArea
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   CONNECT COPY BUTTON
-===================================================== */
-
-if (copyAgeBtn) {
-
-    copyAgeBtn.addEventListener(
-        "click",
-        function() {
-
-            copyAgeResult();
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   SHARE RESULT FUNCTION
-===================================================== */
-
-async function shareAgeResult() {
-
-    if (
-        !ageYears ||
-        !ageMonths ||
-        !ageDays
-    ) {
-
-        return;
-
-    }
-
-
-    const years =
-        ageYears.textContent;
-
-
-    const months =
-        ageMonths.textContent;
-
-
-    const days =
-        ageDays.textContent;
-
-
-    const shareText =
-        `My exact age is ${years} years, ${months} months and ${days} days. Calculated using Quick Tools Official Age Calculator.`;
-
-
-    if (
-        navigator.share
-    ) {
-
-        try {
-
-            await navigator.share({
-
-                title:
-                    "My Exact Age",
-
-                text:
-                    shareText,
-
-                url:
-                    window.location.href
-
-            });
-
-        } catch (error) {
-
-            console.log(
-                "Sharing cancelled."
-            );
-
-        }
-
-    } else {
-
-        try {
-
-            await navigator.clipboard.writeText(
-                shareText
-            );
-
-
-            alert(
-                "Age result copied. You can now share it!"
-            );
-
-
-        } catch (error) {
-
-            alert(
-                shareText
-            );
-
-        }
-
-    }
-
-}
-
-
-/* =====================================================
-   CONNECT SHARE BUTTON
-===================================================== */
-
-if (shareBtn) {
-
-    shareBtn.addEventListener(
-        "click",
-        function() {
-
-            shareAgeResult();
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   BACK TO TOP VISIBILITY
-===================================================== */
-
-function updateBackToTop() {
-
-    if (!backToTop) {
-        return;
-    }
-
-
-    if (
-        window.scrollY >
-        300
-    ) {
-
-        backToTop.classList.add(
-            "show"
-        );
-
-    } else {
-
-        backToTop.classList.remove(
-            "show"
-        );
-
-    }
-
-}
-
-
-window.addEventListener(
-    "scroll",
-    updateBackToTop
-);
-
-
-/* =====================================================
-   BACK TO TOP CLICK
-===================================================== */
-
-if (backToTop) {
-
-    backToTop.addEventListener(
-        "click",
-        function() {
-
-            window.scrollTo({
-
-                top: 0,
-
-                behavior: "smooth"
-
-            });
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   RESET SCROLL POSITION
-===================================================== */
-
-if (resetBtn) {
-
-    resetBtn.addEventListener(
-        "click",
-        function() {
-
-            setTimeout(
-                function() {
-
-                    window.scrollTo({
-
-                        top: 0,
-
-                        behavior: "smooth"
-
-                    });
-
-                },
-                100
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   CURRENT DATE REFRESH
-===================================================== */
-
-function refreshCurrentDate() {
-
-    if (
-        currentDateElement
-    ) {
-
-        currentDateElement.textContent =
-            formatDate(
-                new Date()
-            );
-
-    }
-
-}
-
-
-/* Update date every minute */
-
-setInterval(
-    refreshCurrentDate,
-    60000
-);
-
-
-/* =====================================================
-   PAGE LOAD
-===================================================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-        refreshCurrentDate();
-
-        updateBackToTop();
-
-
-        /* Set default result values */
-
-        if (ageYears) {
-
-            ageYears.textContent =
+        if (
+            monthsValue
+        ) {
+
+            monthsValue.textContent =
                 "0";
 
         }
 
 
-        if (ageMonths) {
+        if (
+            daysValue
+        ) {
 
-            ageMonths.textContent =
+            daysValue.textContent =
                 "0";
 
         }
 
 
-        if (ageDays) {
-
-            ageDays.textContent =
-                "0";
-
-        }
-
-
-        if (totalDays) {
-
-            totalDays.textContent =
-                "0";
-
-        }
-
-
-        if (totalWeeks) {
-
-            totalWeeks.textContent =
-                "0";
-
-        }
-
-
-        if (totalMonths) {
-
-            totalMonths.textContent =
-                "0";
-
-        }
-
+        /* Console message */
 
         console.log(
             "Quick Tools Official Age Calculator is ready 🚀"
@@ -1665,7 +1418,7 @@ document.addEventListener(
 
 
 /* =====================================================
-   FINAL SAFETY CHECK
+   ERROR CHECK
 ===================================================== */
 
 window.addEventListener(
@@ -1674,8 +1427,17 @@ window.addEventListener(
 
         console.error(
             "Age Calculator Error:",
-            event.error
+            event.message
         );
 
     }
+);
+
+
+/* =====================================================
+   FINAL MESSAGE
+===================================================== */
+
+console.log(
+    "Age Calculator JavaScript loaded successfully ✅"
 );
