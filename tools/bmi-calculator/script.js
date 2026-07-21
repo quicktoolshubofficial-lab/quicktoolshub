@@ -1,15 +1,105 @@
 // ==========================================
-// BMI CALCULATOR - SCRIPT.JS
-// PART 1
+// QUICK TOOLS HUB - BMI CALCULATOR
+// COMPLETE SCRIPT.JS
 // ==========================================
 
-// Get HTML Elements
-const heightInput = document.getElementById("height");
-const weightInput = document.getElementById("weight");
-const calculateBtn = document.getElementById("calculateBMI");
 
-const bmiResult = document.getElementById("bmiResult");
-const bmiCategory = document.getElementById("bmiCategory");
+// ==========================================
+// GET HTML ELEMENTS
+// ==========================================
+
+const metricBtn = document.getElementById("metricBtn");
+const imperialBtn = document.getElementById("imperialBtn");
+
+const metricForm = document.getElementById("metricForm");
+const imperialForm = document.getElementById("imperialForm");
+
+const weightInput = document.getElementById("weight");
+const heightInput = document.getElementById("height");
+
+const imperialWeightInput =
+    document.getElementById("imperialWeight");
+
+const feetInput =
+    document.getElementById("feet");
+
+const inchesInput =
+    document.getElementById("inches");
+
+const calculateBtn =
+    document.getElementById("calculateBtn");
+
+const resetBtn =
+    document.getElementById("resetBtn");
+
+const errorMessage =
+    document.getElementById("errorMessage");
+
+const resultSection =
+    document.getElementById("resultSection");
+
+const bmiValue =
+    document.getElementById("bmiValue");
+
+const bmiCategory =
+    document.getElementById("bmiCategory");
+
+const categoryText =
+    document.getElementById("categoryText");
+
+const healthyRange =
+    document.getElementById("healthyRange");
+
+const recommendationText =
+    document.getElementById("recommendationText");
+
+const scaleIndicator =
+    document.getElementById("scaleIndicator");
+
+
+// ==========================================
+// CURRENT UNIT
+// ==========================================
+
+let currentUnit = "metric";
+
+
+// ==========================================
+// METRIC BUTTON
+// ==========================================
+
+metricBtn.addEventListener("click", function () {
+
+    currentUnit = "metric";
+
+    metricBtn.classList.add("active");
+    imperialBtn.classList.remove("active");
+
+    metricForm.classList.remove("hidden");
+    imperialForm.classList.add("hidden");
+
+    clearError();
+
+});
+
+
+// ==========================================
+// IMPERIAL BUTTON
+// ==========================================
+
+imperialBtn.addEventListener("click", function () {
+
+    currentUnit = "imperial";
+
+    imperialBtn.classList.add("active");
+    metricBtn.classList.remove("active");
+
+    imperialForm.classList.remove("hidden");
+    metricForm.classList.add("hidden");
+
+    clearError();
+
+});
 
 
 // ==========================================
@@ -18,92 +108,232 @@ const bmiCategory = document.getElementById("bmiCategory");
 
 calculateBtn.addEventListener("click", function () {
 
-    // Get values from inputs
-    const height = parseFloat(heightInput.value);
-    const weight = parseFloat(weightInput.value);
+    clearError();
 
 
-    // Check empty fields
-    if (!height || !weight) {
-        alert("Please enter your height and weight.");
-        return;
+    let bmi;
+
+
+    // ======================================
+    // METRIC CALCULATION
+    // ======================================
+
+    if (currentUnit === "metric") {
+
+        const weight =
+            parseFloat(weightInput.value);
+
+        const height =
+            parseFloat(heightInput.value);
+
+
+        // Validate inputs
+
+        if (
+            isNaN(weight) ||
+            isNaN(height) ||
+            weight <= 0 ||
+            height <= 0
+        ) {
+
+            showError(
+                "Please enter a valid weight and height."
+            );
+
+            return;
+        }
+
+
+        // Convert CM to Meters
+
+        const heightInMeters =
+            height / 100;
+
+
+        // BMI Formula
+
+        bmi =
+            weight /
+            (heightInMeters * heightInMeters);
+
     }
 
 
-    // Check positive values
-    if (height <= 0 || weight <= 0) {
-        alert("Please enter valid positive numbers.");
-        return;
+    // ======================================
+    // IMPERIAL CALCULATION
+    // ======================================
+
+    else {
+
+        const weight =
+            parseFloat(
+                imperialWeightInput.value
+            );
+
+        const feet =
+            parseFloat(
+                feetInput.value
+            );
+
+        const inches =
+            parseFloat(
+                inchesInput.value
+            ) || 0;
+
+
+        // Validate Weight
+
+        if (
+            isNaN(weight) ||
+            weight <= 0
+        ) {
+
+            showError(
+                "Please enter a valid weight."
+            );
+
+            return;
+        }
+
+
+        // Validate Feet
+
+        if (
+            isNaN(feet) ||
+            feet <= 0
+        ) {
+
+            showError(
+                "Please enter your height in feet."
+            );
+
+            return;
+        }
+
+
+        // Validate Inches
+
+        if (
+            inches < 0 ||
+            inches > 11
+        ) {
+
+            showError(
+                "Inches must be between 0 and 11."
+            );
+
+            return;
+        }
+
+
+        // Convert Height to Total Inches
+
+        const totalInches =
+            (feet * 12) + inches;
+
+
+        // Imperial BMI Formula
+
+        bmi =
+            (weight * 703) /
+            (totalInches * totalInches);
+
     }
 
 
-    // Convert height from CM to Meters
-    const heightInMeters = height / 100;
+    // ======================================
+    // DISPLAY BMI RESULT
+    // ======================================
+
+    displayBMIResult(bmi);
+
+});
 
 
-    // Calculate BMI
-    const bmi = weight / (heightInMeters * heightInMeters);
+// ==========================================
+// DISPLAY BMI RESULT
+// ==========================================
+
+function displayBMIResult(bmi) {
+
+    // Round BMI
+
+    const roundedBMI =
+        bmi.toFixed(1);
 
 
-    // Show BMI Result
-    bmiResult.textContent = bmi.toFixed(1);
+    // Display BMI
+
+    bmiValue.textContent =
+        roundedBMI;
 
 
-    // ==========================================
-    // BMI CATEGORY
-    // ==========================================
+    // Get Category
+
+    let category;
+
 
     if (bmi < 18.5) {
 
-        bmiCategory.textContent = "Underweight";
-
-    } else if (bmi < 25) {
-
-        bmiCategory.textContent = "Normal Weight";
-
-    } else if (bmi < 30) {
-
-        bmiCategory.textContent = "Overweight";
-
-    } else {
-
-        bmiCategory.textContent = "Obesity";
+        category = "Underweight";
 
     }
 
-});
-// ==========================================
-// BMI CALCULATOR - SCRIPT.JS
-// PART 2
-// ==========================================
+    else if (bmi < 25) {
+
+        category = "Normal Weight";
+
+    }
+
+    else if (bmi < 30) {
+
+        category = "Overweight";
+
+    }
+
+    else {
+
+        category = "Obesity";
+
+    }
 
 
-// ==========================================
-// RESET BUTTON
-// ==========================================
+    // Display Category
 
-const resetBtn = document.getElementById("resetBMI");
+    bmiCategory.textContent =
+        category;
 
-if (resetBtn) {
+    categoryText.textContent =
+        category;
 
-    resetBtn.addEventListener("click", function () {
 
-        // Clear input fields
-        heightInput.value = "";
-        weightInput.value = "";
+    // Calculate Healthy Weight Range
 
-        // Reset result
-        bmiResult.textContent = "0";
+    calculateHealthyWeight();
 
-        // Reset category
-        bmiCategory.textContent = "";
 
-        // Hide result box if available
-        const resultBox = document.getElementById("bmiResultBox");
+    // Show Recommendation
 
-        if (resultBox) {
-            resultBox.style.display = "none";
-        }
+    showRecommendation(bmi);
+
+
+    // Update Scale
+
+    updateScale(bmi);
+
+
+    // Show Result Section
+
+    resultSection.classList.remove("hidden");
+
+
+    // Scroll to Result
+
+    resultSection.scrollIntoView({
+
+        behavior: "smooth",
+
+        block: "start"
 
     });
 
@@ -111,126 +341,84 @@ if (resetBtn) {
 
 
 // ==========================================
-// ENTER KEY SUPPORT
+// HEALTHY WEIGHT RANGE
 // ==========================================
 
-heightInput.addEventListener("keydown", function (event) {
+function calculateHealthyWeight() {
 
-    if (event.key === "Enter") {
-        calculateBtn.click();
-    }
-
-});
+    let minWeight;
+    let maxWeight;
 
 
-weightInput.addEventListener("keydown", function (event) {
+    // ======================================
+    // METRIC HEALTHY WEIGHT
+    // ======================================
 
-    if (event.key === "Enter") {
-        calculateBtn.click();
-    }
+    if (currentUnit === "metric") {
 
-});
-
-
-// ==========================================
-// INPUT VALIDATION
-// ==========================================
-
-heightInput.addEventListener("input", function () {
-
-    // Remove negative sign
-    if (heightInput.value < 0) {
-        heightInput.value = "";
-    }
-
-});
+        const height =
+            parseFloat(heightInput.value);
 
 
-weightInput.addEventListener("input", function () {
-
-    // Remove negative sign
-    if (weightInput.value < 0) {
-        weightInput.value = "";
-    }
-
-});
+        const heightInMeters =
+            height / 100;
 
 
-// ==========================================
-// SHOW RESULT BOX
-// ==========================================
+        minWeight =
+            18.5 *
+            (heightInMeters * heightInMeters);
 
-calculateBtn.addEventListener("click", function () {
 
-    const resultBox =
-        document.getElementById("bmiResultBox");
+        maxWeight =
+            24.9 *
+            (heightInMeters * heightInMeters);
 
-    if (resultBox) {
 
-        // Check if valid values are entered
-        const height = parseFloat(heightInput.value);
-        const weight = parseFloat(weightInput.value);
-
-        if (height > 0 && weight > 0) {
-            resultBox.style.display = "block";
-        }
+        healthyRange.textContent =
+            minWeight.toFixed(1) +
+            " – " +
+            maxWeight.toFixed(1) +
+            " kg";
 
     }
 
-});
-// ==========================================
-// BMI CALCULATOR - SCRIPT.JS
-// PART 3
-// ==========================================
 
+    // ======================================
+    // IMPERIAL HEALTHY WEIGHT
+    // ======================================
 
-// ==========================================
-// BMI DETAILED MESSAGE
-// ==========================================
-
-const bmiMessage = document.getElementById("bmiMessage");
-
-
-// ==========================================
-// UPDATE BMI STATUS
-// ==========================================
-
-function updateBMIStatus(bmi) {
-
-    if (!bmiMessage) {
-        return;
-    }
-
-
-    // Underweight
-    if (bmi < 18.5) {
-
-        bmiMessage.textContent =
-            "Your BMI is below the normal range. Consider maintaining a balanced and nutritious diet.";
-
-    }
-
-    // Normal Weight
-    else if (bmi < 25) {
-
-        bmiMessage.textContent =
-            "Your BMI is within the normal range. Keep maintaining a healthy lifestyle!";
-
-    }
-
-    // Overweight
-    else if (bmi < 30) {
-
-        bmiMessage.textContent =
-            "Your BMI is above the normal range. Regular exercise and a balanced diet may help.";
-
-    }
-
-    // Obesity
     else {
 
-        bmiMessage.textContent =
-            "Your BMI is in the obesity range. Consider focusing on a healthy lifestyle and consult a healthcare professional if needed.";
+        const feet =
+            parseFloat(feetInput.value);
+
+        const inches =
+            parseFloat(inchesInput.value) || 0;
+
+
+        const totalInches =
+            (feet * 12) + inches;
+
+
+        minWeight =
+            (18.5 *
+                totalInches *
+                totalInches) /
+            703;
+
+
+        maxWeight =
+            (24.9 *
+                totalInches *
+                totalInches) /
+            703;
+
+
+        healthyRange.textContent =
+            minWeight.toFixed(1) +
+            " – " +
+            maxWeight.toFixed(1) +
+            " lbs";
 
     }
 
@@ -238,68 +426,187 @@ function updateBMIStatus(bmi) {
 
 
 // ==========================================
-// CONNECT STATUS WITH BMI CALCULATION
+// BMI RECOMMENDATION
 // ==========================================
 
-calculateBtn.addEventListener("click", function () {
+function showRecommendation(bmi) {
 
-    const height =
-        parseFloat(heightInput.value);
+    if (bmi < 18.5) {
 
-    const weight =
-        parseFloat(weightInput.value);
+        recommendationText.textContent =
+            "Your BMI is below the typical healthy range. A balanced diet and healthy lifestyle may help you reach a healthier weight. Consider speaking with a healthcare professional for personalized advice.";
+
+    }
+
+    else if (bmi < 25) {
+
+        recommendationText.textContent =
+            "Your BMI falls within the typical healthy range. Continue maintaining a balanced diet, regular physical activity, and a healthy lifestyle.";
+
+    }
+
+    else if (bmi < 30) {
+
+        recommendationText.textContent =
+            "Your BMI is above the typical healthy range. Regular physical activity and a balanced diet may help support a healthier weight.";
+
+    }
+
+    else {
+
+        recommendationText.textContent =
+            "Your BMI is in the obesity range. Consider discussing your health and lifestyle with a qualified healthcare professional for personalized guidance.";
+
+    }
+
+}
 
 
-    // Stop if values are invalid
-    if (!height || !weight || height <= 0 || weight <= 0) {
-        return;
+// ==========================================
+// BMI SCALE INDICATOR
+// ==========================================
+
+function updateScale(bmi) {
+
+    let percentage;
+
+
+    if (bmi < 18.5) {
+
+        percentage =
+            (bmi / 18.5) * 25;
+
+    }
+
+    else if (bmi < 25) {
+
+        percentage =
+            25 +
+            ((bmi - 18.5) / 6.5) * 25;
+
+    }
+
+    else if (bmi < 30) {
+
+        percentage =
+            50 +
+            ((bmi - 25) / 5) * 25;
+
+    }
+
+    else {
+
+        percentage =
+            75 +
+            Math.min(
+                ((bmi - 30) / 20) * 25,
+                25
+            );
+
     }
 
 
-    // Convert CM to Meters
-    const heightInMeters =
-        height / 100;
+    // Keep indicator between 0 and 100
+
+    percentage =
+        Math.max(
+            0,
+            Math.min(
+                percentage,
+                100
+            )
+        );
 
 
-    // Calculate BMI
-    const bmi =
-        weight / (heightInMeters * heightInMeters);
+    // Move Indicator
+
+    scaleIndicator.style.left =
+        percentage + "%";
+
+}
 
 
-    // Update detailed message
-    updateBMIStatus(bmi);
+// ==========================================
+// RESET BMI CALCULATOR
+// ==========================================
+
+resetBtn.addEventListener("click", function () {
+
+    // Clear Metric Inputs
+
+    weightInput.value = "";
+
+    heightInput.value = "";
+
+
+    // Clear Imperial Inputs
+
+    imperialWeightInput.value = "";
+
+    feetInput.value = "";
+
+    inchesInput.value = "";
+
+
+    // Reset Result
+
+    bmiValue.textContent =
+        "0.0";
+
+    bmiCategory.textContent =
+        "--";
+
+    categoryText.textContent =
+        "--";
+
+    healthyRange.textContent =
+        "--";
+
+    recommendationText.textContent =
+        "Your personalized BMI interpretation will appear here.";
+
+
+    // Reset Scale
+
+    scaleIndicator.style.left =
+        "0%";
+
+
+    // Hide Result
+
+    resultSection.classList.add("hidden");
+
+
+    // Clear Error
+
+    clearError();
 
 });
 
 
 // ==========================================
-// BMI RANGE INFORMATION
+// ERROR MESSAGE
 // ==========================================
 
-const bmiRanges = document.getElementById("bmiRanges");
+function showError(message) {
 
-if (bmiRanges) {
+    errorMessage.textContent =
+        message;
 
-    bmiRanges.innerHTML = `
-        <div class="bmi-range-item">
-            <span>Underweight</span>
-            <strong>Below 18.5</strong>
-        </div>
+    errorMessage.classList.add("show");
 
-        <div class="bmi-range-item">
-            <span>Normal Weight</span>
-            <strong>18.5 - 24.9</strong>
-        </div>
+}
 
-        <div class="bmi-range-item">
-            <span>Overweight</span>
-            <strong>25 - 29.9</strong>
-        </div>
 
-        <div class="bmi-range-item">
-            <span>Obesity</span>
-            <strong>30 or above</strong>
-        </div>
-    `;
+// ==========================================
+// CLEAR ERROR
+// ==========================================
+
+function clearError() {
+
+    errorMessage.textContent =
+        "";
+
+    errorMessage.classList.remove("show");
 
 }
