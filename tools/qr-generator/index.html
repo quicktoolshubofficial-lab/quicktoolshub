@@ -9,7 +9,7 @@
           content="width=device-width, initial-scale=1.0">
 
     <meta name="description"
-          content="Create professional branded QR codes with custom shapes, colors, gradients, logos and premium templates using Brand QR Studio by Quick Tools Official.">
+          content="Create professional branded QR codes with custom shapes, colors, gradients and logos using Brand QR Studio by Quick Tools Official.">
 
     <meta name="keywords"
           content="Brand QR Studio, Custom QR Code, QR Code Generator, Logo QR Code, Branded QR">
@@ -21,7 +21,6 @@
 
 
     <!-- Google Font -->
-
     <link rel="preconnect"
           href="https://fonts.googleapis.com">
 
@@ -34,18 +33,15 @@
 
 
     <!-- Font Awesome -->
-
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 
     <!-- QR Code Styling Library -->
-
     <script src="https://unpkg.com/qr-code-styling/lib/qr-code-styling.js"></script>
 
 
     <!-- Main CSS -->
-
     <link rel="stylesheet"
           href="style.css">
 
@@ -55,9 +51,9 @@
 <body>
 
 
-<!-- =========================
+<!-- =========================================
      ANIMATED BACKGROUND
-========================= -->
+========================================= -->
 
 <div class="background-animation">
 
@@ -70,14 +66,16 @@
 </div>
 
 
-<!-- =========================
+<!-- =========================================
      HEADER
-========================= -->
+========================================= -->
 
 <header>
 
     <div class="header-container">
 
+
+        <!-- Brand Logo -->
 
         <a href="../../index.html"
            class="brand-logo">
@@ -92,6 +90,8 @@
 
         </a>
 
+
+        <!-- Back Button -->
 
         <a href="../../index.html"
            class="back-button">
@@ -108,18 +108,19 @@
 </header>
 
 
-<!-- =========================
+<!-- =========================================
      MAIN CONTENT
-========================= -->
+========================================= -->
 
 <main class="main-container">
 
 
-    <!-- =========================
-         INTRO
-    ========================= -->
+    <!-- =====================================
+         PAGE INTRO
+    ====================================== -->
 
     <section class="page-intro">
+
 
         <div class="studio-icon">
 
@@ -151,22 +152,26 @@
 
         </p>
 
+
     </section>
 
 
-    <!-- =========================
+
+    <!-- =====================================
          QR STUDIO
-    ========================= -->
+    ====================================== -->
 
     <section class="studio-container">
 
 
-        <!-- =========================
+        <!-- =================================
              CONTROL PANEL
-        ========================= -->
+        ================================== -->
 
         <div class="control-panel">
 
+
+            <!-- Panel Heading -->
 
             <div class="panel-heading">
 
@@ -188,9 +193,10 @@
             </div>
 
 
-            <!-- =========================
+
+            <!-- =================================
                  QR CONTENT
-            ========================= -->
+            ================================== -->
 
             <div class="form-group">
 
@@ -211,9 +217,10 @@
             </div>
 
 
-            <!-- =========================
-                 BRAND LOGO
-            ========================= -->
+
+            <!-- =================================
+                 BRAND LOGO UPLOAD
+            ================================== -->
 
             <div class="form-group">
 
@@ -228,11 +235,16 @@
 
                 <div class="logo-upload-box">
 
+
+                    <!-- Hidden File Input -->
+
                     <input
                         type="file"
                         id="logoInput"
                         accept="image/png,image/jpeg,image/webp">
 
+
+                    <!-- Upload Area -->
 
                     <label
                         for="logoInput"
@@ -262,8 +274,11 @@
 
                     </label>
 
+
                 </div>
 
+
+                <!-- Logo Preview -->
 
                 <div
                     id="logoPreview"
@@ -274,11 +289,13 @@
             </div>
 
 
-            <!-- =========================
-                 AUTO BRAND COLOR
-            ========================= -->
+
+            <!-- =================================
+                 BRAND COLOR DETECTION
+            ================================== -->
 
             <div class="form-group brand-color-section">
+
 
                 <label>
 
@@ -292,17 +309,24 @@
                 <div class="brand-color-options">
 
 
+                    <!-- Auto Detect Button -->
+
                     <button
                         type="button"
                         id="autoBrandColorBtn"
                         class="auto-brand-btn">
 
+
                         <i class="fa-solid fa-wand-magic-sparkles"></i>
 
                         Auto Detect From Logo
 
+
                     </button>
 
+
+
+                    <!-- Detected Color -->
 
                     <div class="detected-color">
 
@@ -313,7 +337,8 @@
                         </span>
 
 
-                        <span id="detectedColorText">
+                        <span
+                            id="detectedColorText">
 
                             No brand color detected
 
@@ -322,16 +347,19 @@
 
                     </div>
 
+
                 </div>
 
             </div>
 
 
-            <!-- =========================
+
+            <!-- =================================
                  QR DOT STYLE
-            ========================= -->
+            ================================== -->
 
             <div class="form-group">
+
 
                 <label>
 
@@ -345,72 +373,101 @@
                 <div class="style-options">
 
 
+                    <!-- Square -->
+
                     <button
                         type="button"
                         class="style-option active"
                         data-dot="square">
 
-                        <span class="style-preview square-style"></span>
+                        <span
+                            class="style-preview square-style">
+                        </span>
 
                         Square
 
                     </button>
 
 
+
+                    <!-- Rounded -->
+
                     <button
                         type="button"
                         class="style-option"
                         data-dot="rounded">
 
-                        <span class="style-preview rounded-style"></span>
+                        <span
+                            class="style-preview rounded-style">
+                        </span>
 
                         Rounded
 
                     </button>
 
 
+
+                    <!-- Dots -->
+
                     <button
                         type="button"
                         class="style-option"
                         data-dot="dots">
 
-                        <span class="style-preview dots-style"></span>
+                        <span
+                            class="style-preview dots-style">
+                        </span>
 
                         Dots
 
                     </button>
 
 
+
+                    <!-- Classy -->
+
                     <button
                         type="button"
                         class="style-option"
                         data-dot="classy">
 
-                        <span class="style-preview classy-style"></span>
+                        <span
+                            class="style-preview classy-style">
+                        </span>
 
                         Classy
 
                     </button>
 
 
+
+                    <!-- Soft -->
+
                     <button
                         type="button"
                         class="style-option"
                         data-dot="classy-rounded">
 
-                        <span class="style-preview classy-rounded-style"></span>
+                        <span
+                            class="style-preview classy-rounded-style">
+                        </span>
 
                         Soft
 
                     </button>
 
 
+
+                    <!-- Extra Round -->
+
                     <button
                         type="button"
                         class="style-option"
                         data-dot="extra-rounded">
 
-                        <span class="style-preview extra-rounded-style"></span>
+                        <span
+                            class="style-preview extra-rounded-style">
+                        </span>
 
                         Extra Round
 
@@ -422,124 +479,13 @@
             </div>
 
 
-            <!-- =========================
-                 PREMIUM QR TEMPLATES
-            ========================= -->
 
-            <div class="form-group">
-
-                <label>
-
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
-
-                    Premium QR Template
-
-                </label>
-
-
-                <div class="template-grid">
-
-
-                    <button
-                        type="button"
-                        class="template-option active"
-                        data-template="corporate">
-
-                        <span class="template-preview corporate-preview">
-
-                            <i class="fa-solid fa-building"></i>
-
-                        </span>
-
-                        <span>
-                            Corporate
-                        </span>
-
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="template-option"
-                        data-template="luxury">
-
-                        <span class="template-preview luxury-preview">
-
-                            <i class="fa-solid fa-gem"></i>
-
-                        </span>
-
-                        <span>
-                            Luxury
-                        </span>
-
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="template-option"
-                        data-template="modern">
-
-                        <span class="template-preview modern-preview">
-
-                            <i class="fa-solid fa-bolt"></i>
-
-                        </span>
-
-                        <span>
-                            Modern
-                        </span>
-
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="template-option"
-                        data-template="minimal">
-
-                        <span class="template-preview minimal-preview">
-
-                            <i class="fa-solid fa-minus"></i>
-
-                        </span>
-
-                        <span>
-                            Minimal
-                        </span>
-
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="template-option"
-                        data-template="neon">
-
-                        <span class="template-preview neon-preview">
-
-                            <i class="fa-solid fa-star"></i>
-
-                        </span>
-
-                        <span>
-                            Neon
-                        </span>
-
-                    </button>
-
-
-                </div>
-
-            </div>
-
-
-            <!-- =========================
+            <!-- =================================
                  QR CORNER STYLE
-            ========================= -->
+            ================================== -->
 
             <div class="form-group">
+
 
                 <label for="cornerStyle">
 
@@ -575,12 +521,15 @@
             </div>
 
 
-            <!-- =========================
+
+            <!-- =================================
                  QR COLORS
-            ========================= -->
+            ================================== -->
 
             <div class="color-controls">
 
+
+                <!-- QR Color -->
 
                 <div class="color-control">
 
@@ -598,6 +547,9 @@
 
                 </div>
 
+
+
+                <!-- Background Color -->
 
                 <div class="color-control">
 
@@ -619,14 +571,16 @@
             </div>
 
 
-            <!-- =========================
+
+            <!-- =================================
                  GRADIENT
-            ========================= -->
+            ================================== -->
 
             <div class="form-group gradient-section">
 
 
                 <label class="checkbox-label">
+
 
                     <input
                         type="checkbox"
@@ -639,8 +593,12 @@
 
                     </span>
 
+
                 </label>
 
+
+
+                <!-- Gradient Controls -->
 
                 <div
                     id="gradientControls"
@@ -648,6 +606,7 @@
 
 
                     <div class="color-control">
+
 
                         <label>
 
@@ -661,89 +620,23 @@
                             id="gradientColor"
                             value="#7c3aed">
 
+
                     </div>
 
 
                 </div>
 
-            </div>
-
-
-            <!-- =========================
-                 QR FRAME
-            ========================= -->
-
-            <div class="form-group">
-
-                <label for="qrFrame">
-
-                    <i class="fa-solid fa-border-all"></i>
-
-                    QR Frame
-
-                </label>
-
-
-                <select
-                    id="qrFrame"
-                    class="select-control">
-
-
-                    <option value="none">
-                        No Frame
-                    </option>
-
-
-                    <option value="scan-me">
-                        Scan Me
-                    </option>
-
-
-                    <option value="scan-here">
-                        Scan Here
-                    </option>
-
-
-                    <option value="visit-us">
-                        Visit Us
-                    </option>
-
-
-                    <option value="follow-us">
-                        Follow Us
-                    </option>
-
-
-                    <option value="custom">
-                        Custom Text
-                    </option>
-
-
-                </select>
-
-
-                <div
-                    id="customFrameBox"
-                    class="custom-frame-box">
-
-
-                    <input
-                        type="text"
-                        id="customFrameText"
-                        maxlength="30"
-                        placeholder="Enter your custom text">
-
-
-                </div>
 
             </div>
 
 
-            <!-- =========================
+
+            <!-- =================================
                  QR SIZE
-            ========================= -->
+            ================================== -->
 
             <div class="form-group">
+
 
                 <label for="qrSize">
 
@@ -777,11 +670,13 @@
             </div>
 
 
-            <!-- =========================
+
+            <!-- =================================
                  LOGO SIZE
-            ========================= -->
+            ================================== -->
 
             <div class="form-group">
+
 
                 <label for="logoSize">
 
@@ -815,31 +710,41 @@
             </div>
 
 
-            <!-- =========================
+
+            <!-- =================================
                  ACTION BUTTONS
-            ========================= -->
+            ================================== -->
 
             <div class="action-buttons">
 
+
+                <!-- Generate -->
 
                 <button
                     id="generateBtn"
                     class="generate-btn">
 
+
                     <i class="fa-solid fa-wand-magic-sparkles"></i>
 
                     Generate Brand QR
 
+
                 </button>
 
+
+
+                <!-- Reset -->
 
                 <button
                     id="clearBtn"
                     class="clear-btn">
 
+
                     <i class="fa-solid fa-rotate-left"></i>
 
                     Reset
+
 
                 </button>
 
@@ -850,12 +755,15 @@
         </div>
 
 
-        <!-- =========================
+
+        <!-- =================================
              PREVIEW PANEL
-        ========================= -->
+        ================================== -->
 
         <div class="preview-panel">
 
+
+            <!-- Preview Header -->
 
             <div class="preview-header">
 
@@ -868,7 +776,6 @@
 
                     </h2>
 
-
                     <p>
 
                         Your branded QR code appears here.
@@ -878,11 +785,15 @@
                 </div>
 
 
+                <!-- Live Status -->
+
                 <span class="live-status">
+
 
                     <span class="status-dot"></span>
 
                     Live
+
 
                 </span>
 
@@ -890,9 +801,10 @@
             </div>
 
 
-            <!-- =========================
-                 QR PREVIEW
-            ========================= -->
+
+            <!-- =================================
+                 QR PREVIEW AREA
+            ================================== -->
 
             <div class="qr-preview-area">
 
@@ -901,6 +813,8 @@
                     id="qrContainer"
                     class="qr-container">
 
+
+                    <!-- Placeholder -->
 
                     <div class="qr-placeholder">
 
@@ -936,54 +850,43 @@
             </div>
 
 
-            <!-- =========================
-                 QR FRAME PREVIEW
-            ========================= -->
 
-            <div
-                id="qrFramePreview"
-                class="qr-frame-preview">
-
-
-                <div
-                    id="frameText"
-                    class="frame-text">
-
-                    Scan Me
-
-                </div>
-
-
-            </div>
-
-
-            <!-- =========================
+            <!-- =================================
                  DOWNLOAD BUTTONS
-            ========================= -->
+            ================================== -->
 
             <div class="download-area">
 
+
+                <!-- PNG -->
 
                 <button
                     id="downloadPngBtn"
                     class="download-btn"
                     style="display: none;">
 
+
                     <i class="fa-solid fa-image"></i>
 
                     Download PNG
 
+
                 </button>
 
+
+
+                <!-- SVG -->
 
                 <button
                     id="downloadSvgBtn"
                     class="download-btn svg-download-btn"
                     style="display: none;">
 
+
                     <i class="fa-solid fa-file-code"></i>
 
                     Download SVG
+
 
                 </button>
 
@@ -991,9 +894,234 @@
             </div>
 
 
-            <!-- =========================
+
+            <!-- =================================
                  SCAN STATUS
-            ========================= -->
+            ================================== -->
 
             <div
-           
+                id="scanStatus"
+                class="scan-status">
+
+
+                <i class="fa-solid fa-shield-check"></i>
+
+
+                <span>
+
+                    Your QR code will be generated
+                    with high error correction.
+
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================
+         FEATURES
+    ====================================== -->
+
+    <section class="features-section">
+
+
+        <!-- Feature 1 -->
+
+        <div class="feature-card">
+
+
+            <div class="feature-icon">
+
+                <i class="fa-solid fa-palette"></i>
+
+            </div>
+
+
+            <h3>
+
+                Brand Colors
+
+            </h3>
+
+
+            <p>
+
+                Match your QR code
+                with your brand identity.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- Feature 2 -->
+
+        <div class="feature-card">
+
+
+            <div class="feature-icon">
+
+                <i class="fa-solid fa-image"></i>
+
+            </div>
+
+
+            <h3>
+
+                Logo Integration
+
+            </h3>
+
+
+            <p>
+
+                Add your brand logo
+                directly into your QR.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- Feature 3 -->
+
+        <div class="feature-card">
+
+
+            <div class="feature-icon">
+
+                <i class="fa-solid fa-shapes"></i>
+
+            </div>
+
+
+            <h3>
+
+                Custom Shapes
+
+            </h3>
+
+
+            <p>
+
+                Choose from multiple
+                professional QR styles.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- Feature 4 -->
+
+        <div class="feature-card">
+
+
+            <div class="feature-icon">
+
+                <i class="fa-solid fa-file-arrow-down"></i>
+
+            </div>
+
+
+            <h3>
+
+                PNG & SVG
+
+            </h3>
+
+
+            <p>
+
+                Download high-quality
+                QR codes for any project.
+
+            </p>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer>
+
+
+    <div class="footer-container">
+
+
+        <!-- Footer Logo -->
+
+        <div class="footer-logo">
+
+            ⚡ Quick Tools Official
+
+        </div>
+
+
+        <p>
+
+            Powerful, simple and free online tools
+            for everyone.
+
+        </p>
+
+
+
+        <!-- Footer Links -->
+
+        <div class="footer-links">
+
+
+            <a href="../../index.html">
+
+                Home
+
+            </a>
+
+
+            <a href="../../index.html#tools">
+
+                All Tools
+
+            </a>
+
+
+            <a href="../../index.html#categories">
+
+                Categories
+
+            </a>
+
+
+            <a href="../../index.html#about">
+
+                About
+
+            </a>
+
+
+            <a href="../../index.html#contact">
+                
