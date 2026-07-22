@@ -1,1198 +1,2191 @@
 /* =========================================================
-   QUICK TOOLS HUB
-   PDF TOOLS - JAVASCRIPT
+   MERGE PDF TOOL - JAVASCRIPT
    PART 1
 ========================================================= */
 
 
 /* =========================================================
-   DOM READY
+   PDF LIBRARY CHECK
 ========================================================= */
 
-document.addEventListener("DOMContentLoaded", function () {
-
-    console.log("Quick Tools Hub PDF Tools Loaded");
-
-
-    /* =====================================================
-       CATEGORY FILTER ELEMENTS
-    ===================================================== */
-
-    const categoryButtons =
-        document.querySelectorAll(".category-btn");
-
-    const toolCards =
-        document.querySelectorAll(".pdf-tool-card");
+const PDFLibAvailable =
+    typeof PDFLib !== "undefined";
 
 
-    /* =====================================================
-       CATEGORY FILTER FUNCTION
-    ===================================================== */
+/* =========================================================
+   DOM ELEMENTS
+========================================================= */
 
-    categoryButtons.forEach(function (button) {
+const fileInput =
+    document.getElementById("fileInput");
 
-        button.addEventListener("click", function () {
+const uploadArea =
+    document.getElementById("uploadArea");
+
+const selectFilesBtn =
+    document.getElementById("selectFilesBtn");
+
+const fileList =
+    document.getElementById("fileList");
+
+const fileListContainer =
+    document.getElementById("fileListContainer");
+
+const emptyState =
+    document.getElementById("emptyState");
+
+const mergeBtn =
+    document.getElementById("mergeBtn");
+
+const clearBtn =
+    document.getElementById("clearBtn");
+
+const toolMessage =
+    document.getElementById("toolMessage");
+
+const progressContainer =
+    document.getElementById("progressContainer");
+
+const progressBar =
+    document.getElementById("progressBar");
+
+const progressText =
+    document.getElementById("progressText");
+
+const resultSection =
+    document.getElementById("resultSection");
+
+const downloadBtn =
+    document.getElementById("downloadBtn");
 
 
-            /* ---------------------------------------------
-               REMOVE ACTIVE FROM ALL BUTTONS
-            --------------------------------------------- */
+/* =========================================================
+   FILE STORAGE
+========================================================= */
 
-            categoryButtons.forEach(function (btn) {
+let selectedFiles = [];
 
-                btn.classList.remove("active");
-
-            });
+let mergedPdfBytes = null;
 
 
-            /* ---------------------------------------------
-               ADD ACTIVE TO CLICKED BUTTON
-            --------------------------------------------- */
+/* =========================================================
+   INITIAL SETUP
+========================================================= */
 
-            this.classList.add("active");
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        updateFileList();
+
+        updateInterface();
+
+    }
+);
 
 
-            /* ---------------------------------------------
-               GET SELECTED CATEGORY
-            --------------------------------------------- */
+/* =========================================================
+   SELECT FILE BUTTON
+========================================================= */
 
-            const selectedCategory =
-                this.textContent
-                    .trim()
-                    .toLowerCase();
+if (selectFilesBtn && fileInput) {
+
+    selectFilesBtn.addEventListener(
+        "click",
+        (event) => {
+
+            event.preventDefault();
+
+            fileInput.click();
+
+        }
+    );
+
+}
 
 
-            /* ---------------------------------------------
-               SHOW ALL TOOLS
-            --------------------------------------------- */
+/* =========================================================
+   FILE INPUT CHANGE
+========================================================= */
 
-            if (
-                selectedCategory.includes("all")
-            ) {
+if (fileInput) {
 
-                toolCards.forEach(function (card) {
+    fileInput.addEventListener(
+        "change",
+        (event) => {
 
-                    card.style.display = "flex";
+            const files =
+                Array.from(
+                    event.target.files
+                );
 
-                });
+            addFiles(files);
+
+            fileInput.value = "";
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ADD FILES FUNCTION
+========================================================= */
+
+function addFiles(files) {
+
+    if (!files || files.length === 0) {
+
+        return;
+
+    }
+
+
+    const pdfFiles =
+        files.filter(
+            (file) => {
+
+                return (
+                    file.type === "application/pdf" ||
+                    file.name
+                        .toLowerCase()
+                        .endsWith(".pdf")
+                );
+
+            }
+        );
+
+
+    if (pdfFiles.length === 0) {
+
+        showMessage(
+            "Please select valid PDF files.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    pdfFiles.forEach(
+        (file) => {
+
+            const duplicate =
+                selectedFiles.some(
+                    (existingFile) => {
+
+                        return (
+                            existingFile.name === file.name &&
+                            existingFile.size === file.size &&
+                            existingFile.lastModified ===
+                            file.lastModified
+                        );
+
+                    }
+                );
+
+
+            if (!duplicate) {
+
+                selectedFiles.push(file);
+
+            }
+
+        }
+    );
+
+
+    updateFileList();
+
+    updateInterface();
+
+    showMessage(
+        `${pdfFiles.length} PDF file(s) added successfully.`,
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   UPDATE FILE LIST
+========================================================= */
+
+function updateFileList() {
+
+    if (!fileList) {
+
+        return;
+
+    }
+
+
+    fileList.innerHTML = "";
+
+
+    if (selectedFiles.length === 0) {
+
+        if (emptyState) {
+
+            emptyState.style.display =
+                "flex";
+
+        }
+
+        return;
+
+    }
+
+
+    if (emptyState) {
+
+        emptyState.style.display =
+            "none";
+
+    }
+
+
+    selectedFiles.forEach(
+        (file, index) => {
+
+            const fileItem =
+                createFileItem(
+                    file,
+                    index
+                );
+
+            fileList.appendChild(
+                fileItem
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CREATE FILE ITEM
+========================================================= */
+
+function createFileItem(
+    file,
+    index
+) {
+
+    const item =
+        document.createElement("div");
+
+
+    item.className =
+        "file-item";
+
+
+    item.dataset.index =
+        index;
+
+
+    const fileIcon =
+        document.createElement("div");
+
+
+    fileIcon.className =
+        "file-icon";
+
+
+    fileIcon.innerHTML =
+        `<i class="fa-solid fa-file-pdf"></i>`;
+
+
+    const fileInfo =
+        document.createElement("div");
+
+
+    fileInfo.className =
+        "file-info";
+
+
+    const fileName =
+        document.createElement("h4");
+
+
+    fileName.className =
+        "file-name";
+
+
+    fileName.textContent =
+        file.name;
+
+
+    fileName.title =
+        file.name;
+
+
+    const fileSize =
+        document.createElement("span");
+
+
+    fileSize.className =
+        "file-size";
+
+
+    fileSize.textContent =
+        formatFileSize(
+            file.size
+        );
+
+
+    fileInfo.appendChild(
+        fileName
+    );
+
+
+    fileInfo.appendChild(
+        fileSize
+    );
+
+
+    const orderControls =
+        document.createElement("div");
+
+
+    orderControls.className =
+        "file-order-controls";
+
+
+    const upButton =
+        document.createElement("button");
+
+
+    upButton.type =
+        "button";
+
+
+    upButton.className =
+        "order-btn";
+
+
+    upButton.title =
+        "Move up";
+
+
+    upButton.innerHTML =
+        `<i class="fa-solid fa-chevron-up"></i>`;
+
+
+    upButton.addEventListener(
+        "click",
+        () => {
+
+            moveFileUp(index);
+
+        }
+    );
+
+
+    const downButton =
+        document.createElement("button");
+
+
+    downButton.type =
+        "button";
+
+
+    downButton.className =
+        "order-btn";
+
+
+    downButton.title =
+        "Move down";
+
+
+    downButton.innerHTML =
+        `<i class="fa-solid fa-chevron-down"></i>`;
+
+
+    downButton.addEventListener(
+        "click",
+        () => {
+
+            moveFileDown(index);
+
+        }
+    );
+
+
+    orderControls.appendChild(
+        upButton
+    );
+
+
+    orderControls.appendChild(
+        downButton
+    );
+
+
+    const removeButton =
+        document.createElement("button");
+
+
+    removeButton.type =
+        "button";
+
+
+    removeButton.className =
+        "remove-file-btn";
+
+
+    removeButton.title =
+        "Remove PDF";
+
+
+    removeButton.innerHTML =
+        `<i class="fa-solid fa-trash"></i>`;
+
+
+    removeButton.addEventListener(
+        "click",
+        () => {
+
+            removeFile(index);
+
+        }
+    );
+
+
+    item.appendChild(
+        fileIcon
+    );
+
+
+    item.appendChild(
+        fileInfo
+    );
+
+
+    item.appendChild(
+        orderControls
+    );
+
+
+    item.appendChild(
+        removeButton
+    );
+
+
+    return item;
+
+}
+
+
+/* =========================================================
+   REMOVE FILE
+========================================================= */
+
+function removeFile(index) {
+
+    if (
+        index < 0 ||
+        index >= selectedFiles.length
+    ) {
+
+        return;
+
+    }
+
+
+    const removedFile =
+        selectedFiles[index];
+
+
+    selectedFiles.splice(
+        index,
+        1
+    );
+
+
+    updateFileList();
+
+    updateInterface();
+
+
+    showMessage(
+        `${removedFile.name} removed.`,
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   MOVE FILE UP
+========================================================= */
+
+function moveFileUp(index) {
+
+    if (index <= 0) {
+
+        return;
+
+    }
+
+
+    const temp =
+        selectedFiles[index];
+
+
+    selectedFiles[index] =
+        selectedFiles[index - 1];
+
+
+    selectedFiles[index - 1] =
+        temp;
+
+
+    updateFileList();
+
+}
+
+
+/* =========================================================
+   MOVE FILE DOWN
+========================================================= */
+
+function moveFileDown(index) {
+
+    if (
+        index < 0 ||
+        index >= selectedFiles.length - 1
+    ) {
+
+        return;
+
+    }
+
+
+    const temp =
+        selectedFiles[index];
+
+
+    selectedFiles[index] =
+        selectedFiles[index + 1];
+
+
+    selectedFiles[index + 1] =
+        temp;
+
+
+    updateFileList();
+
+}
+
+
+/* =========================================================
+   FORMAT FILE SIZE
+========================================================= */
+
+function formatFileSize(bytes) {
+
+    if (bytes === 0) {
+
+        return "0 Bytes";
+
+    }
+
+
+    const units = [
+        "Bytes",
+        "KB",
+        "MB",
+        "GB"
+    ];
+
+
+    const index =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+
+    const size =
+        bytes /
+        Math.pow(
+            1024,
+            index
+        );
+
+
+    return (
+        `${size.toFixed(2)} ${units[index]}`
+    );
+
+}
+
+
+/* =========================================================
+   UPDATE INTERFACE
+========================================================= */
+
+function updateInterface() {
+
+    const hasFiles =
+        selectedFiles.length > 0;
+
+
+    if (mergeBtn) {
+
+        mergeBtn.disabled =
+            selectedFiles.length < 2;
+
+    }
+
+
+    if (clearBtn) {
+
+        clearBtn.disabled =
+            !hasFiles;
+
+    }
+
+
+    if (fileListContainer) {
+
+        fileListContainer.style.display =
+            hasFiles
+                ? "block"
+                : "none";
+
+    }
+
+}
+
+
+/* =========================================================
+   CLEAR ALL FILES
+========================================================= */
+
+if (clearBtn) {
+
+    clearBtn.addEventListener(
+        "click",
+        () => {
+
+            selectedFiles = [];
+
+            mergedPdfBytes = null;
+
+            updateFileList();
+
+            updateInterface();
+
+            hideResult();
+
+            showMessage(
+                "All PDF files have been cleared.",
+                "success"
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   MESSAGE SYSTEM
+========================================================= */
+
+function showMessage(
+    message,
+    type = "info"
+) {
+
+    if (!toolMessage) {
+
+        return;
+
+    }
+
+
+    toolMessage.textContent =
+        message;
+
+
+    toolMessage.className =
+        "tool-message";
+
+
+    toolMessage.classList.add(
+        type
+    );
+
+
+    toolMessage.style.display =
+        "block";
+
+
+    clearTimeout(
+        window.messageTimeout
+    );
+
+
+    window.messageTimeout =
+        setTimeout(
+            () => {
+
+                toolMessage.style.display =
+                    "none";
+
+            },
+            4000
+        );
+
+}
+
+
+/* =========================================================
+   HIDE RESULT
+========================================================= */
+
+function hideResult() {
+
+    if (resultSection) {
+
+        resultSection.style.display =
+            "none";
+
+    }
+
+
+    mergedPdfBytes =
+        null;
+
+}
+
+
+/* =========================================================
+   FILE DRAG & DROP
+========================================================= */
+
+if (uploadArea) {
+
+    uploadArea.addEventListener(
+        "dragover",
+        (event) => {
+
+            event.preventDefault();
+
+            uploadArea.classList.add(
+                "drag-over"
+            );
+
+        }
+    );
+
+
+    uploadArea.addEventListener(
+        "dragleave",
+        () => {
+
+            uploadArea.classList.remove(
+                "drag-over"
+            );
+
+        }
+    );
+
+
+    uploadArea.addEventListener(
+        "drop",
+        (event) => {
+
+            event.preventDefault();
+
+            uploadArea.classList.remove(
+                "drag-over"
+            );
+
+
+            const files =
+                Array.from(
+                    event.dataTransfer.files
+                );
+
+
+            addFiles(files);
+
+        }
+    );
+
+   
+}
+/* =========================================================
+   MERGE PDF FUNCTION
+========================================================= */
+
+if (mergeBtn) {
+
+    mergeBtn.addEventListener(
+        "click",
+        async () => {
+
+            if (selectedFiles.length < 2) {
+
+                showMessage(
+                    "Please select at least 2 PDF files to merge.",
+                    "error"
+                );
 
                 return;
 
             }
 
 
-            /* ---------------------------------------------
-               FILTER TOOLS
-            --------------------------------------------- */
+            if (!PDFLibAvailable) {
 
-            let categoryName = "";
+                showMessage(
+                    "PDF processing library could not be loaded.",
+                    "error"
+                );
 
-
-            if (
-                selectedCategory.includes("organize")
-            ) {
-
-                categoryName = "organize";
-
-            }
-
-            else if (
-                selectedCategory.includes("convert")
-            ) {
-
-                categoryName = "convert";
-
-            }
-
-            else if (
-                selectedCategory.includes("optimize")
-            ) {
-
-                categoryName = "optimize";
-
-            }
-
-            else if (
-                selectedCategory.includes("security")
-            ) {
-
-                categoryName = "security";
+                return;
 
             }
 
 
-            /* ---------------------------------------------
-               CHECK EACH TOOL
-            --------------------------------------------- */
+            try {
 
-            toolCards.forEach(function (card) {
+                setProcessingState(true);
 
-                const cardCategory =
-                    card.getAttribute(
-                        "data-category"
+                hideResult();
+
+                updateProgress(
+                    5,
+                    "Preparing PDF files..."
+                );
+
+
+                const mergedPdf =
+                    await PDFLib.PDFDocument.create();
+
+
+                for (
+                    let i = 0;
+                    i < selectedFiles.length;
+                    i++
+                ) {
+
+                    const file =
+                        selectedFiles[i];
+
+
+                    const progress =
+                        10 +
+                        Math.round(
+                            (
+                                i /
+                                selectedFiles.length
+                            ) *
+                            70
+                        );
+
+
+                    updateProgress(
+                        progress,
+                        `Reading ${file.name}...`
                     );
 
 
-                if (
-                    cardCategory === categoryName
-                ) {
-
-                    card.style.display =
-                        "flex";
-
-                }
-
-                else {
-
-                    card.style.display =
-                        "none";
-
-                }
-
-            });
-
-        });
-
-    });
+                    const fileBytes =
+                        await readFileAsArrayBuffer(
+                            file
+                        );
 
 
-
-    /* =====================================================
-       HERO SMOOTH SCROLL
-    ===================================================== */
-
-    const heroButtons =
-        document.querySelectorAll(
-            'a[href^="#"]'
-        );
+                    const sourcePdf =
+                        await PDFLib.PDFDocument.load(
+                            fileBytes
+                        );
 
 
-    heroButtons.forEach(function (link) {
-
-        link.addEventListener(
-            "click",
-            function (event) {
-
-                const targetId =
-                    this.getAttribute("href");
+                    const pageCount =
+                        sourcePdf.getPageCount();
 
 
-                if (
-                    !targetId ||
-                    targetId === "#"
-                ) {
-
-                    return;
-
-                }
-
-
-                const targetElement =
-                    document.querySelector(
-                        targetId
+                    updateProgress(
+                        progress + 5,
+                        `Processing ${file.name}...`
                     );
 
 
-                if (
-                    targetElement
-                ) {
-
-                    event.preventDefault();
-
-
-                    targetElement.scrollIntoView({
-
-                        behavior: "smooth",
-
-                        block: "start"
-
-                    });
-
-                }
-
-            }
-        );
-
-    });
+                    const copiedPages =
+                        await mergedPdf.copyPages(
+                            sourcePdf,
+                            sourcePdf.getPageIndices()
+                        );
 
 
+                    copiedPages.forEach(
+                        (page) => {
 
-    /* =====================================================
-       TOOL CARD ENTRANCE ANIMATION
-    ===================================================== */
-
-    const observerOptions = {
-
-        threshold: 0.12
-
-    };
-
-
-    const toolObserver =
-        new IntersectionObserver(
-
-            function (entries) {
-
-                entries.forEach(
-                    function (entry) {
-
-                        if (
-                            entry.isIntersecting
-                        ) {
-
-                            entry.target.classList.add(
-                                "visible"
+                            mergedPdf.addPage(
+                                page
                             );
 
                         }
-
-                    }
-                );
-
-            },
-
-            observerOptions
-
-        );
-
-
-    toolCards.forEach(function (card) {
-
-        toolObserver.observe(card);
-
-    });
-
-
-
-    /* =====================================================
-       FAQ ICON ANIMATION
-    ===================================================== */
-
-    const faqItems =
-        document.querySelectorAll(
-            ".faq-item"
-        );
-
-
-    faqItems.forEach(function (faq) {
-
-        faq.addEventListener(
-            "toggle",
-            function () {
-
-                const icon =
-                    faq.querySelector(
-                        "summary i"
-                    );
-
-
-                if (
-                    !icon
-                ) {
-
-                    return;
-
-                }
-
-
-                if (
-                    faq.open
-                ) {
-
-                    icon.classList.add(
-                        "faq-open"
                     );
 
                 }
 
-                else {
 
-                    icon.classList.remove(
-                        "faq-open"
-                    );
-
-                }
-
-            }
-        );
-
-    });
-
-
-
-    /* =====================================================
-       ACTIVE NAVIGATION EFFECT
-    ===================================================== */
-
-    const currentPage =
-        window.location.pathname;
-
-
-    const navigationLinks =
-        document.querySelectorAll(
-            ".main-nav a"
-        );
-
-
-    navigationLinks.forEach(
-        function (link) {
-
-            const linkPath =
-                link.getAttribute(
-                    "href"
+                updateProgress(
+                    90,
+                    "Creating merged PDF..."
                 );
 
 
-            if (
-                linkPath &&
-                currentPage.includes(
-                    "pdf-tools"
-                )
-            ) {
+                mergedPdfBytes =
+                    await mergedPdf.save();
 
-                if (
-                    link.textContent
-                        .trim()
-                        .toLowerCase()
-                        .includes("all tools")
-                ) {
 
-                    link.classList.add(
-                        "active"
-                    );
-
-                }
-
-            }
-
-        }
-    );
-
-
-
-    /* =====================================================
-       TOOL BUTTON HOVER EFFECT
-    ===================================================== */
-
-    const toolButtons =
-        document.querySelectorAll(
-            ".tool-btn"
-        );
-
-
-    toolButtons.forEach(function (button) {
-
-        button.addEventListener(
-            "mouseenter",
-            function () {
-
-                const arrow =
-                    this.querySelector(
-                        "i:last-child"
-                    );
-
-
-                if (
-                    arrow
-                ) {
-
-                    arrow.style.transform =
-                        "translateX(5px)";
-
-                }
-
-            }
-        );
-
-
-        button.addEventListener(
-            "mouseleave",
-            function () {
-
-                const arrow =
-                    this.querySelector(
-                        "i:last-child"
-                    );
-
-
-                if (
-                    arrow
-                ) {
-
-                    arrow.style.transform =
-                        "translateX(0)";
-
-                }
-
-            }
-        );
-
-    });
-
-
-
-    /* =====================================================
-       PAGE LOAD COMPLETE
-    ===================================================== */
-
-    document.body.classList.add(
-        "page-loaded"
-    );
-
-
-});
-/* =====================================================
-   PDF TOOLKIT - SCRIPT.JS
-   PART 2
-   CATEGORY FILTER SYSTEM
-===================================================== */
-
-
-/* =====================================================
-   CATEGORY FILTER
-===================================================== */
-
-const categoryButtons = document.querySelectorAll(".category-btn");
-
-const pdfToolCards = document.querySelectorAll(".pdf-tool-card");
-
-
-categoryButtons.forEach(function(button) {
-
-    button.addEventListener("click", function() {
-
-
-        /* =========================
-           REMOVE ACTIVE CLASS
-        ========================== */
-
-        categoryButtons.forEach(function(btn) {
-
-            btn.classList.remove("active");
-
-        });
-
-
-        /* =========================
-           ADD ACTIVE CLASS
-        ========================== */
-
-        this.classList.add("active");
-
-
-        /* =========================
-           GET CATEGORY
-        ========================== */
-
-        const selectedCategory =
-            this.textContent.trim().toLowerCase();
-
-
-        /* =========================
-           FILTER TOOLS
-        ========================== */
-
-        pdfToolCards.forEach(function(card) {
-
-
-            const cardCategory =
-                card.getAttribute("data-category");
-
-
-            /* =========================
-               ALL TOOLS
-            ========================== */
-
-            if (
-                selectedCategory === "all tools"
-            ) {
-
-                card.style.display = "flex";
-
-                setTimeout(function() {
-
-                    card.classList.remove("filter-hidden");
-
-                }, 10);
-
-            }
-
-
-            /* =========================
-               SELECTED CATEGORY
-            ========================== */
-
-            else if (
-                cardCategory === selectedCategory
-            ) {
-
-                card.style.display = "flex";
-
-                setTimeout(function() {
-
-                    card.classList.remove("filter-hidden");
-
-                }, 10);
-
-            }
-
-
-            /* =========================
-               HIDE OTHER CARDS
-            ========================== */
-
-            else {
-
-                card.classList.add("filter-hidden");
-
-                setTimeout(function() {
-
-                    card.style.display = "none";
-
-                }, 250);
-
-            }
-
-        });
-
-    });
-
-});
-
-
-
-/* =====================================================
-   FAQ ACCORDION
-===================================================== */
-
-const faqItems =
-    document.querySelectorAll(".faq-item");
-
-
-faqItems.forEach(function(item) {
-
-
-    item.addEventListener("toggle", function() {
-
-
-        if (item.open) {
-
-
-            faqItems.forEach(function(otherItem) {
-
-
-                if (otherItem !== item) {
-
-                    otherItem.removeAttribute("open");
-
-                }
-
-            });
-
-        }
-
-    });
-
-});
-
-
-
-/* =====================================================
-   SMOOTH SCROLL
-===================================================== */
-
-const smoothScrollLinks =
-    document.querySelectorAll('a[href^="#"]');
-
-
-smoothScrollLinks.forEach(function(link) {
-
-
-    link.addEventListener("click", function(event) {
-
-
-        const targetId =
-            this.getAttribute("href");
-
-
-        if (
-            targetId === "#" ||
-            targetId === ""
-        ) {
-
-            return;
-
-        }
-
-
-        const targetElement =
-            document.querySelector(targetId);
-
-
-        if (targetElement) {
-
-
-            event.preventDefault();
-
-
-            targetElement.scrollIntoView({
-
-                behavior: "smooth",
-
-                block: "start"
-
-            });
-
-        }
-
-    });
-
-});
-
-
-
-/* =====================================================
-   SCROLL REVEAL ANIMATION
-===================================================== */
-
-const revealElements =
-    document.querySelectorAll(
-        ".pdf-tool-card, .step-card, .privacy-card, .faq-item, .final-cta-content"
-    );
-
-
-const revealObserver =
-    new IntersectionObserver(
-
-        function(entries) {
-
-
-            entries.forEach(function(entry) {
-
-
-                if (entry.isIntersecting) {
-
-
-                    entry.target.classList.add(
-                        "reveal-visible"
-                    );
-
-
-                    revealObserver.unobserve(
-                        entry.target
-                    );
-
-                }
-
-            });
-
-        },
-
-        {
-
-            threshold: 0.12
-
-        }
-
-    );
-
-
-revealElements.forEach(function(element) {
-
-
-    element.classList.add(
-        "reveal-element"
-    );
-
-
-    revealObserver.observe(
-        element
-    );
-
-});
-
-
-
-/* =====================================================
-   BUTTON RIPPLE EFFECT
-===================================================== */
-
-const actionButtons =
-    document.querySelectorAll(
-        ".primary-btn, .secondary-btn, .tool-btn, .upload-cta-btn"
-    );
-
-
-actionButtons.forEach(function(button) {
-
-
-    button.addEventListener(
-        "click",
-        function(event) {
-
-
-            const ripple =
-                document.createElement(
-                    "span"
+                updateProgress(
+                    100,
+                    "PDF merged successfully!"
                 );
 
 
-            ripple.classList.add(
-                "button-ripple"
-            );
+                const totalPages =
+                    mergedPdf.getPageCount();
 
 
-            const rect =
-                button.getBoundingClientRect();
+                showResult(
+                    totalPages
+                );
 
 
-            const x =
-                event.clientX -
-                rect.left;
+                showMessage(
+                    "Your PDF files have been merged successfully.",
+                    "success"
+                );
 
 
-            const y =
-                event.clientY -
-                rect.top;
+            } catch (error) {
 
+                console.error(
+                    "PDF Merge Error:",
+                    error
+                );
 
-            ripple.style.left =
-                x + "px";
 
+                mergedPdfBytes =
+                    null;
 
-            ripple.style.top =
-                y + "px";
 
+                showMessage(
+                    getFriendlyErrorMessage(
+                        error
+                    ),
+                    "error"
+                );
 
-            button.appendChild(
-                ripple
-            );
 
+            } finally {
 
-            setTimeout(function() {
-
-                ripple.remove();
-
-            }, 600);
-
-        }
-
-    );
-
-});
-
-
-
-/* =====================================================
-   END OF PART 2
-===================================================== */
-
-/* =====================================================
-   PDF TOOLKIT - SCRIPT.JS
-   PART 3
-   PREMIUM INTERACTIONS + FINAL POLISH
-===================================================== */
-
-
-/* =====================================================
-   HEADER SCROLL EFFECT
-===================================================== */
-
-const siteHeader =
-    document.querySelector(".site-header");
-
-
-window.addEventListener("scroll", function() {
-
-    if (!siteHeader) {
-        return;
-    }
-
-
-    if (window.scrollY > 30) {
-
-        siteHeader.classList.add(
-            "header-scrolled"
-        );
-
-    } else {
-
-        siteHeader.classList.remove(
-            "header-scrolled"
-        );
-
-    }
-
-});
-
-
-
-/* =====================================================
-   ACTIVE NAVIGATION EFFECT
-===================================================== */
-
-const navLinks =
-    document.querySelectorAll(
-        ".main-nav a"
-    );
-
-
-navLinks.forEach(function(link) {
-
-
-    link.addEventListener(
-        "click",
-        function() {
-
-
-            navLinks.forEach(
-                function(navLink) {
-
-                    navLink.classList.remove(
-                        "nav-active"
-                    );
-
-                }
-            );
-
-
-            this.classList.add(
-                "nav-active"
-            );
-
-        }
-    );
-
-});
-
-
-
-/* =====================================================
-   TOOL CARD HOVER EFFECT
-===================================================== */
-
-pdfToolCards.forEach(function(card) {
-
-
-    card.addEventListener(
-        "mouseenter",
-        function() {
-
-            this.classList.add(
-                "card-hover-active"
-            );
-
-        }
-    );
-
-
-    card.addEventListener(
-        "mouseleave",
-        function() {
-
-            this.classList.remove(
-                "card-hover-active"
-            );
-
-        }
-    );
-
-});
-
-
-
-/* =====================================================
-   PARALLAX BACKGROUND EFFECT
-===================================================== */
-
-const floatingShapes =
-    document.querySelectorAll(
-        ".floating-shape"
-    );
-
-
-window.addEventListener(
-    "mousemove",
-    function(event) {
-
-
-        const mouseX =
-            (event.clientX /
-                window.innerWidth) -
-            0.5;
-
-
-        const mouseY =
-            (event.clientY /
-                window.innerHeight) -
-            0.5;
-
-
-        floatingShapes.forEach(
-            function(shape, index) {
-
-
-                const movement =
-                    (index + 1) * 10;
-
-
-                shape.style.transform =
-                    "translate(" +
-                    (mouseX * movement) +
-                    "px, " +
-                    (mouseY * movement) +
-                    "px)";
+                setProcessingState(
+                    false
+                );
 
             }
-        );
-
-    }
-);
-
-
-
-/* =====================================================
-   HERO PDF ICON PARALLAX
-===================================================== */
-
-const floatingPdfIcons =
-    document.querySelectorAll(
-        ".floating-pdf-icon"
-    );
-
-
-window.addEventListener(
-    "mousemove",
-    function(event) {
-
-
-        const x =
-            (event.clientX /
-                window.innerWidth) -
-            0.5;
-
-
-        const y =
-            (event.clientY /
-                window.innerHeight) -
-            0.5;
-
-
-        floatingPdfIcons.forEach(
-            function(icon, index) {
-
-
-                const speed =
-                    (index + 1) * 8;
-
-
-                icon.style.marginLeft =
-                    (x * speed) + "px";
-
-
-                icon.style.marginTop =
-                    (y * speed) + "px";
-
-            }
-        );
-
-    }
-);
-
-
-
-/* =====================================================
-   BUTTON LOADING EFFECT
-===================================================== */
-
-const toolButtons =
-    document.querySelectorAll(
-        ".tool-btn"
-    );
-
-
-toolButtons.forEach(function(button) {
-
-
-    button.addEventListener(
-        "click",
-        function() {
-
-
-            const originalText =
-                this.innerHTML;
-
-
-            this.classList.add(
-                "button-loading"
-            );
-
-
-            this.innerHTML =
-                '<i class="fa-solid fa-spinner fa-spin"></i> Opening...';
-
-
-            const currentButton =
-                this;
-
-
-            setTimeout(
-                function() {
-
-
-                    currentButton.classList.remove(
-                        "button-loading"
-                    );
-
-
-                    currentButton.innerHTML =
-                        originalText;
-
-
-                },
-                1200
-            );
 
         }
-    );
-
-});
-
-
-
-/* =====================================================
-   ESC KEY - CLOSE FAQ
-===================================================== */
-
-document.addEventListener(
-    "keydown",
-    function(event) {
-
-
-        if (
-            event.key === "Escape"
-        ) {
-
-
-            faqItems.forEach(
-                function(item) {
-
-                    item.removeAttribute(
-                        "open"
-                    );
-
-                }
-            );
-
-        }
-
-    }
-);
-
-
-
-/* =====================================================
-   PAGE LOAD ANIMATION
-===================================================== */
-
-window.addEventListener(
-    "load",
-    function() {
-
-
-        document.body.classList.add(
-            "page-loaded"
-        );
-
-
-        setTimeout(
-            function() {
-
-
-                const heroContent =
-                    document.querySelector(
-                        ".hero-content"
-                    );
-
-
-                if (heroContent) {
-
-                    heroContent.classList.add(
-                        "hero-loaded"
-                    );
-
-                }
-
-
-            },
-            150
-        );
-
-    }
-);
-
-
-
-/* =====================================================
-   PREVENT EMPTY ANCHOR JUMP
-===================================================== */
-
-document.querySelectorAll(
-    'a[href="#"]'
-).forEach(function(link) {
-
-
-    link.addEventListener(
-        "click",
-        function(event) {
-
-            event.preventDefault();
-
-        }
-    );
-
-});
-
-
-
-/* =====================================================
-   MOBILE MENU FALLBACK
-===================================================== */
-
-if (
-    window.innerWidth <= 768
-) {
-
-
-    document.body.classList.add(
-        "mobile-device"
     );
 
 }
 
 
+/* =========================================================
+   READ FILE AS ARRAY BUFFER
+========================================================= */
 
-/* =====================================================
-   WINDOW RESIZE HANDLER
-===================================================== */
+function readFileAsArrayBuffer(
+    file
+) {
 
-window.addEventListener(
-    "resize",
-    function() {
+    return new Promise(
+        (
+            resolve,
+            reject
+        ) => {
+
+            const reader =
+                new FileReader();
 
 
-        if (
-            window.innerWidth <= 768
-        ) {
+            reader.onload =
+                () => {
 
-            document.body.classList.add(
-                "mobile-device"
+                    resolve(
+                        reader.result
+                    );
+
+                };
+
+
+            reader.onerror =
+                () => {
+
+                    reject(
+                        new Error(
+                            "Unable to read the selected PDF file."
+                        )
+                    );
+
+                };
+
+
+            reader.readAsArrayBuffer(
+                file
             );
 
-        } else {
+        }
+    );
 
-            document.body.classList.remove(
-                "mobile-device"
+}
+
+
+/* =========================================================
+   UPDATE PROGRESS
+========================================================= */
+
+function updateProgress(
+    percentage,
+    message
+) {
+
+    const safePercentage =
+        Math.min(
+            100,
+            Math.max(
+                0,
+                percentage
+            )
+        );
+
+
+    if (progressContainer) {
+
+        progressContainer.style.display =
+            "block";
+
+    }
+
+
+    if (progressBar) {
+
+        progressBar.style.width =
+            `${safePercentage}%`;
+
+
+        progressBar.setAttribute(
+            "aria-valuenow",
+            safePercentage
+        );
+
+    }
+
+
+    if (progressText) {
+
+        progressText.textContent =
+            message;
+
+    }
+
+}
+
+
+/* =========================================================
+   PROCESSING STATE
+========================================================= */
+
+function setProcessingState(
+    isProcessing
+) {
+
+    if (mergeBtn) {
+
+        mergeBtn.disabled =
+            isProcessing ||
+            selectedFiles.length < 2;
+
+    }
+
+
+    if (clearBtn) {
+
+        clearBtn.disabled =
+            isProcessing;
+
+    }
+
+
+    if (selectFilesBtn) {
+
+        selectFilesBtn.disabled =
+            isProcessing;
+
+    }
+
+
+    if (fileInput) {
+
+        fileInput.disabled =
+            isProcessing;
+
+    }
+
+
+    const orderButtons =
+        document.querySelectorAll(
+            ".order-btn"
+        );
+
+
+    orderButtons.forEach(
+        (button) => {
+
+            button.disabled =
+                isProcessing;
+
+        }
+    );
+
+
+    const removeButtons =
+        document.querySelectorAll(
+            ".remove-file-btn"
+        );
+
+
+    removeButtons.forEach(
+        (button) => {
+
+            button.disabled =
+                isProcessing;
+
+        }
+    );
+
+
+    if (isProcessing) {
+
+        if (mergeBtn) {
+
+            mergeBtn.classList.add(
+                "processing"
+            );
+
+
+            mergeBtn.innerHTML =
+                `
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                Merging PDFs...
+                `;
+
+        }
+
+    } else {
+
+        if (mergeBtn) {
+
+            mergeBtn.classList.remove(
+                "processing"
+            );
+
+
+            mergeBtn.innerHTML =
+                `
+                <i class="fa-solid fa-code-merge"></i>
+                Merge PDF Files
+                <i class="fa-solid fa-arrow-right"></i>
+                `;
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   SHOW MERGE RESULT
+========================================================= */
+
+function showResult(
+    totalPages
+) {
+
+    if (!resultSection) {
+
+        return;
+
+    }
+
+
+    resultSection.style.display =
+        "block";
+
+
+    resultSection.classList.add(
+        "result-visible"
+    );
+
+
+    const resultPageCount =
+        document.getElementById(
+            "resultPageCount"
+        );
+
+
+    if (resultPageCount) {
+
+        resultPageCount.textContent =
+            `${totalPages} page${totalPages === 1 ? "" : "s"}`;
+
+    }
+
+
+    resultSection.scrollIntoView(
+        {
+            behavior: "smooth",
+            block: "center"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   DOWNLOAD MERGED PDF
+========================================================= */
+
+if (downloadBtn) {
+
+    downloadBtn.addEventListener(
+        "click",
+        () => {
+
+            if (
+                !mergedPdfBytes ||
+                mergedPdfBytes.length === 0
+            ) {
+
+                showMessage(
+                    "No merged PDF is available yet.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            try {
+
+                const blob =
+                    new Blob(
+                        [
+                            mergedPdfBytes
+                        ],
+                        {
+                            type:
+                                "application/pdf"
+                        }
+                    );
+
+
+                const url =
+                    URL.createObjectURL(
+                        blob
+                    );
+
+
+                const link =
+                    document.createElement(
+                        "a"
+                    );
+
+
+                link.href =
+                    url;
+
+
+                link.download =
+                    "quick-tools-hub-merged.pdf";
+
+
+                document.body.appendChild(
+                    link
+                );
+
+
+                link.click();
+
+
+                link.remove();
+
+
+                setTimeout(
+                    () => {
+
+                        URL.revokeObjectURL(
+                            url
+                        );
+
+                    },
+                    1000
+                );
+
+
+                showMessage(
+                    "Your merged PDF download has started.",
+                    "success"
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Download Error:",
+                    error
+                );
+
+
+                showMessage(
+                    "Unable to download the merged PDF.",
+                    "error"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   FRIENDLY ERROR MESSAGES
+========================================================= */
+
+function getFriendlyErrorMessage(
+    error
+) {
+
+    if (!error) {
+
+        return "Something went wrong while processing your PDF files.";
+
+    }
+
+
+    const errorMessage =
+        String(
+            error.message ||
+            error
+        ).toLowerCase();
+
+
+    if (
+        errorMessage.includes(
+            "encrypted"
+        ) ||
+        errorMessage.includes(
+            "password"
+        )
+    ) {
+
+        return (
+            "One of your PDF files is password protected or encrypted."
+        );
+
+    }
+
+
+    if (
+        errorMessage.includes(
+            "invalid"
+        ) ||
+        errorMessage.includes(
+            "malformed"
+        )
+    ) {
+
+        return (
+            "One of the selected files appears to be an invalid or damaged PDF."
+        );
+
+    }
+
+
+    if (
+        errorMessage.includes(
+            "memory"
+        )
+    ) {
+
+        return (
+            "The selected PDF files are too large to process in your browser."
+        );
+
+    }
+
+
+    return (
+        "Something went wrong while merging your PDF files. Please try again."
+    );
+
+}
+
+
+/* =========================================================
+   RESET PROGRESS
+========================================================= */
+
+function resetProgress() {
+
+    if (progressBar) {
+
+        progressBar.style.width =
+            "0%";
+
+        progressBar.setAttribute(
+            "aria-valuenow",
+            "0"
+        );
+
+    }
+
+
+    if (progressText) {
+
+        progressText.textContent =
+            "Ready to process your PDF files.";
+
+    }
+
+}
+
+
+/* =========================================================
+   AUTO RESET AFTER SUCCESS
+========================================================= */
+
+window.addEventListener(
+    "beforeunload",
+    () => {
+
+        selectedFiles = [];
+
+        mergedPdfBytes = null;
+
+    }
+);
+
+
+/* =========================================================
+   KEYBOARD SUPPORT
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (
+            event.key === "Escape" &&
+            selectedFiles.length > 0
+        ) {
+
+            if (
+                !mergeBtn ||
+                !mergeBtn.disabled
+            ) {
+
+                hideResult();
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   FINAL INITIALIZATION
+========================================================= */
+
+resetProgress();
+
+updateInterface();
+/* =========================================================
+   MERGE PDF - SCRIPT.JS
+   PART 3 - FINAL POLISH & SAFETY
+========================================================= */
+
+
+/* =========================================================
+   UPLOAD AREA CLICK SUPPORT
+========================================================= */
+
+if (uploadArea) {
+
+    uploadArea.addEventListener(
+        "click",
+        (event) => {
+
+            if (
+                event.target.closest(
+                    "button"
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                fileInput &&
+                !fileInput.disabled
+            ) {
+
+                fileInput.click();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   DRAG & DROP VISUAL STATE
+========================================================= */
+
+if (uploadArea) {
+
+    [
+        "dragenter",
+        "dragover"
+    ].forEach(
+        (eventName) => {
+
+            uploadArea.addEventListener(
+                eventName,
+                (event) => {
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+
+                    if (
+                        fileInput &&
+                        fileInput.disabled
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    uploadArea.classList.add(
+                        "drag-active"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    [
+        "dragleave",
+        "drop"
+    ].forEach(
+        (eventName) => {
+
+            uploadArea.addEventListener(
+                eventName,
+                (event) => {
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+
+                    uploadArea.classList.remove(
+                        "drag-active"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   DROP FILE VALIDATION
+========================================================= */
+
+if (uploadArea) {
+
+    uploadArea.addEventListener(
+        "drop",
+        (event) => {
+
+            if (
+                fileInput &&
+                fileInput.disabled
+            ) {
+
+                return;
+
+            }
+
+
+            const droppedFiles =
+                Array.from(
+                    event.dataTransfer.files
+                );
+
+
+            if (
+                droppedFiles.length === 0
+            ) {
+
+                showMessage(
+                    "No files were dropped.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            const validFiles =
+                droppedFiles.filter(
+                    (file) => {
+
+                        return isValidPdf(
+                            file
+                        );
+
+                    }
+                );
+
+
+            const invalidFiles =
+                droppedFiles.filter(
+                    (file) => {
+
+                        return !isValidPdf(
+                            file
+                        );
+
+                    }
+                );
+
+
+            if (
+                invalidFiles.length > 0
+            ) {
+
+                showMessage(
+                    `${invalidFiles.length} non-PDF file(s) were ignored.`,
+                    "error"
+                );
+
+            }
+
+
+            if (
+                validFiles.length > 0
+            ) {
+
+                addFiles(
+                    validFiles
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   PDF VALIDATION
+========================================================= */
+
+function isValidPdf(
+    file
+) {
+
+    if (!file) {
+
+        return false;
+
+    }
+
+
+    const fileName =
+        file.name
+            .toLowerCase();
+
+
+    const isPdfExtension =
+        fileName.endsWith(
+            ".pdf"
+        );
+
+
+    const isPdfType =
+        file.type ===
+        "application/pdf";
+
+
+    return (
+        isPdfExtension ||
+        isPdfType
+    );
+
+}
+
+
+/* =========================================================
+   FILE INPUT VALIDATION OVERRIDE
+========================================================= */
+
+if (fileInput) {
+
+    fileInput.addEventListener(
+        "change",
+        (event) => {
+
+            const files =
+                Array.from(
+                    event.target.files
+                );
+
+
+            const validFiles =
+                files.filter(
+                    (file) => {
+
+                        return isValidPdf(
+                            file
+                        );
+
+                    }
+                );
+
+
+            const invalidCount =
+                files.length -
+                validFiles.length;
+
+
+            if (
+                invalidCount > 0
+            ) {
+
+                showMessage(
+                    `${invalidCount} invalid file(s) were ignored. Please select PDF files only.`,
+                    "error"
+                );
+
+            }
+
+
+            if (
+                validFiles.length > 0
+            ) {
+
+                addFiles(
+                    validFiles
+                );
+
+            }
+
+
+            fileInput.value =
+                "";
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   PREVENT DUPLICATE FILES
+========================================================= */
+
+function isDuplicateFile(
+    file
+) {
+
+    return selectedFiles.some(
+        (existingFile) => {
+
+            return (
+                existingFile.name ===
+                file.name &&
+
+                existingFile.size ===
+                file.size &&
+
+                existingFile.lastModified ===
+                file.lastModified
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SAFE FILE ADDING
+========================================================= */
+
+function safelyAddFiles(
+    files
+) {
+
+    if (
+        !Array.isArray(files)
+    ) {
+
+        return;
+
+    }
+
+
+    let addedCount =
+        0;
+
+
+    files.forEach(
+        (file) => {
+
+            if (
+                !isValidPdf(
+                    file
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                isDuplicateFile(
+                    file
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            selectedFiles.push(
+                file
+            );
+
+
+            addedCount++;
+
+        }
+    );
+
+
+    updateFileList();
+
+    updateInterface();
+
+
+    if (
+        addedCount > 0
+    ) {
+
+        showMessage(
+            `${addedCount} PDF file(s) added successfully.`,
+            "success"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   MAX FILE LIMIT
+========================================================= */
+
+const MAX_PDF_FILES =
+    20;
+
+
+/* =========================================================
+   FILE COUNT PROTECTION
+========================================================= */
+
+function canAddMoreFiles(
+    newFilesCount
+) {
+
+    return (
+        selectedFiles.length +
+        newFilesCount <=
+        MAX_PDF_FILES
+    );
+
+}
+
+
+/* =========================================================
+   SAFE MERGE CHECK
+========================================================= */
+
+function canStartMerge() {
+
+    if (
+        selectedFiles.length < 2
+    ) {
+
+        showMessage(
+            "Please select at least 2 PDF files before merging.",
+            "error"
+        );
+
+        return false;
+
+    }
+
+
+    if (
+        selectedFiles.length >
+        MAX_PDF_FILES
+    ) {
+
+        showMessage(
+            `You can merge a maximum of ${MAX_PDF_FILES} PDF files at once.`,
+            "error"
+        );
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   PREVENT ACCIDENTAL DOUBLE MERGE
+========================================================= */
+
+let mergeInProgress =
+    false;
+
+
+if (mergeBtn) {
+
+    mergeBtn.addEventListener(
+        "click",
+        () => {
+
+            if (
+                mergeInProgress
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                !canStartMerge()
+            ) {
+
+                return;
+
+            }
+
+
+            mergeInProgress =
+                true;
+
+
+            setTimeout(
+                () => {
+
+                    mergeInProgress =
+                        false;
+
+                },
+                2000
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   UPLOAD AREA ACCESSIBILITY
+========================================================= */
+
+if (uploadArea) {
+
+    uploadArea.setAttribute(
+        "role",
+        "button"
+    );
+
+
+    uploadArea.setAttribute(
+        "tabindex",
+        "0"
+    );
+
+
+    uploadArea.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key === "Enter" ||
+                event.key === " "
+            ) {
+
+                event.preventDefault();
+
+
+                if (
+                    fileInput &&
+                    !fileInput.disabled
+                ) {
+
+                    fileInput.click();
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   FILE COUNT DISPLAY
+========================================================= */
+
+function updateFileCount() {
+
+    const fileCount =
+        document.getElementById(
+            "fileCount"
+        );
+
+
+    if (!fileCount) {
+
+        return;
+
+    }
+
+
+    const count =
+        selectedFiles.length;
+
+
+    if (count === 0) {
+
+        fileCount.textContent =
+            "No PDF files selected.";
+
+    } else {
+
+        fileCount.textContent =
+            `${count} PDF file${count === 1 ? "" : "s"} selected.`;
+
+    }
+
+}
+
+
+/* =========================================================
+   KEEP FILE COUNT SYNCHRONIZED
+========================================================= */
+
+const originalUpdateFileList =
+    updateFileList;
+
+
+updateFileList =
+    function () {
+
+        originalUpdateFileList();
+
+        updateFileCount();
+
+    };
+
+
+/* =========================================================
+   PAGE VISIBILITY SAFETY
+========================================================= */
+
+document.addEventListener(
+    "visibilitychange",
+    () => {
+
+        if (
+            document.hidden &&
+            progressContainer
+        ) {
+
+            progressContainer.classList.add(
+                "page-hidden"
+            );
+
+        } else if (
+            progressContainer
+        ) {
+
+            progressContainer.classList.remove(
+                "page-hidden"
             );
 
         }
@@ -1201,35 +2194,64 @@ window.addEventListener(
 );
 
 
+/* =========================================================
+   BROWSER SUPPORT CHECK
+========================================================= */
 
-/* =====================================================
-   CONSOLE STATUS
-===================================================== */
+function checkBrowserSupport() {
+
+    const supported =
+        typeof FileReader !==
+            "undefined" &&
+
+        typeof Blob !==
+            "undefined" &&
+
+        typeof URL !==
+            "undefined";
+
+
+    if (
+        !supported
+    ) {
+
+        showMessage(
+            "Your browser does not support the required file processing features.",
+            "error"
+        );
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   INITIAL BROWSER CHECK
+========================================================= */
+
+checkBrowserSupport();
+
+
+/* =========================================================
+   FINAL UI UPDATE
+========================================================= */
+
+updateFileList();
+
+updateFileCount();
+
+updateInterface();
+
+
+/* =========================================================
+   MERGE PDF TOOL READY
+========================================================= */
 
 console.log(
-    "Quick Tools Hub PDF Toolkit loaded successfully."
+    "Quick Tools Hub - Merge PDF Tool is ready."
 );
-
-
-console.log(
-    "PDF Tools: " +
-    pdfToolCards.length
-);
-
-
-console.log(
-    "Category Filters: " +
-    categoryButtons.length
-);
-
-
-console.log(
-    "FAQ Items: " +
-    faqItems.length
-);
-
-
-
-/* =====================================================
-   END OF PDF TOOLKIT SCRIPT
-===================================================== */
