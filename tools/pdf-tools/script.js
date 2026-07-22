@@ -1,1497 +1,110 @@
 /* ==========================================
-   QUICK TOOLS HUB - PDF TOOLS
-   SCRIPT.JS - PART 1
-   ========================================== */
+   QUICK TOOLS HUB
+   PDF TOOLS - SCRIPT.JS
+   PART 1
+========================================== */
 
 
 /* ==========================================
-   DOM READY
-   ========================================== */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    console.log("Quick Tools Hub PDF Tools Loaded");
-
-
-    /* ==========================================
-       CATEGORY FILTER
-       ========================================== */
-
-    const categoryButtons =
-        document.querySelectorAll(".category-btn");
-
-    const toolCards =
-        document.querySelectorAll(".pdf-tool-card");
-
-
-    if (
-        categoryButtons.length > 0 &&
-        toolCards.length > 0
-    ) {
-
-        categoryButtons.forEach(function (button) {
-
-            button.addEventListener(
-                "click",
-                function () {
-
-
-                    /* Remove active
-                       from all buttons */
-
-                    categoryButtons.forEach(
-                        function (btn) {
-
-                            btn.classList.remove(
-                                "active"
-                            );
-
-                        }
-                    );
-
-
-                    /* Add active
-                       to clicked button */
-
-                    button.classList.add(
-                        "active"
-                    );
-
-
-                    /* Get selected category */
-
-                    const selectedCategory =
-                        button.getAttribute(
-                            "data-category"
-                        );
-
-
-                    /* Filter tool cards */
-
-                    toolCards.forEach(
-                        function (card) {
-
-                            const cardCategory =
-                                card.getAttribute(
-                                    "data-category"
-                                );
-
-
-                            if (
-                                selectedCategory ===
-                                "all" ||
-                                cardCategory ===
-                                selectedCategory
-                            ) {
-
-                                card.style.display =
-                                    "flex";
-
-
-                                /* Small animation */
-
-                                card.classList.remove(
-                                    "tool-card-show"
-                                );
-
-
-                                setTimeout(
-                                    function () {
-
-                                        card.classList.add(
-                                            "tool-card-show"
-                                        );
-
-                                    },
-                                    20
-                                );
-
-                            } else {
-
-                                card.style.display =
-                                    "none";
-
-                            }
-
-                        }
-                    );
-
-                }
-            );
-
-        });
-
-    }
-
-
-    /* ==========================================
-       SMOOTH SCROLL
-       ========================================== */
-
-    const scrollButtons =
-        document.querySelectorAll(
-            '[data-scroll]'
-        );
-
-
-    scrollButtons.forEach(
-        function (button) {
-
-            button.addEventListener(
-                "click",
-                function (event) {
-
-                    event.preventDefault();
-
-
-                    const targetId =
-                        button.getAttribute(
-                            "data-scroll"
-                        );
-
-
-                    const targetElement =
-                        document.querySelector(
-                            targetId
-                        );
-
-
-                    if (targetElement) {
-
-                        targetElement.scrollIntoView(
-                            {
-                                behavior: "smooth",
-                                block: "start"
-                            }
-                        );
-
-                    }
-
-                }
-            );
-
-        }
-    );
-
-
-    /* ==========================================
-       SCROLL REVEAL ANIMATION
-       ========================================== */
-
-    const revealElements =
-        document.querySelectorAll(
-            ".pdf-tool-card, .step-card, .privacy-card, .faq-item"
-        );
-
-
-    if (
-        "IntersectionObserver"
-        in window
-    ) {
-
-        const revealObserver =
-            new IntersectionObserver(
-                function (
-                    entries,
-                    observer
-                ) {
-
-                    entries.forEach(
-                        function (entry) {
-
-                            if (
-                                entry.isIntersecting
-                            ) {
-
-                                entry.target.classList.add(
-                                    "reveal-visible"
-                                );
-
-
-                                observer.unobserve(
-                                    entry.target
-                                );
-
-                            }
-
-                        }
-                    );
-
-                },
-                {
-                    threshold: 0.12
-                }
-            );
-
-
-        revealElements.forEach(
-            function (element) {
-
-                element.classList.add(
-                    "reveal-element"
-                );
-
-
-                revealObserver.observe(
-                    element
-                );
-
-            }
-        );
-
-    } else {
-
-        revealElements.forEach(
-            function (element) {
-
-                element.classList.add(
-                    "reveal-visible"
-                );
-
-            }
-        );
-
-    }
-
-
-    /* ==========================================
-       NAVIGATION HEADER EFFECT
-       ========================================== */
-
-    const header =
-        document.querySelector(
-            ".site-header"
-        );
-
-
-    if (header) {
-
-        window.addEventListener(
-            "scroll",
-            function () {
-
-                if (
-                    window.scrollY > 30
-                ) {
-
-                    header.classList.add(
-                        "header-scrolled"
-                    );
-
-                } else {
-
-                    header.classList.remove(
-                        "header-scrolled"
-                    );
-
-                }
-
-            }
-        );
-
-    }
-
-
-    /* ==========================================
-       TOOL BUTTON CLICK HANDLER
-       ========================================== */
-
-    const toolButtons =
-        document.querySelectorAll(
-            ".tool-btn"
-        );
-
-
-    toolButtons.forEach(
-        function (button) {
-
-            button.addEventListener(
-                "click",
-                function (event) {
-
-                    const isDisabled =
-                        button.classList.contains(
-                            "disabled"
-                        );
-
-
-                    if (isDisabled) {
-
-                        event.preventDefault();
-
-                        showComingSoonMessage(
-                            button
-                        );
-
-                    }
-
-                }
-            );
-
-        }
-    );
-
-
-    /* ==========================================
-       COMING SOON MESSAGE
-       ========================================== */
-
-    function showComingSoonMessage(
-        button
-    ) {
-
-        const existingMessage =
-            document.querySelector(
-                ".coming-soon-message"
-            );
-
-
-        if (existingMessage) {
-
-            existingMessage.remove();
-
-        }
-
-
-        const message =
-            document.createElement(
-                "div"
-            );
-
-
-        message.className =
-            "coming-soon-message";
-
-
-        message.innerHTML = `
-
-            <div class="coming-soon-icon">
-
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
-
-            </div>
-
-            <div>
-
-                <strong>
-                    Coming Soon
-                </strong>
-
-                <p>
-                    This PDF tool is currently
-                    being prepared for you.
-                </p>
-
-            </div>
-
-            <button
-                type="button"
-                class="close-coming-soon"
-                aria-label="Close"
-            >
-
-                <i class="fa-solid fa-xmark"></i>
-
-            </button>
-
-        `;
-
-
-        document.body.appendChild(
-            message
-        );
-
-
-        /* Show message */
-
-        setTimeout(
-            function () {
-
-                message.classList.add(
-                    "show"
-                );
-
-            },
-            50
-        );
-
-
-        /* Close button */
-
-        const closeButton =
-            message.querySelector(
-                ".close-coming-soon"
-            );
-
-
-        closeButton.addEventListener(
-            "click",
-            function () {
-
-                closeComingSoonMessage(
-                    message
-                );
-
-            }
-        );
-
-
-        /* Auto close */
-
-        setTimeout(
-            function () {
-
-                closeComingSoonMessage(
-                    message
-                );
-
-            },
-            5000
-        );
-
-    }
-
-
-    /* ==========================================
-       CLOSE COMING SOON MESSAGE
-       ========================================== */
-
-    function closeComingSoonMessage(
-        message
-    ) {
-
-        if (!message) {
-            return;
-        }
-
-
-        message.classList.remove(
-            "show"
-        );
-
-
-        setTimeout(
-            function () {
-
-                if (
-                    message.parentNode
-                ) {
-
-                    message.remove();
-
-                }
-
-            },
-            350
-        );
-
-    }
-
-
-    /* ==========================================
-       ACTIVE NAVIGATION LINK
-       ========================================== */
-
-    const currentPage =
-        window.location.pathname;
-
-
-    const navLinks =
-        document.querySelectorAll(
-            ".main-nav a"
-        );
-
-
-    navLinks.forEach(
-        function (link) {
-
-            const linkPath =
-                link.getAttribute(
-                    "href"
-                );
-
-
-            if (
-                linkPath &&
-                currentPage.includes(
-                    "pdf"
-                ) &&
-                linkPath.includes(
-                    "index.html"
-                )
-            ) {
-
-                link.classList.add(
-                    "current-page"
-                );
-
-            }
-
-        }
-    );
-
-
-    /* ==========================================
-       BUTTON RIPPLE EFFECT
-       ========================================== */
-
-    const rippleButtons =
-        document.querySelectorAll(
-            ".primary-btn, .secondary-btn, .upload-cta-btn, .category-btn"
-        );
-
-
-    rippleButtons.forEach(
-        function (button) {
-
-            button.addEventListener(
-                "click",
-                function (event) {
-
-                    const ripple =
-                        document.createElement(
-                            "span"
-                        );
-
-
-                    ripple.className =
-                        "button-ripple";
-
-
-                    const rect =
-                        button.getBoundingClientRect();
-
-
-                    const size =
-                        Math.max(
-                            rect.width,
-                            rect.height
-                        );
-
-
-                    ripple.style.width =
-                        size + "px";
-
-
-                    ripple.style.height =
-                        size + "px";
-
-
-                    ripple.style.left =
-                        (
-                            event.clientX -
-                            rect.left -
-                            size / 2
-                        ) + "px";
-
-
-                    ripple.style.top =
-                        (
-                            event.clientY -
-                            rect.top -
-                            size / 2
-                        ) + "px";
-
-
-                    button.appendChild(
-                        ripple
-                    );
-
-
-                    setTimeout(
-                        function () {
-
-                            ripple.remove();
-
-                        },
-                        600
-                    );
-
-                }
-            );
-
-        }
-    );
-
-
-});
-/* ==========================================
-   QUICK TOOLS HUB - PDF TOOLS
-   SCRIPT.JS - PART 2
-   ========================================== */
-
-
-/* ==========================================
-   PDF FILE UPLOAD SYSTEM
-   ========================================== */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-
-    /* ==========================================
-       GET UPLOAD ELEMENTS
-    ========================================== */
-
-    const uploadArea =
-        document.querySelector(
-            ".upload-area"
-        );
-
-
-    const pdfInput =
-        document.querySelector(
-            "#pdfInput"
-        );
-
-
-    const browseButton =
-        document.querySelector(
-            "#browsePdfBtn"
-        );
-
-
-    const fileList =
-        document.querySelector(
-            ".file-list"
-        );
-
-
-    /* ==========================================
-       SELECTED FILES
-    ========================================== */
-
-    let selectedFiles = [];
-
-
-    /* ==========================================
-       MAX FILE SIZE
-       50 MB
-    ========================================== */
-
-    const MAX_FILE_SIZE =
-        50 * 1024 * 1024;
-
-
-    /* ==========================================
-       ALLOWED FILE TYPE
-    ========================================== */
-
-    const ALLOWED_TYPE =
-        "application/pdf";
-
-
-    /* ==========================================
-       BROWSE BUTTON
-    ========================================== */
-
-    if (browseButton && pdfInput) {
-
-        browseButton.addEventListener(
-            "click",
-            function (event) {
-
-                event.preventDefault();
-
-                pdfInput.click();
-
-            }
-        );
-
-    }
-
-
-    /* ==========================================
-       FILE INPUT CHANGE
-    ========================================== */
-
-    if (pdfInput) {
-
-        pdfInput.addEventListener(
-            "change",
-            function (event) {
-
-                const files =
-                    Array.from(
-                        event.target.files
-                    );
-
-
-                handleSelectedFiles(
-                    files
-                );
-
-
-                /* Reset input */
-
-                pdfInput.value = "";
-
-            }
-        );
-
-    }
-
-
-    /* ==========================================
-       DRAG OVER
-    ========================================== */
-
-    if (uploadArea) {
-
-        uploadArea.addEventListener(
-            "dragover",
-            function (event) {
-
-                event.preventDefault();
-
-                uploadArea.classList.add(
-                    "drag-over"
-                );
-
-            }
-        );
-
-
-        /* ==========================================
-           DRAG LEAVE
-        ========================================== */
-
-        uploadArea.addEventListener(
-            "dragleave",
-            function () {
-
-                uploadArea.classList.remove(
-                    "drag-over"
-                );
-
-            }
-        );
-
-
-        /* ==========================================
-           DROP FILE
-        ========================================== */
-
-        uploadArea.addEventListener(
-            "drop",
-            function (event) {
-
-                event.preventDefault();
-
-
-                uploadArea.classList.remove(
-                    "drag-over"
-                );
-
-
-                const files =
-                    Array.from(
-                        event.dataTransfer.files
-                    );
-
-
-                handleSelectedFiles(
-                    files
-                );
-
-            }
-        );
-
-    }
-
-
-    /* ==========================================
-       HANDLE SELECTED FILES
-    ========================================== */
-
-    function handleSelectedFiles(
-        files
-    ) {
-
-        if (
-            !files ||
-            files.length === 0
-        ) {
-
-            return;
-
-        }
-
-
-        files.forEach(
-            function (file) {
-
-                /* Validate file */
-
-                const validation =
-                    validatePdfFile(
-                        file
-                    );
-
-
-                if (
-                    !validation.valid
-                ) {
-
-                    showUploadError(
-                        validation.message
-                    );
-
-                    return;
-
-                }
-
-
-                /* Check duplicate */
-
-                const alreadyExists =
-                    selectedFiles.some(
-                        function (
-                            existingFile
-                        ) {
-
-                            return (
-                                existingFile.name ===
-                                file.name &&
-                                existingFile.size ===
-                                file.size
-                            );
-
-                        }
-                    );
-
-
-                if (
-                    alreadyExists
-                ) {
-
-                    showUploadError(
-                        "This file has already been added."
-                    );
-
-                    return;
-
-                }
-
-
-                /* Add file */
-
-                selectedFiles.push(
-                    file
-                );
-
-            }
-        );
-
-
-        renderFileList();
-
-    }
-
-
-    /* ==========================================
-       VALIDATE PDF FILE
-    ========================================== */
-
-    function validatePdfFile(
-        file
-    ) {
-
-        if (!file) {
-
-            return {
-
-                valid: false,
-
-                message:
-                    "Please select a valid file."
-
-            };
-
-        }
-
-
-        /* Check file type */
-
-        const isPdf =
-            file.type ===
-            ALLOWED_TYPE ||
-            file.name
-                .toLowerCase()
-                .endsWith(
-                    ".pdf"
-                );
-
-
-        if (!isPdf) {
-
-            return {
-
-                valid: false,
-
-                message:
-                    "Only PDF files are allowed."
-
-            };
-
-        }
-
-
-        /* Check file size */
-
-        if (
-            file.size >
-            MAX_FILE_SIZE
-        ) {
-
-            return {
-
-                valid: false,
-
-                message:
-                    "File size must be less than 50 MB."
-
-            };
-
-        }
-
-
-        return {
-
-            valid: true
-
-        };
-
-    }
-
-
-    /* ==========================================
-       RENDER FILE LIST
-    ========================================== */
-
-    function renderFileList() {
-
-        if (!fileList) {
-
-            return;
-
-        }
-
-
-        fileList.innerHTML = "";
-
-
-        if (
-            selectedFiles.length === 0
-        ) {
-
-            fileList.classList.remove(
-                "has-files"
-            );
-
-            return;
-
-        }
-
-
-        fileList.classList.add(
-            "has-files"
-        );
-
-
-        selectedFiles.forEach(
-            function (
-                file,
-                index
-            ) {
-
-                const fileItem =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                fileItem.className =
-                    "selected-file";
-
-
-                fileItem.innerHTML = `
-
-                    <div class="selected-file-icon">
-
-                        <i class="fa-solid fa-file-pdf"></i>
-
-                    </div>
-
-
-                    <div class="selected-file-info">
-
-                        <strong>
-                            ${escapeHtml(file.name)}
-                        </strong>
-
-                        <span>
-                            ${formatFileSize(file.size)}
-                        </span>
-
-                    </div>
-
-
-                    <button
-                        type="button"
-                        class="remove-file-btn"
-                        data-index="${index}"
-                        aria-label="Remove file"
-                    >
-
-                        <i class="fa-solid fa-xmark"></i>
-
-                    </button>
-
-                `;
-
-
-                fileList.appendChild(
-                    fileItem
-                );
-
-            }
-        );
-
-
-        /* Add remove events */
-
-        const removeButtons =
-            fileList.querySelectorAll(
-                ".remove-file-btn"
-            );
-
-
-        removeButtons.forEach(
-            function (button) {
-
-                button.addEventListener(
-                    "click",
-                    function () {
-
-                        const index =
-                            parseInt(
-                                button.getAttribute(
-                                    "data-index"
-                                )
-                            );
-
-
-                        removeFile(
-                            index
-                        );
-
-                    }
-                );
-
-            }
-        );
-
-    }
-
-
-    /* ==========================================
-       REMOVE FILE
-    ========================================== */
-
-    function removeFile(
-        index
-    ) {
-
-        if (
-            index < 0 ||
-            index >=
-            selectedFiles.length
-        ) {
-
-            return;
-
-        }
-
-
-        selectedFiles.splice(
-            index,
-            1
-        );
-
-
-        renderFileList();
-
-    }
-
-
-    /* ==========================================
-       FORMAT FILE SIZE
-    ========================================== */
-
-    function formatFileSize(
-        bytes
-    ) {
-
-        if (
-            bytes === 0
-        ) {
-
-            return "0 Bytes";
-
-        }
-
-
-        const units = [
-
-            "Bytes",
-
-            "KB",
-
-            "MB",
-
-            "GB"
-
-        ];
-
-
-        const unitIndex =
-            Math.floor(
-                Math.log(bytes) /
-                Math.log(1024)
-            );
-
-
-        const size =
-            bytes /
-            Math.pow(
-                1024,
-                unitIndex
-            );
-
-
-        return (
-            size.toFixed(2) +
-            " " +
-            units[unitIndex]
-        );
-
-    }
-
-
-    /* ==========================================
-       ESCAPE HTML
-    ========================================== */
-
-    function escapeHtml(
-        text
-    ) {
-
-        const div =
-            document.createElement(
-                "div"
-            );
-
-
-        div.textContent =
-            text;
-
-
-        return div.innerHTML;
-
-    }
-
-
-    /* ==========================================
-       UPLOAD ERROR MESSAGE
-    ========================================== */
-
-    function showUploadError(
-        message
-    ) {
-
-        let errorBox =
-            document.querySelector(
-                ".upload-error"
-            );
-
-
-        if (!errorBox) {
-
-            errorBox =
-                document.createElement(
-                    "div"
-                );
-
-
-            errorBox.className =
-                "upload-error";
-
-
-            if (uploadArea) {
-
-                uploadArea.appendChild(
-                    errorBox
-                );
-
-            }
-
-        }
-
-
-        errorBox.innerHTML = `
-
-            <i class="fa-solid fa-circle-exclamation"></i>
-
-            <span>
-                ${escapeHtml(message)}
-            </span>
-
-        `;
-
-
-        errorBox.classList.add(
-            "show"
-        );
-
-
-        setTimeout(
-            function () {
-
-                errorBox.classList.remove(
-                    "show"
-                );
-
-            },
-            4000
-        );
-
-    }
-
-
-    /* ==========================================
-       CLEAR ALL FILES
-    ========================================== */
-
-    window.clearPdfFiles =
-        function () {
-
-            selectedFiles = [];
-
-            renderFileList();
-
-        };
-
-
-    /* ==========================================
-       GET SELECTED FILES
-    ========================================== */
-
-    window.getSelectedPdfFiles =
-        function () {
-
-            return [
-                ...selectedFiles
-            ];
-
-        };
-
-
-    /* ==========================================
-       UPLOAD PROGRESS SIMULATION
-    ========================================== */
-
-    window.showPdfProgress =
-        function (
-            callback
-        ) {
-
-            let progress =
-                0;
-
-
-            const interval =
-                setInterval(
-                    function () {
-
-                        progress +=
-                            Math.floor(
-                                Math.random() *
-                                12
-                            ) + 5;
-
-
-                        if (
-                            progress >= 100
-                        ) {
-
-                            progress = 100;
-
-                            clearInterval(
-                                interval
-                            );
-
-                        }
-
-
-                        if (
-                            typeof callback ===
-                            "function"
-                        ) {
-
-                            callback(
-                                progress
-                            );
-
-                        }
-
-                    },
-                    250
-                );
-
-        };
-
-
-});
-/* ==========================================
-   QUICK TOOLS HUB - PDF TOOLS
-   SCRIPT.JS - PART 3
-   ========================================== */
-
-
-/* ==========================================
-   PDF TOOL INTERACTIONS
-   ========================================== */
+   PAGE READY
+========================================== */
 
 document.addEventListener(
     "DOMContentLoaded",
     function () {
 
 
+        console.log(
+            "Quick Tools Hub PDF Tools Loaded"
+        );
+
+
         /* ==========================================
-           TOOL SEARCH
+           CATEGORY BUTTONS
         ========================================== */
 
-        const toolSearch =
-            document.querySelector(
-                "#toolSearch"
+        const categoryButtons =
+            document.querySelectorAll(
+                ".category-btn"
             );
 
 
-        const allToolCards =
+        /* ==========================================
+           PDF TOOL CARDS
+        ========================================== */
+
+        const toolCards =
             document.querySelectorAll(
                 ".pdf-tool-card"
             );
 
 
-        if (
-            toolSearch &&
-            allToolCards.length > 0
-        ) {
-
-            toolSearch.addEventListener(
-                "input",
-                function () {
-
-                    const searchText =
-                        toolSearch.value
-                            .toLowerCase()
-                            .trim();
-
-
-                    allToolCards.forEach(
-                        function (card) {
-
-                            const cardTitle =
-                                card.querySelector(
-                                    "h3"
-                                );
-
-
-                            const cardDescription =
-                                card.querySelector(
-                                    "p"
-                                );
-
-
-                            const titleText =
-                                cardTitle
-                                    ? cardTitle
-                                        .textContent
-                                        .toLowerCase()
-                                    : "";
-
-
-                            const descriptionText =
-                                cardDescription
-                                    ? cardDescription
-                                        .textContent
-                                        .toLowerCase()
-                                    : "";
-
-
-                            const matches =
-                                titleText.includes(
-                                    searchText
-                                ) ||
-                                descriptionText.includes(
-                                    searchText
-                                );
-
-
-                            if (matches) {
-
-                                card.style.display =
-                                    "flex";
-
-                            } else {
-
-                                card.style.display =
-                                    "none";
-
-                            }
-
-                        }
-                    );
-
-                }
-            );
-
-        }
-
-
         /* ==========================================
-           PDF TOOL OPEN BUTTONS
+           CATEGORY FILTER SYSTEM
         ========================================== */
 
-        const openToolButtons =
-            document.querySelectorAll(
-                "[data-tool-url]"
-            );
-
-
-        openToolButtons.forEach(
+        categoryButtons.forEach(
             function (button) {
+
 
                 button.addEventListener(
                     "click",
-                    function (event) {
+                    function () {
 
-                        const toolUrl =
-                            button.getAttribute(
-                                "data-tool-url"
-                            );
 
+                        /* ==========================
+                           REMOVE ACTIVE CLASS
+                        ========================== */
+
+                        categoryButtons.forEach(
+                            function (btn) {
+
+                                btn.classList.remove(
+                                    "active"
+                                );
+
+                            }
+                        );
+
+
+                        /* ==========================
+                           ACTIVE BUTTON
+                        ========================== */
+
+                        button.classList.add(
+                            "active"
+                        );
+
+
+                        /* ==========================
+                           GET CATEGORY NAME
+                        ========================== */
+
+                        const categoryName =
+                            button.textContent
+                                .trim()
+                                .toLowerCase();
+
+
+                        /* ==========================
+                           SHOW ALL TOOLS
+                        ========================== */
 
                         if (
-                            !toolUrl ||
-                            toolUrl === "#"
+                            categoryName.includes(
+                                "all tools"
+                            )
                         ) {
 
-                            event.preventDefault();
 
+                            toolCards.forEach(
+                                function (card) {
 
-                            showToolNotification(
-                                "This PDF tool is coming soon."
+                                    showCard(
+                                        card
+                                    );
+
+                                }
                             );
 
 
@@ -1499,6 +112,49 @@ document.addEventListener(
 
                         }
 
+
+                        /* ==========================
+                           FILTER CATEGORY
+                        ========================== */
+
+                        toolCards.forEach(
+                            function (card) {
+
+
+                                const cardCategory =
+                                    card.getAttribute(
+                                        "data-category"
+                                    );
+
+
+                                if (
+                                    categoryName.includes(
+                                        cardCategory
+                                    )
+                                ) {
+
+
+                                    showCard(
+                                        card
+                                    );
+
+
+                                }
+
+                                else {
+
+
+                                    hideCard(
+                                        card
+                                    );
+
+
+                                }
+
+                            }
+                        );
+
+
                     }
                 );
 
@@ -1507,200 +163,125 @@ document.addEventListener(
 
 
         /* ==========================================
-           TOOL NOTIFICATION
+           SHOW TOOL CARD
         ========================================== */
 
-        function showToolNotification(
-            message
+        function showCard(
+            card
         ) {
 
-            const oldNotification =
-                document.querySelector(
-                    ".tool-notification"
-                );
+
+            card.style.display =
+                "flex";
 
 
-            if (
-                oldNotification
-            ) {
+            /* Reset animation */
 
-                oldNotification.remove();
-
-            }
-
-
-            const notification =
-                document.createElement(
-                    "div"
-                );
-
-
-            notification.className =
-                "tool-notification";
-
-
-            notification.innerHTML = `
-
-                <div class="notification-icon">
-
-                    <i class="fa-solid fa-circle-info"></i>
-
-                </div>
-
-
-                <div class="notification-content">
-
-                    <strong>
-                        Quick Tools Hub
-                    </strong>
-
-                    <span>
-                        ${message}
-                    </span>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="notification-close"
-                >
-
-                    <i class="fa-solid fa-xmark"></i>
-
-                </button>
-
-            `;
-
-
-            document.body.appendChild(
-                notification
+            card.classList.remove(
+                "filter-card-show"
             );
 
+
+            /* Trigger animation */
 
             setTimeout(
                 function () {
 
-                    notification.classList.add(
-                        "show"
+                    card.classList.add(
+                        "filter-card-show"
                     );
 
                 },
-                50
+                20
             );
 
-
-            const closeButton =
-                notification.querySelector(
-                    ".notification-close"
-                );
-
-
-            closeButton.addEventListener(
-                "click",
-                function () {
-
-                    hideNotification(
-                        notification
-                    );
-
-                }
-            );
-
-
-            setTimeout(
-                function () {
-
-                    hideNotification(
-                        notification
-                    );
-
-                },
-                4500
-            );
 
         }
 
 
         /* ==========================================
-           HIDE NOTIFICATION
+           HIDE TOOL CARD
         ========================================== */
 
-        function hideNotification(
-            notification
+        function hideCard(
+            card
         ) {
 
-            if (
-                !notification
-            ) {
 
-                return;
-
-            }
-
-
-            notification.classList.remove(
-                "show"
+            card.classList.remove(
+                "filter-card-show"
             );
 
 
-            setTimeout(
-                function () {
+            card.style.display =
+                "none";
 
-                    if (
-                        notification.parentNode
-                    ) {
-
-                        notification.remove();
-
-                    }
-
-                },
-                350
-            );
 
         }
 
 
         /* ==========================================
-           FAQ ACCORDION
+           SMOOTH SCROLL
         ========================================== */
 
-        const faqItems =
+        const anchorLinks =
             document.querySelectorAll(
-                ".faq-item"
+                'a[href^="#"]'
             );
 
 
-        faqItems.forEach(
-            function (item) {
+        anchorLinks.forEach(
+            function (link) {
 
-                item.addEventListener(
-                    "toggle",
-                    function () {
+
+                link.addEventListener(
+                    "click",
+                    function (event) {
+
+
+                        const targetId =
+                            link.getAttribute(
+                                "href"
+                            );
+
+
+                        /* Ignore empty links */
 
                         if (
-                            item.open
+                            !targetId ||
+                            targetId === "#"
                         ) {
 
-                            faqItems.forEach(
-                                function (
-                                    otherItem
-                                ) {
+                            return;
 
-                                    if (
-                                        otherItem !==
-                                        item
-                                    ) {
+                        }
 
-                                        otherItem.open =
-                                            false;
 
-                                    }
+                        const target =
+                            document.querySelector(
+                                targetId
+                            );
 
+
+                        if (
+                            target
+                        ) {
+
+
+                            event.preventDefault();
+
+
+                            target.scrollIntoView(
+                                {
+                                    behavior:
+                                        "smooth",
+
+                                    block:
+                                        "start"
                                 }
                             );
 
+
                         }
 
                     }
@@ -1711,93 +292,36 @@ document.addEventListener(
 
 
         /* ==========================================
-           BACK TO TOP BUTTON
+           TOOL CARD REVEAL ANIMATION
         ========================================== */
-
-        const backToTop =
-            document.querySelector(
-                "#backToTop"
-            );
-
-
-        if (backToTop) {
-
-            window.addEventListener(
-                "scroll",
-                function () {
-
-                    if (
-                        window.scrollY >
-                        500
-                    ) {
-
-                        backToTop.classList.add(
-                            "show"
-                        );
-
-                    } else {
-
-                        backToTop.classList.remove(
-                            "show"
-                        );
-
-                    }
-
-                }
-            );
-
-
-            backToTop.addEventListener(
-                "click",
-                function () {
-
-                    window.scrollTo(
-                        {
-                            top: 0,
-                            behavior: "smooth"
-                        }
-                    );
-
-                }
-            );
-
-        }
-
-
-        /* ==========================================
-           ANIMATED COUNTERS
-        ========================================== */
-
-        const counters =
-            document.querySelectorAll(
-                "[data-counter]"
-            );
-
 
         if (
-            counters.length > 0 &&
             "IntersectionObserver"
             in window
         ) {
 
-            const counterObserver =
+
+            const cardObserver =
                 new IntersectionObserver(
                     function (
                         entries,
                         observer
                     ) {
 
+
                         entries.forEach(
                             function (
                                 entry
                             ) {
 
+
                                 if (
                                     entry.isIntersecting
                                 ) {
 
-                                    animateCounter(
-                                        entry.target
+
+                                    entry.target.classList.add(
+                                        "card-visible"
                                     );
 
 
@@ -1805,179 +329,85 @@ document.addEventListener(
                                         entry.target
                                     );
 
+
                                 }
 
                             }
                         );
 
+
                     },
                     {
-                        threshold: 0.5
+                        threshold:
+                            0.15
                     }
                 );
 
 
-            counters.forEach(
-                function (counter) {
+            toolCards.forEach(
+                function (card) {
 
-                    counterObserver.observe(
-                        counter
+
+                    cardObserver.observe(
+                        card
                     );
+
 
                 }
             );
 
-        }
-
-
-        /* ==========================================
-           COUNTER ANIMATION FUNCTION
-        ========================================== */
-
-        function animateCounter(
-            element
-        ) {
-
-            const target =
-                parseInt(
-                    element.getAttribute(
-                        "data-counter"
-                    )
-                );
-
-
-            if (
-                isNaN(target)
-            ) {
-
-                return;
-
-            }
-
-
-            let current = 0;
-
-
-            const duration =
-                1500;
-
-
-            const increment =
-                target /
-                (duration / 16);
-
-
-            const timer =
-                setInterval(
-                    function () {
-
-                        current +=
-                            increment;
-
-
-                        if (
-                            current >=
-                            target
-                        ) {
-
-                            current =
-                                target;
-
-                            clearInterval(
-                                timer
-                            );
-
-                        }
-
-
-                        element.textContent =
-                            Math.floor(
-                                current
-                            ).toLocaleString();
-
-                    },
-                    16
-                );
 
         }
 
 
         /* ==========================================
-           PREVENT EMPTY SEARCH SUBMISSION
+           HEADER SCROLL EFFECT
         ========================================== */
 
-        const searchForms =
-            document.querySelectorAll(
-                ".tool-search-form"
+        const header =
+            document.querySelector(
+                ".site-header"
             );
 
 
-        searchForms.forEach(
-            function (form) {
-
-                form.addEventListener(
-                    "submit",
-                    function (event) {
-
-                        const input =
-                            form.querySelector(
-                                "input"
-                            );
+        if (
+            header
+        ) {
 
 
-                        if (
-                            input &&
-                            input.value
-                                .trim() === ""
-                        ) {
-
-                            event.preventDefault();
-
-                            input.focus();
-
-                        }
-
-                    }
-                );
-
-            }
-        );
-
-
-        /* ==========================================
-           ESC KEY
-           CLOSE NOTIFICATIONS
-        ========================================== */
-
-        document.addEventListener(
-            "keydown",
-            function (event) {
-
-                if (
-                    event.key ===
-                    "Escape"
-                ) {
-
-                    const notification =
-                        document.querySelector(
-                            ".tool-notification.show"
-                        );
+            window.addEventListener(
+                "scroll",
+                function () {
 
 
                     if (
-                        notification
+                        window.scrollY >
+                        50
                     ) {
 
-                        notification.classList.remove(
-                            "show"
+
+                        header.classList.add(
+                            "header-scrolled"
                         );
+
+
+                    }
+
+                    else {
+
+
+                        header.classList.remove(
+                            "header-scrolled"
+                        );
+
 
                     }
 
                 }
+            );
 
-            }
-        );
+
+        }
 
 
         /* ==========================================
@@ -1990,7 +420,241 @@ document.addEventListener(
 
 
         console.log(
-            "PDF Tools JavaScript initialized successfully."
+            "PDF Tools Script Part 1 Ready"
+        );
+
+
+    }
+);
+/* ==========================================
+   PDF TOOL BUTTON HANDLER
+   PART 2
+========================================== */
+
+
+/* ==========================================
+   GET ALL TOOL BUTTONS
+========================================== */
+
+const toolButtons =
+    document.querySelectorAll(
+        ".pdf-tool-card .tool-btn"
+    );
+
+
+/* ==========================================
+   TOOL BUTTON CLICK EFFECT
+========================================== */
+
+toolButtons.forEach(
+    function (button) {
+
+
+        button.addEventListener(
+            "click",
+            function (event) {
+
+
+                /* ==========================
+                   GET TOOL CARD
+                ========================== */
+
+                const toolCard =
+                    button.closest(
+                        ".pdf-tool-card"
+                    );
+
+
+                /* ==========================
+                   GET TOOL NAME
+                ========================== */
+
+                let toolName =
+                    "PDF Tool";
+
+
+                if (
+                    toolCard
+                ) {
+
+
+                    const heading =
+                        toolCard.querySelector(
+                            "h3"
+                        );
+
+
+                    if (
+                        heading
+                    ) {
+
+                        toolName =
+                            heading.textContent
+                                .trim();
+
+                    }
+
+                }
+
+
+                /* ==========================
+                   ADD CLICKING EFFECT
+                ========================== */
+
+                button.classList.add(
+                    "tool-btn-clicked"
+                );
+
+
+                /* ==========================
+                   REMOVE EFFECT
+                ========================== */
+
+                setTimeout(
+                    function () {
+
+                        button.classList.remove(
+                            "tool-btn-clicked"
+                        );
+
+                    },
+                    500
+                );
+
+
+                console.log(
+                    "Opening:",
+                    toolName
+                );
+
+
+            }
+        );
+
+    }
+);
+
+
+/* ==========================================
+   PREVENT BROKEN EMPTY LINKS
+========================================== */
+
+const allToolLinks =
+    document.querySelectorAll(
+        ".pdf-tool-card a.tool-btn"
+    );
+
+
+allToolLinks.forEach(
+    function (link) {
+
+
+        link.addEventListener(
+            "click",
+            function (event) {
+
+
+                const href =
+                    link.getAttribute(
+                        "href"
+                    );
+
+
+                /* ==========================
+                   CHECK EMPTY LINK
+                ========================== */
+
+                if (
+                    !href ||
+                    href === "#" ||
+                    href === "#!"
+                ) {
+
+
+                    event.preventDefault();
+
+
+                    console.warn(
+                        "This PDF tool is not available yet."
+                    );
+
+
+                    /* ==========================
+                       GET CARD
+                    ========================== */
+
+                    const card =
+                        link.closest(
+                            ".pdf-tool-card"
+                        );
+
+
+                    if (
+                        card
+                    ) {
+
+
+                        card.classList.add(
+                            "tool-unavailable"
+                        );
+
+
+                        setTimeout(
+                            function () {
+
+                                card.classList.remove(
+                                    "tool-unavailable"
+                                );
+
+                            },
+                            1000
+                        );
+
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+/* ==========================================
+   TOOL CARD HOVER INTERACTION
+========================================== */
+
+toolCards.forEach(
+    function (card) {
+
+
+        card.addEventListener(
+            "mouseenter",
+            function () {
+
+
+                card.classList.add(
+                    "card-hover-active"
+                );
+
+
+            }
+        );
+
+
+        card.addEventListener(
+            "mouseleave",
+            function () {
+
+
+                card.classList.remove(
+                    "card-hover-active"
+                );
+
+
+            }
         );
 
 
@@ -1999,76 +663,920 @@ document.addEventListener(
 
 
 /* ==========================================
-   GLOBAL PDF TOOL FUNCTION
-   ========================================== */
+   PDF TOOL COUNT
+========================================== */
 
-function openPdfTool(
-    toolName
-) {
-
-    if (
-        !toolName
-    ) {
-
-        return;
-
-    }
+const totalPdfTools =
+    toolCards.length;
 
 
-    console.log(
-        "Opening PDF Tool:",
-        toolName
+console.log(
+    "Total PDF Tools:",
+    totalPdfTools
+);
+
+
+/* ==========================================
+   UPDATE TOOL COUNT IF ELEMENT EXISTS
+========================================== */
+
+const toolCountElement =
+    document.querySelector(
+        ".tool-count"
     );
 
 
-    /*
+if (
+    toolCountElement
+) {
 
-    Future PDF tools can be connected here.
 
-    Example:
+    toolCountElement.textContent =
+        totalPdfTools;
 
-    if (toolName === "merge") {
-
-        window.location.href =
-            "merge-pdf/index.html";
-
-    }
-
-    if (toolName === "compress") {
-
-        window.location.href =
-            "compress-pdf/index.html";
-
-    }
-
-    */
 
 }
 
 
 /* ==========================================
-   PAGE VISIBILITY
-   ========================================== */
+   PART 2 COMPLETE
+========================================== */
 
-document.addEventListener(
-    "visibilitychange",
-    function () {
+console.log(
+    "PDF Tools Script Part 2 Ready"
+);
+/* ==========================================
+   PDF TOOLS - SCRIPT.JS
+   PART 3
+   PREMIUM SECTIONS & INTERACTIONS
+========================================== */
 
-        if (
-            document.hidden
+
+/* ==========================================
+   PREMIUM UPLOAD CTA
+========================================== */
+
+const uploadCtaButton =
+    document.querySelector(
+        ".upload-cta-btn"
+    );
+
+
+if (
+    uploadCtaButton
+) {
+
+
+    uploadCtaButton.addEventListener(
+        "click",
+        function (event) {
+
+
+            const pdfToolsSection =
+                document.querySelector(
+                    "#pdf-tools"
+                );
+
+
+            if (
+                pdfToolsSection
+            ) {
+
+
+                event.preventDefault();
+
+
+                pdfToolsSection.scrollIntoView(
+                    {
+                        behavior:
+                            "smooth",
+
+                        block:
+                            "start"
+                    }
+                );
+
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   HOW IT WORKS STEP CARDS
+========================================== */
+
+const stepCards =
+    document.querySelectorAll(
+        ".step-card"
+    );
+
+
+if (
+    stepCards.length > 0
+) {
+
+
+    stepCards.forEach(
+        function (
+            card,
+            index
         ) {
 
-            console.log(
-                "User switched away from PDF Tools."
+
+            /* ==========================
+               STEP CARD HOVER
+            ========================== */
+
+            card.addEventListener(
+                "mouseenter",
+                function () {
+
+                    card.classList.add(
+                        "step-active"
+                    );
+
+                }
             );
 
-        } else {
 
-            console.log(
-                "User returned to PDF Tools."
+            card.addEventListener(
+                "mouseleave",
+                function () {
+
+                    card.classList.remove(
+                        "step-active"
+                    );
+
+                }
             );
+
+
+            /* ==========================
+               STEP CARD DELAY
+            ========================== */
+
+            card.style.setProperty(
+                "--step-delay",
+                `${index * 100}ms`
+            );
+
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   PRIVACY POINTS
+========================================== */
+
+const privacyPoints =
+    document.querySelectorAll(
+        ".privacy-point"
+    );
+
+
+privacyPoints.forEach(
+    function (
+        point
+    ) {
+
+
+        point.addEventListener(
+            "mouseenter",
+            function () {
+
+
+                point.classList.add(
+                    "privacy-point-active"
+                );
+
+
+            }
+        );
+
+
+        point.addEventListener(
+            "mouseleave",
+            function () {
+
+
+                point.classList.remove(
+                    "privacy-point-active"
+                );
+
+
+            }
+        );
+
+
+    }
+);
+
+
+/* ==========================================
+   PRIVACY CARD REVEAL
+========================================== */
+
+const privacyCard =
+    document.querySelector(
+        ".privacy-card"
+    );
+
+
+if (
+    privacyCard &&
+    "IntersectionObserver"
+    in window
+) {
+
+
+    const privacyObserver =
+        new IntersectionObserver(
+            function (
+                entries,
+                observer
+            ) {
+
+
+                entries.forEach(
+                    function (
+                        entry
+                    ) {
+
+
+                        if (
+                            entry.isIntersecting
+                        ) {
+
+
+                            privacyCard.classList.add(
+                                "privacy-visible"
+                            );
+
+
+                            observer.unobserve(
+                                privacyCard
+                            );
+
+
+                        }
+
+                    }
+                );
+
+
+            },
+            {
+                threshold:
+                    0.15
+            }
+        );
+
+
+    privacyObserver.observe(
+        privacyCard
+    );
+
+}
+
+
+/* ==========================================
+   UPLOAD SECTION REVEAL
+========================================== */
+
+const uploadSection =
+    document.querySelector(
+        ".premium-upload-section"
+    );
+
+
+if (
+    uploadSection &&
+    "IntersectionObserver"
+    in window
+) {
+
+
+    const uploadObserver =
+        new IntersectionObserver(
+            function (
+                entries,
+                observer
+            ) {
+
+
+                entries.forEach(
+                    function (
+                        entry
+                    ) {
+
+
+                        if (
+                            entry.isIntersecting
+                        ) {
+
+
+                            uploadSection.classList.add(
+                                "upload-section-visible"
+                            );
+
+
+                            observer.unobserve(
+                                uploadSection
+                            );
+
+
+                        }
+
+                    }
+                );
+
+
+            },
+            {
+                threshold:
+                    0.15
+            }
+        );
+
+
+    uploadObserver.observe(
+        uploadSection
+    );
+
+}
+
+
+/* ==========================================
+   PDF TOOL CARDS
+   ADD TOOL NAME TO BUTTON
+========================================== */
+
+toolCards.forEach(
+    function (
+        card
+    ) {
+
+
+        const title =
+            card.querySelector(
+                "h3"
+            );
+
+
+        const button =
+            card.querySelector(
+                ".tool-btn"
+            );
+
+
+        if (
+            title &&
+            button
+        ) {
+
+
+            const toolName =
+                title.textContent
+                    .trim();
+
+
+            button.setAttribute(
+                "aria-label",
+                `Open ${toolName}`
+            );
+
 
         }
 
     }
+);
+
+
+/* ==========================================
+   KEYBOARD ACCESSIBILITY
+========================================== */
+
+toolCards.forEach(
+    function (
+        card
+    ) {
+
+
+        card.setAttribute(
+            "tabindex",
+            "0"
+        );
+
+
+        card.addEventListener(
+            "keydown",
+            function (
+                event
+            ) {
+
+
+                if (
+                    event.key ===
+                    "Enter"
+                ) {
+
+
+                    const button =
+                        card.querySelector(
+                            ".tool-btn"
+                        );
+
+
+                    if (
+                        button
+                    ) {
+
+
+                        button.click();
+
+
+                    }
+
+                }
+
+            }
+        );
+
+
+    }
+);
+
+
+/* ==========================================
+   BACK TO TOP BUTTON
+   CREATE ONLY IF NEEDED
+========================================== */
+
+const backToTop =
+    document.querySelector(
+        ".back-to-top"
+    );
+
+
+if (
+    backToTop
+) {
+
+
+    window.addEventListener(
+        "scroll",
+        function () {
+
+
+            if (
+                window.scrollY >
+                500
+            ) {
+
+
+                backToTop.classList.add(
+                    "show"
+                );
+
+
+            }
+
+            else {
+
+
+                backToTop.classList.remove(
+                    "show"
+                );
+
+
+            }
+
+        }
+    );
+
+
+    backToTop.addEventListener(
+        "click",
+        function () {
+
+
+            window.scrollTo(
+                {
+                    top:
+                        0,
+
+                    behavior:
+                        "smooth"
+                }
+            );
+
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   PDF TOOLS READY
+========================================== */
+
+console.log(
+    "PDF Tools Script Part 3 Ready"
+);
+/* ==========================================
+   PDF TOOLS - SCRIPT.JS
+   PART 4 - FINAL
+   FAQ & FINAL CTA
+========================================== */
+
+
+/* ==========================================
+   FAQ ACCORDION
+========================================== */
+
+const faqItems =
+    document.querySelectorAll(
+        ".faq-item"
+    );
+
+
+faqItems.forEach(
+    function (faq) {
+
+
+        const summary =
+            faq.querySelector(
+                "summary"
+            );
+
+
+        const icon =
+            summary.querySelector(
+                "i"
+            );
+
+
+        summary.addEventListener(
+            "click",
+            function () {
+
+
+                /* ==========================
+                   CLOSE OTHER FAQ ITEMS
+                ========================== */
+
+                faqItems.forEach(
+                    function (
+                        otherFaq
+                    ) {
+
+
+                        if (
+                            otherFaq !== faq &&
+                            otherFaq.open
+                        ) {
+
+
+                            otherFaq.open =
+                                false;
+
+
+                            const otherIcon =
+                                otherFaq.querySelector(
+                                    "summary i"
+                                );
+
+
+                            if (
+                                otherIcon
+                            ) {
+
+
+                                otherIcon.classList.remove(
+                                    "fa-minus"
+                                );
+
+
+                                otherIcon.classList.add(
+                                    "fa-plus"
+                                );
+
+
+                            }
+
+                        }
+
+                    }
+                );
+
+
+                /* ==========================
+                   UPDATE CURRENT ICON
+                ========================== */
+
+                setTimeout(
+                    function () {
+
+
+                        if (
+                            faq.open
+                        ) {
+
+
+                            if (
+                                icon
+                            ) {
+
+
+                                icon.classList.remove(
+                                    "fa-plus"
+                                );
+
+
+                                icon.classList.add(
+                                    "fa-minus"
+                                );
+
+
+                            }
+
+                        }
+
+                        else {
+
+
+                            if (
+                                icon
+                            ) {
+
+
+                                icon.classList.remove(
+                                    "fa-minus"
+                                );
+
+
+                                icon.classList.add(
+                                    "fa-plus"
+                                );
+
+
+                            }
+
+                        }
+
+
+                    },
+                    10
+                );
+
+
+            }
+        );
+
+
+    }
+);
+
+
+/* ==========================================
+   FINAL CTA BUTTON
+========================================== */
+
+const finalCtaButton =
+    document.querySelector(
+        ".final-cta-section .primary-btn"
+    );
+
+
+if (
+    finalCtaButton
+) {
+
+
+    finalCtaButton.addEventListener(
+        "click",
+        function (event) {
+
+
+            const pdfToolsSection =
+                document.querySelector(
+                    "#pdf-tools"
+                );
+
+
+            if (
+                pdfToolsSection
+            ) {
+
+
+                event.preventDefault();
+
+
+                pdfToolsSection.scrollIntoView(
+                    {
+                        behavior:
+                            "smooth",
+
+                        block:
+                            "start"
+                    }
+                );
+
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   CTA ICON ANIMATION
+========================================== */
+
+const ctaIcon =
+    document.querySelector(
+        ".cta-icon"
+    );
+
+
+if (
+    ctaIcon
+) {
+
+
+    ctaIcon.addEventListener(
+        "mouseenter",
+        function () {
+
+
+            ctaIcon.classList.add(
+                "cta-icon-active"
+            );
+
+
+        }
+    );
+
+
+    ctaIcon.addEventListener(
+        "mouseleave",
+        function () {
+
+
+            ctaIcon.classList.remove(
+                "cta-icon-active"
+            );
+
+
+        }
+    );
+
+
+}
+
+
+/* ==========================================
+   FOOTER PDF TOOLS LINK
+========================================== */
+
+const footerPdfLink =
+    document.querySelector(
+        '.footer-links a[href="#pdf-tools"]'
+    );
+
+
+if (
+    footerPdfLink
+) {
+
+
+    footerPdfLink.addEventListener(
+        "click",
+        function (event) {
+
+
+            const pdfToolsSection =
+                document.querySelector(
+                    "#pdf-tools"
+                );
+
+
+            if (
+                pdfToolsSection
+            ) {
+
+
+                event.preventDefault();
+
+
+                pdfToolsSection.scrollIntoView(
+                    {
+                        behavior:
+                            "smooth",
+
+                        block:
+                            "start"
+                    }
+                );
+
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   FAQ ACCESSIBILITY
+========================================== */
+
+faqItems.forEach(
+    function (
+        faq
+    ) {
+
+
+        faq.setAttribute(
+            "role",
+            "group"
+        );
+
+
+    }
+);
+
+
+/* ==========================================
+   FINAL PAGE LOAD
+========================================== */
+
+window.addEventListener(
+    "load",
+    function () {
+
+
+        document.body.classList.add(
+            "fully-loaded"
+        );
+
+
+        console.log(
+            "Quick Tools Hub PDF Tools Fully Loaded"
+        );
+
+
+    }
+);
+
+
+/* ==========================================
+   FINAL STATUS
+========================================== */
+
+console.log(
+    "================================"
+);
+
+console.log(
+    "PDF TOOLS SCRIPT.JS COMPLETE"
+);
+
+console.log(
+    "Category Filter: READY"
+);
+
+console.log(
+    "Tool Cards: READY"
+);
+
+console.log(
+    "Smooth Scroll: READY"
+);
+
+console.log(
+    "FAQ Accordion: READY"
+);
+
+console.log(
+    "CTA Buttons: READY"
+);
+
+console.log(
+    "Privacy Section: READY"
+);
+
+console.log(
+    "================================"
 );
