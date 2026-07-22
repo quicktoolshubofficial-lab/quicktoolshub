@@ -1,268 +1,248 @@
 /* =========================================================
-   PDF TOOLS - SCRIPT.JS
-   PART 1
-   ========================================================= */
+   QUICK TOOLS HUB - PDF TOOLS
+   SCRIPT.JS - PART 1
+========================================================= */
 
 
 /* =========================================================
-   DOM READY
-   ========================================================= */
+   1. DOM READY
+========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
 
-
     /* =====================================================
-       ELEMENT SELECTORS
+       2. ELEMENT SELECTORS
     ===================================================== */
 
-    const categoryButtons =
-        document.querySelectorAll(".category-btn");
+    const categoryButtons = document.querySelectorAll(
+        ".category-btn"
+    );
 
-    const toolCards =
-        document.querySelectorAll(".pdf-tool-card");
+    const toolCards = document.querySelectorAll(
+        ".pdf-tool-card"
+    );
 
-    const faqItems =
-        document.querySelectorAll(".faq-item");
+    const toolsGrid = document.querySelector(
+        ".tools-grid"
+    );
 
-    const primaryButtons =
-        document.querySelectorAll(".primary-btn");
+    const noResults = document.querySelector(
+        ".no-results"
+    );
 
-    const toolButtons =
-        document.querySelectorAll(".tool-btn");
+    const resetSearchButton = document.querySelector(
+        ".reset-search-btn"
+    );
+
+    const toolCount = document.querySelector(
+        ".tool-count strong"
+    );
 
 
     /* =====================================================
-       PDF TOOL CATEGORY FILTER
+       3. TOOL DATA
+    ===================================================== */
+
+    const tools = Array.from(toolCards).filter(function (card) {
+
+        return !card.classList.contains(
+            "no-results"
+        );
+
+    });
+
+
+    /* =====================================================
+       4. UPDATE TOOL COUNT
+    ===================================================== */
+
+    function updateToolCount(count) {
+
+        if (!toolCount) {
+            return;
+        }
+
+        toolCount.textContent = count;
+
+    }
+
+
+    /* =====================================================
+       5. SHOW / HIDE NO RESULTS
+    ===================================================== */
+
+    function toggleNoResults(show) {
+
+        if (!noResults) {
+            return;
+        }
+
+        if (show) {
+
+            noResults.classList.add(
+                "show"
+            );
+
+        } else {
+
+            noResults.classList.remove(
+                "show"
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       6. FILTER TOOLS BY CATEGORY
+    ===================================================== */
+
+    function filterTools(category) {
+
+        let visibleCount = 0;
+
+
+        tools.forEach(function (card) {
+
+            const cardCategory =
+                card.getAttribute(
+                    "data-category"
+                );
+
+
+            if (
+                category === "all" ||
+                category === cardCategory
+            ) {
+
+                card.style.display = "";
+
+                visibleCount++;
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+
+        updateToolCount(
+            visibleCount
+        );
+
+
+        toggleNoResults(
+            visibleCount === 0
+        );
+
+    }
+
+
+    /* =====================================================
+       7. CATEGORY BUTTON EVENTS
     ===================================================== */
 
     categoryButtons.forEach(function (button) {
 
-        button.addEventListener("click", function () {
+        button.addEventListener(
+            "click",
+            function () {
 
+                categoryButtons.forEach(
+                    function (item) {
 
-            /* REMOVE ACTIVE FROM ALL BUTTONS */
+                        item.classList.remove(
+                            "active"
+                        );
 
-            categoryButtons.forEach(function (btn) {
+                    }
+                );
 
-                btn.classList.remove("active");
 
-            });
+                this.classList.add(
+                    "active"
+                );
 
 
-            /* ADD ACTIVE TO CLICKED BUTTON */
+                const selectedCategory =
+                    this.getAttribute(
+                        "data-category"
+                    );
 
-            this.classList.add("active");
 
-
-            /* GET SELECTED CATEGORY */
-
-            const selectedCategory =
-                this.textContent
-                .trim()
-                .toLowerCase();
-
-
-            /* SHOW / HIDE TOOL CARDS */
-
-            toolCards.forEach(function (card) {
-
-
-                const cardCategory =
-                    card.dataset.category;
-
-
-                /* ALL TOOLS */
-
-                if (
-                    selectedCategory === "all tools"
-                ) {
-
-                    showToolCard(card);
-
-                }
-
-
-                /* MATCH CATEGORY */
-
-                else if (
-                    cardCategory === selectedCategory
-                ) {
-
-                    showToolCard(card);
-
-                }
-
-
-                /* HIDE OTHER CATEGORIES */
-
-                else {
-
-                    hideToolCard(card);
-
-                }
-
-            });
-
-        });
-
-    });
-
-
-    /* =====================================================
-       SHOW TOOL CARD
-    ===================================================== */
-
-    function showToolCard(card) {
-
-        card.style.display = "block";
-
-
-        /* Small animation */
-
-        card.style.opacity = "0";
-
-        card.style.transform =
-            "translateY(15px)";
-
-
-        requestAnimationFrame(function () {
-
-            card.style.transition =
-                "opacity 0.3s ease, transform 0.3s ease";
-
-            card.style.opacity = "1";
-
-            card.style.transform =
-                "translateY(0)";
-
-        });
-
-    }
-
-
-    /* =====================================================
-       HIDE TOOL CARD
-    ===================================================== */
-
-    function hideToolCard(card) {
-
-        card.style.opacity = "0";
-
-        card.style.transform =
-            "translateY(15px)";
-
-
-        setTimeout(function () {
-
-            card.style.display = "none";
-
-        }, 250);
-
-    }
-
-
-    /* =====================================================
-       FAQ ACCORDION
-    ===================================================== */
-
-    faqItems.forEach(function (item) {
-
-
-        item.addEventListener("toggle", function () {
-
-
-            /* Only run when opened */
-
-            if (!item.open) {
-
-                return;
+                filterTools(
+                    selectedCategory || "all"
+                );
 
             }
-
-
-            /* Close other FAQ items */
-
-            faqItems.forEach(function (otherItem) {
-
-                if (
-                    otherItem !== item &&
-                    otherItem.open
-                ) {
-
-                    otherItem.open = false;
-
-                }
-
-            });
-
-        });
-
-    });
-
-
-    /* =====================================================
-       SMOOTH SCROLL
-    ===================================================== */
-
-    const smoothScrollLinks =
-        document.querySelectorAll(
-            'a[href^="#"]'
         );
 
-
-    smoothScrollLinks.forEach(function (link) {
-
-        link.addEventListener("click", function (event) {
-
-
-            const targetId =
-                this.getAttribute("href");
-
-
-            /* Ignore empty hash */
-
-            if (
-                !targetId ||
-                targetId === "#"
-            ) {
-
-                return;
-
-            }
-
-
-            const targetElement =
-                document.querySelector(targetId);
-
-
-            /* If target exists */
-
-            if (targetElement) {
-
-                event.preventDefault();
-
-
-                targetElement.scrollIntoView({
-
-                    behavior: "smooth",
-
-                    block: "start"
-
-                });
-
-            }
-
-        });
-
     });
 
 
     /* =====================================================
-       TOOL CARD HOVER EFFECT
+       8. RESET FILTER
     ===================================================== */
 
-    toolCards.forEach(function (card) {
+    if (resetSearchButton) {
 
+        resetSearchButton.addEventListener(
+            "click",
+            function () {
+
+                categoryButtons.forEach(
+                    function (button) {
+
+                        button.classList.remove(
+                            "active"
+                        );
+
+                    }
+                );
+
+
+                const allButton =
+                    document.querySelector(
+                        '.category-btn[data-category="all"]'
+                    );
+
+
+                if (allButton) {
+
+                    allButton.classList.add(
+                        "active"
+                    );
+
+                }
+
+
+                filterTools(
+                    "all"
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       9. INITIALIZE TOOLS
+    ===================================================== */
+
+    filterTools(
+        "all"
+    );
+
+
+    /* =====================================================
+       10. TOOL CARD HOVER EFFECT
+    ===================================================== */
+
+    tools.forEach(function (card) {
 
         card.addEventListener(
             "mouseenter",
@@ -291,48 +271,426 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       BUTTON CLICK EFFECT
+       11. SMOOTH SCROLL FOR INTERNAL LINKS
     ===================================================== */
 
-    const allButtons =
+    const internalLinks =
         document.querySelectorAll(
-            "button, .primary-btn, .secondary-btn, .tool-btn, .upload-cta-btn"
+            'a[href^="#"]'
         );
 
 
-    allButtons.forEach(function (button) {
+    internalLinks.forEach(
+        function (link) {
+
+            link.addEventListener(
+                "click",
+                function (event) {
+
+                    const targetId =
+                        this.getAttribute(
+                            "href"
+                        );
 
 
-        button.addEventListener(
-            "mousedown",
+                    if (
+                        !targetId ||
+                        targetId === "#"
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const targetElement =
+                        document.querySelector(
+                            targetId
+                        );
+
+
+                    if (targetElement) {
+
+                        event.preventDefault();
+
+
+                        targetElement.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start"
+                        });
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+});
+/* =========================================================
+   QUICK TOOLS HUB - PDF TOOLS
+   SCRIPT.JS - PART 2
+========================================================= */
+
+
+/* =========================================================
+   12. SEARCH FUNCTIONALITY
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const searchInput = document.querySelector(
+        "#toolSearch"
+    );
+
+    const searchButton = document.querySelector(
+        ".search-btn"
+    );
+
+    const toolCards = document.querySelectorAll(
+        ".pdf-tool-card"
+    );
+
+    const noResults = document.querySelector(
+        ".no-results"
+    );
+
+    const toolCount = document.querySelector(
+        ".tool-count strong"
+    );
+
+
+    /* =====================================================
+       13. SEARCH TOOLS
+    ===================================================== */
+
+    function searchTools() {
+
+        if (!searchInput) {
+            return;
+        }
+
+
+        const searchValue =
+            searchInput.value
+                .toLowerCase()
+                .trim();
+
+
+        let visibleCount = 0;
+
+
+        toolCards.forEach(function (card) {
+
+            if (
+                card.classList.contains(
+                    "no-results"
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            const titleElement =
+                card.querySelector(
+                    ".tool-title"
+                );
+
+
+            const descriptionElement =
+                card.querySelector(
+                    ".tool-description"
+                );
+
+
+            const keywords =
+                card.getAttribute(
+                    "data-keywords"
+                ) || "";
+
+
+            const title =
+                titleElement
+                    ? titleElement.textContent.toLowerCase()
+                    : "";
+
+
+            const description =
+                descriptionElement
+                    ? descriptionElement.textContent.toLowerCase()
+                    : "";
+
+
+            const searchableText =
+                title +
+                " " +
+                description +
+                " " +
+                keywords.toLowerCase();
+
+
+            if (
+                searchableText.includes(
+                    searchValue
+                )
+            ) {
+
+                card.style.display = "";
+
+                visibleCount++;
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+
+        if (toolCount) {
+
+            toolCount.textContent =
+                visibleCount;
+
+        }
+
+
+        if (noResults) {
+
+            if (
+                visibleCount === 0
+            ) {
+
+                noResults.classList.add(
+                    "show"
+                );
+
+            } else {
+
+                noResults.classList.remove(
+                    "show"
+                );
+
+            }
+
+        }
+
+    }
+
+
+    /* =====================================================
+       14. SEARCH BUTTON EVENT
+    ===================================================== */
+
+    if (searchButton) {
+
+        searchButton.addEventListener(
+            "click",
+            function () {
+
+                searchTools();
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       15. SEARCH ON ENTER KEY
+    ===================================================== */
+
+    if (searchInput) {
+
+        searchInput.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Enter"
+                ) {
+
+                    event.preventDefault();
+
+                    searchTools();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       16. LIVE SEARCH
+    ===================================================== */
+
+    if (searchInput) {
+
+        searchInput.addEventListener(
+            "input",
+            function () {
+
+                searchTools();
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       17. CLEAR SEARCH
+    ===================================================== */
+
+    const clearSearchButton =
+        document.querySelector(
+            ".clear-search-btn"
+        );
+
+
+    if (clearSearchButton) {
+
+        clearSearchButton.addEventListener(
+            "click",
+            function () {
+
+                if (searchInput) {
+
+                    searchInput.value = "";
+
+                    searchInput.focus();
+
+                }
+
+
+                toolCards.forEach(
+                    function (card) {
+
+                        if (
+                            !card.classList.contains(
+                                "no-results"
+                            )
+                        ) {
+
+                            card.style.display = "";
+
+                        }
+
+                    }
+                );
+
+
+                if (noResults) {
+
+                    noResults.classList.remove(
+                        "show"
+                    );
+
+                }
+
+
+                if (toolCount) {
+
+                    let totalTools = 0;
+
+
+                    toolCards.forEach(
+                        function (card) {
+
+                            if (
+                                !card.classList.contains(
+                                    "no-results"
+                                )
+                            ) {
+
+                                totalTools++;
+
+                            }
+
+                        }
+                    );
+
+
+                    toolCount.textContent =
+                        totalTools;
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       18. ESCAPE KEY TO CLEAR SEARCH
+    ===================================================== */
+
+    if (searchInput) {
+
+        searchInput.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    searchInput.value = "";
+
+                    searchTools();
+
+                    searchInput.blur();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       19. TOOL CARD CLICK ANIMATION
+    ===================================================== */
+
+    toolCards.forEach(function (card) {
+
+        if (
+            card.classList.contains(
+                "no-results"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        card.addEventListener(
+            "click",
             function () {
 
                 this.classList.add(
-                    "button-pressed"
+                    "card-clicked"
                 );
 
-            }
-        );
 
+                setTimeout(
+                    function () {
 
-        button.addEventListener(
-            "mouseup",
-            function () {
+                        card.classList.remove(
+                            "card-clicked"
+                        );
 
-                this.classList.remove(
-                    "button-pressed"
-                );
-
-            }
-        );
-
-
-        button.addEventListener(
-            "mouseleave",
-            function () {
-
-                this.classList.remove(
-                    "button-pressed"
+                    },
+                    300
                 );
 
             }
@@ -342,297 +700,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       SCROLL REVEAL OBSERVER
+       20. BUTTON RIPPLE EFFECT
     ===================================================== */
 
-    const revealElements =
+    const buttons =
         document.querySelectorAll(
-            ".pdf-tool-card, .step-card, .privacy-card, .faq-item"
+            "button"
         );
 
 
-    const revealObserver =
-        new IntersectionObserver(
-
-            function (entries) {
-
-                entries.forEach(function (entry) {
-
-
-                    if (
-                        entry.isIntersecting
-                    ) {
-
-                        entry.target.classList.add(
-                            "reveal-visible"
-                        );
-
-
-                        revealObserver.unobserve(
-                            entry.target
-                        );
-
-                    }
-
-                });
-
-            },
-
-            {
-
-                threshold: 0.12
-
-            }
-
-        );
-
-
-    revealElements.forEach(function (element) {
-
-        element.classList.add(
-            "reveal-hidden"
-        );
-
-
-        revealObserver.observe(
-            element
-        );
-
-    });
-
-
-});
-/* =========================================================
-   PDF TOOLS - SCRIPT.JS
-   PART 2
-   ========================================================= */
-
-
-/* =========================================================
-   FAQ ICON ANIMATION
-   ========================================================= */
-
-const faqList =
-    document.querySelectorAll(".faq-item");
-
-
-faqList.forEach(function (faq) {
-
-    const icon =
-        faq.querySelector("summary i");
-
-
-    if (!icon) {
-
-        return;
-
-    }
-
-
-    faq.addEventListener("toggle", function () {
-
-
-        if (faq.open) {
-
-            icon.classList.remove(
-                "fa-plus"
-            );
-
-            icon.classList.add(
-                "fa-minus"
-            );
-
-        }
-
-        else {
-
-            icon.classList.remove(
-                "fa-minus"
-            );
-
-            icon.classList.add(
-                "fa-plus"
-            );
-
-        }
-
-    });
-
-});
-
-
-
-/* =========================================================
-   ACTIVE NAVIGATION ON SCROLL
-   ========================================================= */
-
-const sections =
-    document.querySelectorAll(
-        "section[id]"
-    );
-
-
-const navigationLinks =
-    document.querySelectorAll(
-        ".main-nav a"
-    );
-
-
-window.addEventListener(
-    "scroll",
-    function () {
-
-
-        let currentSection = "";
-
-
-        sections.forEach(function (section) {
-
-
-            const sectionTop =
-                section.offsetTop - 150;
-
-
-            const sectionHeight =
-                section.offsetHeight;
-
-
-            if (
-                window.scrollY >= sectionTop &&
-                window.scrollY <
-                sectionTop + sectionHeight
-            ) {
-
-                currentSection =
-                    section.getAttribute("id");
-
-            }
-
-        });
-
-
-        navigationLinks.forEach(
-            function (link) {
-
-
-                link.classList.remove(
-                    "active"
-                );
-
-
-                const linkTarget =
-                    link.getAttribute(
-                        "href"
-                    );
-
-
-                if (
-                    linkTarget &&
-                    linkTarget.includes(
-                        "#" + currentSection
-                    )
-                ) {
-
-                    link.classList.add(
-                        "active"
-                    );
-
-                }
-
-            }
-        );
-
-    }
-);
-
-
-
-/* =========================================================
-   HEADER SCROLL EFFECT
-   ========================================================= */
-
-const header =
-    document.querySelector(
-        ".site-header"
-    );
-
-
-window.addEventListener(
-    "scroll",
-    function () {
-
-
-        if (!header) {
-
-            return;
-
-        }
-
-
-        if (window.scrollY > 50) {
-
-            header.classList.add(
-                "header-scrolled"
-            );
-
-        }
-
-        else {
-
-            header.classList.remove(
-                "header-scrolled"
-            );
-
-        }
-
-    }
-);
-
-
-
-/* =========================================================
-   TOOL CARD STAGGER ANIMATION
-   ========================================================= */
-
-const cards =
-    document.querySelectorAll(
-        ".pdf-tool-card"
-    );
-
-
-cards.forEach(
-    function (card, index) {
-
-
-        card.style.setProperty(
-            "--card-delay",
-            (index * 0.05) + "s"
-        );
-
-
-    }
-);
-
-
-
-/* =========================================================
-   BUTTON RIPPLE EFFECT
-   ========================================================= */
-
-const rippleButtons =
-    document.querySelectorAll(
-        ".primary-btn, .secondary-btn, .tool-btn, .upload-cta-btn, .category-btn"
-    );
-
-
-rippleButtons.forEach(
-    function (button) {
-
+    buttons.forEach(function (button) {
 
         button.addEventListener(
             "click",
             function (event) {
-
 
                 const ripple =
                     document.createElement(
@@ -641,7 +722,7 @@ rippleButtons.forEach(
 
 
                 ripple.classList.add(
-                    "button-ripple"
+                    "ripple-effect"
                 );
 
 
@@ -649,35 +730,22 @@ rippleButtons.forEach(
                     button.getBoundingClientRect();
 
 
-                const size =
-                    Math.max(
-                        rect.width,
-                        rect.height
-                    );
+                const x =
+                    event.clientX -
+                    rect.left;
 
 
-                ripple.style.width =
-                    size + "px";
-
-
-                ripple.style.height =
-                    size + "px";
+                const y =
+                    event.clientY -
+                    rect.top;
 
 
                 ripple.style.left =
-                    (
-                        event.clientX -
-                        rect.left -
-                        size / 2
-                    ) + "px";
+                    x + "px";
 
 
                 ripple.style.top =
-                    (
-                        event.clientY -
-                        rect.top -
-                        size / 2
-                    ) + "px";
+                    y + "px";
 
 
                 button.appendChild(
@@ -694,792 +762,367 @@ rippleButtons.forEach(
                     600
                 );
 
-
             }
         );
 
-    }
-);
+    });
 
 
+    /* =====================================================
+       21. BACK TO TOP BUTTON
+    ===================================================== */
 
-/* =========================================================
-   BACK TO TOP BUTTON
-   ========================================================= */
-
-const backToTop =
-    document.createElement(
-        "button"
-    );
-
-
-backToTop.className =
-    "back-to-top";
+    const backToTop =
+        document.querySelector(
+            ".back-to-top"
+        );
 
 
-backToTop.setAttribute(
-    "type",
-    "button"
-);
+    if (backToTop) {
 
-
-backToTop.setAttribute(
-    "aria-label",
-    "Back to top"
-);
-
-
-backToTop.innerHTML =
-    '<i class="fa-solid fa-arrow-up"></i>';
-
-
-document.body.appendChild(
-    backToTop
-);
-
-
-
-/* =========================================================
-   BACK TO TOP VISIBILITY
-   ========================================================= */
-
-window.addEventListener(
-    "scroll",
-    function () {
-
-
-        if (
-            window.scrollY > 500
-        ) {
-
-            backToTop.classList.add(
-                "show"
-            );
-
-        }
-
-        else {
-
-            backToTop.classList.remove(
-                "show"
-            );
-
-        }
-
-    }
-);
-
-
-
-/* =========================================================
-   BACK TO TOP ACTION
-   ========================================================= */
-
-backToTop.addEventListener(
-    "click",
-    function () {
-
-
-        window.scrollTo({
-
-            top: 0,
-
-            behavior: "smooth"
-
-        });
-
-    }
-);
-
-
-
-/* =========================================================
-   PREVENT EMPTY TOOL LINKS
-   ========================================================= */
-
-toolButtons.forEach(
-    function (button) {
-
-
-        button.addEventListener(
-            "click",
-            function (event) {
-
-
-                const href =
-                    this.getAttribute(
-                        "href"
-                    );
-
+        window.addEventListener(
+            "scroll",
+            function () {
 
                 if (
-                    !href ||
-                    href === "#"
+                    window.scrollY > 500
                 ) {
 
-                    event.preventDefault();
+                    backToTop.classList.add(
+                        "show"
+                    );
+
+                } else {
+
+                    backToTop.classList.remove(
+                        "show"
+                    );
 
                 }
 
             }
         );
 
+
+        backToTop.addEventListener(
+            "click",
+            function () {
+
+                window.scrollTo({
+
+                    top: 0,
+
+                    behavior: "smooth"
+
+                });
+
+            }
+        );
+
     }
-);
 
 
+    /* =====================================================
+       22. PAGE LOAD ANIMATION
+    ===================================================== */
 
-/* =========================================================
-   PAGE LOADED ANIMATION
-   ========================================================= */
-
-window.addEventListener(
-    "load",
-    function () {
-
-
-        document.body.classList.add(
-            "page-loaded"
+    const pageElements =
+        document.querySelectorAll(
+            ".pdf-tool-card, .category-btn"
         );
 
 
-    }
-);
+    pageElements.forEach(
+        function (element, index) {
 
+            element.style.animationDelay =
+                (index * 0.05) + "s";
 
-
-/* =========================================================
-   REDUCE MOTION ACCESSIBILITY
-   ========================================================= */
-
-const prefersReducedMotion =
-    window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-    );
-
-
-if (
-    prefersReducedMotion.matches
-) {
-
-
-    document.documentElement.style.scrollBehavior =
-        "auto";
-
-
-    revealElements.forEach(
-        function (element) {
 
             element.classList.add(
-                "reveal-visible"
-            );
-
-        }
-    );
-
-}
-
-
-
-/* =========================================================
-   PDF TOOL SEARCH SUPPORT
-   ========================================================= */
-
-function searchPDFTools(
-    searchTerm
-) {
-
-
-    const search =
-        searchTerm
-        .toLowerCase()
-        .trim();
-
-
-    toolCards.forEach(
-        function (card) {
-
-
-            const title =
-                card.querySelector(
-                    "h3"
-                );
-
-
-            const description =
-                card.querySelector(
-                    "p"
-                );
-
-
-            if (
-                !title ||
-                !description
-            ) {
-
-                return;
-
-            }
-
-
-            const titleText =
-                title.textContent
-                .toLowerCase();
-
-
-            const descriptionText =
-                description.textContent
-                .toLowerCase();
-
-
-            if (
-                titleText.includes(search) ||
-                descriptionText.includes(search)
-            ) {
-
-                showToolCard(card);
-
-            }
-
-            else {
-
-                hideToolCard(card);
-
-            }
-
-        }
-    );
-
-}
-
-
-
-/* =========================================================
-   GLOBAL PDF TOOLS OBJECT
-   ========================================================= */
-
-window.PDFTools =
-    {
-
-        search:
-            searchPDFTools,
-
-
-        showAll:
-            function () {
-
-
-                toolCards.forEach(
-                    function (card) {
-
-                        showToolCard(card);
-
-                    }
-                );
-
-            },
-
-
-        scrollToTools:
-            function () {
-
-
-                const toolsSection =
-                    document.querySelector(
-                        "#pdf-tools"
-                    );
-
-
-                if (
-                    toolsSection
-                ) {
-
-                    toolsSection.scrollIntoView({
-
-                        behavior: "smooth"
-
-                    });
-
-                }
-
-            }
-
-    };
-/* =========================================================
-   PDF TOOLS - SCRIPT.JS
-   PART 3 - FINAL
-   ========================================================= */
-
-
-/* =========================================================
-   TOOL CARD KEYBOARD ACCESSIBILITY
-   ========================================================= */
-
-toolCards.forEach(function (card) {
-
-    card.setAttribute(
-        "tabindex",
-        "0"
-    );
-
-
-    card.addEventListener(
-        "keydown",
-        function (event) {
-
-            if (
-                event.key === "Enter" ||
-                event.key === " "
-            ) {
-
-                const toolLink =
-                    card.querySelector(
-                        ".tool-btn"
-                    );
-
-
-                if (toolLink) {
-
-                    event.preventDefault();
-
-                    toolLink.click();
-
-                }
-
-            }
-
-        }
-    );
-
-});
-
-
-
-/* =========================================================
-   CATEGORY BUTTON KEYBOARD SUPPORT
-   ========================================================= */
-
-categoryButtons.forEach(function (button) {
-
-    button.addEventListener(
-        "keydown",
-        function (event) {
-
-
-            if (
-                event.key === "Enter" ||
-                event.key === " "
-            ) {
-
-                event.preventDefault();
-
-                this.click();
-
-            }
-
-        }
-    );
-
-});
-
-
-
-/* =========================================================
-   HERO PARALLAX EFFECT
-   ========================================================= */
-
-const heroSection =
-    document.querySelector(
-        ".hero-section"
-    );
-
-
-const floatingIcons =
-    document.querySelectorAll(
-        ".floating-pdf-icon"
-    );
-
-
-if (
-    heroSection &&
-    floatingIcons.length > 0
-) {
-
-
-    heroSection.addEventListener(
-        "mousemove",
-        function (event) {
-
-
-            const rect =
-                heroSection.getBoundingClientRect();
-
-
-            const mouseX =
-                event.clientX -
-                rect.left;
-
-
-            const mouseY =
-                event.clientY -
-                rect.top;
-
-
-            const centerX =
-                rect.width / 2;
-
-
-            const centerY =
-                rect.height / 2;
-
-
-            const moveX =
-                (mouseX - centerX) /
-                centerX;
-
-
-            const moveY =
-                (mouseY - centerY) /
-                centerY;
-
-
-            floatingIcons.forEach(
-                function (icon, index) {
-
-
-                    const intensity =
-                        (index + 1) * 5;
-
-
-                    icon.style.transform =
-                        "translate(" +
-                        (moveX * intensity) +
-                        "px, " +
-                        (moveY * intensity) +
-                        "px)";
-
-                }
-            );
-
-
-        }
-    );
-
-
-    heroSection.addEventListener(
-        "mouseleave",
-        function () {
-
-
-            floatingIcons.forEach(
-                function (icon) {
-
-
-                    icon.style.transform =
-                        "";
-
-                }
-            );
-
-        }
-    );
-
-}
-
-
-
-/* =========================================================
-   UPLOAD CTA HOVER EFFECT
-   ========================================================= */
-
-const uploadSection =
-    document.querySelector(
-        ".premium-upload-section"
-    );
-
-
-if (
-    uploadSection
-) {
-
-
-    uploadSection.addEventListener(
-        "mouseenter",
-        function () {
-
-            this.classList.add(
-                "upload-active"
+                "page-load-animation"
             );
 
         }
     );
 
 
-    uploadSection.addEventListener(
-        "mouseleave",
-        function () {
+    /* =====================================================
+       23. MOBILE MENU
+    ===================================================== */
 
-            this.classList.remove(
-                "upload-active"
-            );
-
-        }
-    );
-
-}
-
-
-
-/* =========================================================
-   PRIVACY CARD INTERACTION
-   ========================================================= */
-
-const privacyCard =
-    document.querySelector(
-        ".privacy-card"
-    );
-
-
-if (
-    privacyCard
-) {
-
-
-    privacyCard.addEventListener(
-        "mouseenter",
-        function () {
-
-            this.classList.add(
-                "privacy-active"
-            );
-
-        }
-    );
-
-
-    privacyCard.addEventListener(
-        "mouseleave",
-        function () {
-
-            this.classList.remove(
-                "privacy-active"
-            );
-
-        }
-    );
-
-}
-
-
-
-/* =========================================================
-   SECTION REVEAL ANIMATION
-   ========================================================= */
-
-const sectionsToReveal =
-    document.querySelectorAll(
-        ".section-heading, .premium-upload-section, .final-cta-content"
-    );
-
-
-const sectionObserver =
-    new IntersectionObserver(
-
-        function (entries) {
-
-
-            entries.forEach(
-                function (entry) {
-
-
-                    if (
-                        entry.isIntersecting
-                    ) {
-
-
-                        entry.target.classList.add(
-                            "section-visible"
-                        );
-
-
-                        sectionObserver.unobserve(
-                            entry.target
-                        );
-
-                    }
-
-                }
-            );
-
-        },
-
-        {
-
-            threshold: 0.15
-
-        }
-
-    );
-
-
-sectionsToReveal.forEach(
-    function (element) {
-
-
-        element.classList.add(
-            "section-hidden"
+    const menuToggle =
+        document.querySelector(
+            ".menu-toggle"
         );
 
 
-        sectionObserver.observe(
-            element
+    const mainNavigation =
+        document.querySelector(
+            ".main-navigation"
+        );
+
+
+    if (
+        menuToggle &&
+        mainNavigation
+    ) {
+
+        menuToggle.addEventListener(
+            "click",
+            function () {
+
+                mainNavigation.classList.toggle(
+                    "mobile-open"
+                );
+
+
+                menuToggle.classList.toggle(
+                    "active"
+                );
+
+            }
         );
 
     }
-);
 
 
+    /* =====================================================
+       24. CLOSE MOBILE MENU
+    ===================================================== */
 
-/* =========================================================
-   MOBILE MENU FALLBACK
-   ========================================================= */
+    if (mainNavigation) {
 
-const mainNav =
-    document.querySelector(
-        ".main-nav"
-    );
+        const navigationLinks =
+            mainNavigation.querySelectorAll(
+                "a"
+            );
 
 
-if (
-    mainNav
-) {
+        navigationLinks.forEach(
+            function (link) {
+
+                link.addEventListener(
+                    "click",
+                    function () {
+
+                        mainNavigation.classList.remove(
+                            "mobile-open"
+                        );
+
+
+                        if (menuToggle) {
+
+                            menuToggle.classList.remove(
+                                "active"
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       25. PREVENT EMPTY SEARCH SUBMISSION
+    ===================================================== */
+
+    const searchForm =
+        document.querySelector(
+            ".search-form"
+        );
+
+
+    if (searchForm) {
+
+        searchForm.addEventListener(
+            "submit",
+            function (event) {
+
+                if (
+                    !searchInput ||
+                    searchInput.value.trim() === ""
+                ) {
+
+                    event.preventDefault();
+
+                    if (searchInput) {
+
+                        searchInput.focus();
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       26. WINDOW RESIZE HANDLER
+    ===================================================== */
+
+    let resizeTimer;
 
 
     window.addEventListener(
         "resize",
         function () {
 
+            clearTimeout(
+                resizeTimer
+            );
 
-            if (
-                window.innerWidth > 768
-            ) {
 
-                mainNav.classList.remove(
-                    "mobile-nav-open"
+            resizeTimer =
+                setTimeout(
+                    function () {
+
+                        if (
+                            window.innerWidth > 768 &&
+                            mainNavigation
+                        ) {
+
+                            mainNavigation.classList.remove(
+                                "mobile-open"
+                            );
+
+
+                            if (menuToggle) {
+
+                                menuToggle.classList.remove(
+                                    "active"
+                                );
+
+                            }
+
+                        }
+
+                    },
+                    250
                 );
-
-            }
 
         }
     );
 
-}
 
+    /* =====================================================
+       27. CONSOLE STATUS
+    ===================================================== */
+
+    console.log(
+        "Quick Tools Hub PDF Tools loaded successfully."
+    );
+
+
+});
+/* =========================================================
+   QUICK TOOLS HUB - PDF TOOLS
+   SCRIPT.JS - PART 3
+   MERGE PDF TOOL ENGINE
+========================================================= */
 
 
 /* =========================================================
-   TOOL CARD LINK PRELOADER
-   ========================================================= */
+   28. MERGE PDF TOOL
+========================================================= */
 
-toolButtons.forEach(
-    function (button) {
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* =====================================================
+       29. PDF ELEMENT SELECTORS
+    ===================================================== */
+
+    const pdfInput =
+        document.querySelector("#pdfInput");
+
+    const uploadArea =
+        document.querySelector("#uploadArea");
+
+    const selectPdfButton =
+        document.querySelector("#selectPdfButton");
+
+    const pdfFileList =
+        document.querySelector("#pdfFileList");
+
+    const mergePdfButton =
+        document.querySelector("#mergePdfButton");
+
+    const clearPdfButton =
+        document.querySelector("#clearPdfButton");
+
+    const pdfStatus =
+        document.querySelector("#pdfStatus");
+
+    const selectedFileCount =
+        document.querySelector("#selectedFileCount");
 
 
-        button.addEventListener(
+    /* =====================================================
+       30. PDF FILE STORAGE
+    ===================================================== */
+
+    let selectedPdfFiles = [];
+
+
+    /* =====================================================
+       31. CHECK REQUIRED ELEMENTS
+    ===================================================== */
+
+    if (
+        !pdfInput ||
+        !uploadArea ||
+        !pdfFileList ||
+        !mergePdfButton
+    ) {
+
+        console.warn(
+            "Merge PDF elements were not found on this page."
+        );
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       32. OPEN FILE SELECTOR
+    ===================================================== */
+
+    if (selectPdfButton) {
+
+        selectPdfButton.addEventListener(
             "click",
-            function () {
+            function (event) {
 
+                event.preventDefault();
 
-                const originalText =
-                    this.innerHTML;
-
-
-                this.classList.add(
-                    "loading"
-                );
-
-
-                this.innerHTML =
-                    '<i class="fa-solid fa-spinner fa-spin"></i> Opening...';
-
-
-                setTimeout(
-                    function () {
-
-
-                        button.classList.remove(
-                            "loading"
-                        );
-
-
-                        button.innerHTML =
-                            originalText;
-
-
-                    },
-                    1500
-                );
+                pdfInput.click();
 
             }
         );
 
     }
-);
 
 
+    /* =====================================================
+       33. UPLOAD AREA CLICK
+    ===================================================== */
 
-/* =========================================================
-   ESCAPE KEY SUPPORT
-   ========================================================= */
-
-document.addEventListener(
-    "keydown",
-    function (event) {
-
-
-        if (
-            event.key === "Escape"
-        ) {
-
-
-            faqItems.forEach(
-                function (item) {
-
-
-                    if (
-                        item.open
-                    ) {
-
-                        item.open =
-                            false;
-
-                    }
-
-                }
-            );
-
-
-        }
-
-    }
-);
-
-
-
-/* =========================================================
-   INITIALIZE DEFAULT CATEGORY
-   ========================================================= */
-
-function initializePDFTools() {
-
-
-    categoryButtons.forEach(
-        function (button) {
-
+    uploadArea.addEventListener(
+        "click",
+        function (event) {
 
             if (
-                button.classList.contains(
-                    "active"
+                event.target.closest(
+                    "button"
                 )
             ) {
 
@@ -1487,125 +1130,1691 @@ function initializePDFTools() {
 
             }
 
-        }
-    );
 
-
-    toolCards.forEach(
-        function (card) {
-
-            card.style.display =
-                "block";
+            pdfInput.click();
 
         }
     );
 
-}
 
+    /* =====================================================
+       34. FILE INPUT CHANGE
+    ===================================================== */
 
+    pdfInput.addEventListener(
+        "change",
+        function () {
 
-/* =========================================================
-   INITIALIZE FAQ ICONS
-   ========================================================= */
-
-function initializeFAQIcons() {
-
-
-    faqItems.forEach(
-        function (item) {
-
-
-            const icon =
-                item.querySelector(
-                    "summary i"
+            const files =
+                Array.from(
+                    this.files
                 );
 
 
+            addPdfFiles(
+                files
+            );
+
+
+            this.value = "";
+
+        }
+    );
+
+
+    /* =====================================================
+       35. ADD PDF FILES
+    ===================================================== */
+
+    function addPdfFiles(files) {
+
+        if (
+            !files ||
+            files.length === 0
+        ) {
+
+            return;
+
+        }
+
+
+        files.forEach(
+            function (file) {
+
+                const isPdf =
+                    file.type === "application/pdf" ||
+                    file.name
+                        .toLowerCase()
+                        .endsWith(".pdf");
+
+
+                if (!isPdf) {
+
+                    showPdfStatus(
+                        "Only PDF files are allowed.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                const alreadyExists =
+                    selectedPdfFiles.some(
+                        function (existingFile) {
+
+                            return (
+                                existingFile.name ===
+                                file.name &&
+
+                                existingFile.size ===
+                                file.size &&
+
+                                existingFile.lastModified ===
+                                file.lastModified
+                            );
+
+                        }
+                    );
+
+
+                if (
+                    alreadyExists
+                ) {
+
+                    return;
+
+                }
+
+
+                selectedPdfFiles.push(
+                    file
+                );
+
+            }
+        );
+
+
+        renderPdfFiles();
+
+    }
+
+
+    /* =====================================================
+       36. RENDER PDF FILE LIST
+    ===================================================== */
+
+    function renderPdfFiles() {
+
+        pdfFileList.innerHTML = "";
+
+
+        if (
+            selectedPdfFiles.length === 0
+        ) {
+
+            updatePdfInterface();
+
+            return;
+
+        }
+
+
+        selectedPdfFiles.forEach(
+            function (file, index) {
+
+                const fileItem =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                fileItem.className =
+                    "pdf-file-item";
+
+
+                fileItem.setAttribute(
+                    "data-index",
+                    index
+                );
+
+
+                fileItem.draggable =
+                    true;
+
+
+                const fileNumber =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                fileNumber.className =
+                    "pdf-file-number";
+
+
+                fileNumber.textContent =
+                    index + 1;
+
+
+                const fileIcon =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                fileIcon.className =
+                    "pdf-file-icon";
+
+
+                fileIcon.innerHTML =
+                    '<i class="fas fa-file-pdf"></i>';
+
+
+                const fileDetails =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                fileDetails.className =
+                    "pdf-file-details";
+
+
+                const fileName =
+                    document.createElement(
+                        "strong"
+                    );
+
+
+                fileName.className =
+                    "pdf-file-name";
+
+
+                fileName.textContent =
+                    file.name;
+
+
+                const fileSize =
+                    document.createElement(
+                        "small"
+                    );
+
+
+                fileSize.className =
+                    "pdf-file-size";
+
+
+                fileSize.textContent =
+                    formatFileSize(
+                        file.size
+                    );
+
+
+                fileDetails.appendChild(
+                    fileName
+                );
+
+
+                fileDetails.appendChild(
+                    fileSize
+                );
+
+
+                const dragHandle =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                dragHandle.className =
+                    "pdf-drag-handle";
+
+
+                dragHandle.innerHTML =
+                    '<i class="fas fa-grip-vertical"></i>';
+
+
+                const removeButton =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                removeButton.type =
+                    "button";
+
+
+                removeButton.className =
+                    "remove-pdf-btn";
+
+
+                removeButton.setAttribute(
+                    "aria-label",
+                    "Remove PDF"
+                );
+
+
+                removeButton.innerHTML =
+                    '<i class="fas fa-times"></i>';
+
+
+                removeButton.addEventListener(
+                    "click",
+                    function () {
+
+                        removePdfFile(
+                            index
+                        );
+
+                    }
+                );
+
+
+                fileItem.appendChild(
+                    fileNumber
+                );
+
+
+                fileItem.appendChild(
+                    fileIcon
+                );
+
+
+                fileItem.appendChild(
+                    fileDetails
+                );
+
+
+                fileItem.appendChild(
+                    dragHandle
+                );
+
+
+                fileItem.appendChild(
+                    removeButton
+                );
+
+
+                addDragEvents(
+                    fileItem
+                );
+
+
+                pdfFileList.appendChild(
+                    fileItem
+                );
+
+            }
+        );
+
+
+        updatePdfInterface();
+
+    }
+
+
+    /* =====================================================
+       37. REMOVE PDF FILE
+    ===================================================== */
+
+    function removePdfFile(index) {
+
+        if (
+            index < 0 ||
+            index >= selectedPdfFiles.length
+        ) {
+
+            return;
+
+        }
+
+
+        selectedPdfFiles.splice(
+            index,
+            1
+        );
+
+
+        renderPdfFiles();
+
+
+        showPdfStatus(
+            "PDF removed successfully.",
+            "success"
+        );
+
+    }
+
+
+    /* =====================================================
+       38. CLEAR ALL PDF FILES
+    ===================================================== */
+
+    if (clearPdfButton) {
+
+        clearPdfButton.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    selectedPdfFiles.length === 0
+                ) {
+
+                    return;
+
+                }
+
+
+                selectedPdfFiles = [];
+
+
+                renderPdfFiles();
+
+
+                showPdfStatus(
+                    "All selected PDFs have been cleared.",
+                    "success"
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       39. UPDATE PDF INTERFACE
+    ===================================================== */
+
+    function updatePdfInterface() {
+
+        const totalFiles =
+            selectedPdfFiles.length;
+
+
+        if (selectedFileCount) {
+
+            selectedFileCount.textContent =
+                totalFiles;
+
+        }
+
+
+        if (mergePdfButton) {
+
+            mergePdfButton.disabled =
+                totalFiles < 2;
+
+        }
+
+
+        if (clearPdfButton) {
+
+            clearPdfButton.disabled =
+                totalFiles === 0;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       40. FORMAT FILE SIZE
+    ===================================================== */
+
+    function formatFileSize(bytes) {
+
+        if (
+            bytes === 0
+        ) {
+
+            return "0 Bytes";
+
+        }
+
+
+        const units = [
+            "Bytes",
+            "KB",
+            "MB",
+            "GB"
+        ];
+
+
+        const index =
+            Math.floor(
+                Math.log(bytes) /
+                Math.log(1024)
+            );
+
+
+        return (
+            parseFloat(
+                (
+                    bytes /
+                    Math.pow(
+                        1024,
+                        index
+                    )
+                ).toFixed(2)
+            ) +
+            " " +
+            units[index]
+        );
+
+    }
+
+
+    /* =====================================================
+       41. DRAG AND DROP EVENTS
+    ===================================================== */
+
+    [
+        "dragenter",
+        "dragover"
+    ].forEach(
+        function (eventName) {
+
+            uploadArea.addEventListener(
+                eventName,
+                function (event) {
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+
+                    uploadArea.classList.add(
+                        "drag-active"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    [
+        "dragleave",
+        "drop"
+    ].forEach(
+        function (eventName) {
+
+            uploadArea.addEventListener(
+                eventName,
+                function (event) {
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+
+                    uploadArea.classList.remove(
+                        "drag-active"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       42. DROP PDF FILES
+    ===================================================== */
+
+    uploadArea.addEventListener(
+        "drop",
+        function (event) {
+
+            const droppedFiles =
+                Array.from(
+                    event.dataTransfer.files
+                );
+
+
+            addPdfFiles(
+                droppedFiles
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       43. DRAG TO REORDER
+    ===================================================== */
+
+    let draggedIndex = null;
+
+
+    function addDragEvents(element) {
+
+        element.addEventListener(
+            "dragstart",
+            function () {
+
+                draggedIndex =
+                    Number(
+                        this.getAttribute(
+                            "data-index"
+                        )
+                    );
+
+
+                this.classList.add(
+                    "dragging"
+                );
+
+            }
+        );
+
+
+        element.addEventListener(
+            "dragend",
+            function () {
+
+                this.classList.remove(
+                    "dragging"
+                );
+
+
+                draggedIndex =
+                    null;
+
+            }
+        );
+
+
+        element.addEventListener(
+            "dragover",
+            function (event) {
+
+                event.preventDefault();
+
+            }
+        );
+
+
+        element.addEventListener(
+            "drop",
+            function (event) {
+
+                event.preventDefault();
+
+
+                const targetIndex =
+                    Number(
+                        this.getAttribute(
+                            "data-index"
+                        )
+                    );
+
+
+                if (
+                    draggedIndex === null ||
+                    draggedIndex === targetIndex
+                ) {
+
+                    return;
+
+                }
+
+
+                const draggedFile =
+                    selectedPdfFiles[
+                        draggedIndex
+                    ];
+
+
+                selectedPdfFiles.splice(
+                    draggedIndex,
+                    1
+                );
+
+
+                selectedPdfFiles.splice(
+                    targetIndex,
+                    0,
+                    draggedFile
+                );
+
+
+                renderPdfFiles();
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       44. PDF STATUS MESSAGE
+    ===================================================== */
+
+    function showPdfStatus(
+        message,
+        type
+    ) {
+
+        if (!pdfStatus) {
+
+            return;
+
+        }
+
+
+        pdfStatus.textContent =
+            message;
+
+
+        pdfStatus.className =
+            "pdf-status";
+
+
+        if (type) {
+
+            pdfStatus.classList.add(
+                type
+            );
+
+        }
+
+
+        pdfStatus.classList.add(
+            "show"
+        );
+
+
+        setTimeout(
+            function () {
+
+                pdfStatus.classList.remove(
+                    "show"
+                );
+
+            },
+            4000
+        );
+
+    }
+
+
+    /* =====================================================
+       45. INITIAL PDF UI STATE
+    ===================================================== */
+
+    updatePdfInterface();
+
+
+    /* =====================================================
+       46. MERGE BUTTON PRE-CHECK
+    ===================================================== */
+
+    mergePdfButton.addEventListener(
+        "click",
+        function () {
+
             if (
-                !icon
+                selectedPdfFiles.length < 2
             ) {
+
+                showPdfStatus(
+                    "Please select at least 2 PDF files to merge.",
+                    "error"
+                );
+
 
                 return;
 
             }
 
 
-            if (
-                item.open
-            ) {
-
-
-                icon.classList.remove(
-                    "fa-plus"
-                );
-
-
-                icon.classList.add(
-                    "fa-minus"
-                );
-
-            }
-
-            else {
-
-
-                icon.classList.remove(
-                    "fa-minus"
-                );
-
-
-                icon.classList.add(
-                    "fa-plus"
-                );
-
-            }
+            showPdfStatus(
+                "Preparing your PDF files for merging...",
+                "success"
+            );
 
         }
     );
 
-}
 
+    /* =====================================================
+       47. PDF FILE TYPE VALIDATION
+    ===================================================== */
+
+    function validatePdfFiles() {
+
+        return selectedPdfFiles.every(
+            function (file) {
+
+                return (
+                    file.type ===
+                    "application/pdf" ||
+
+                    file.name
+                        .toLowerCase()
+                        .endsWith(
+                            ".pdf"
+                        )
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       48. FINAL VALIDATION
+    ===================================================== */
+
+    function validateBeforeMerge() {
+
+        if (
+            selectedPdfFiles.length < 2
+        ) {
+
+            showPdfStatus(
+                "Select at least two PDF files.",
+                "error"
+            );
+
+
+            return false;
+
+        }
+
+
+        if (
+            !validatePdfFiles()
+        ) {
+
+            showPdfStatus(
+                "One or more selected files are not valid PDF files.",
+                "error"
+            );
+
+
+            return false;
+
+        }
+
+
+        return true;
+
+    }
+
+
+    /* =====================================================
+       49. EXPOSE PDF DATA
+    ===================================================== */
+
+    window.quickToolsPDF = {
+
+        getFiles:
+            function () {
+
+                return selectedPdfFiles;
+
+            },
+
+
+        clear:
+            function () {
+
+                selectedPdfFiles = [];
+
+                renderPdfFiles();
+
+            },
+
+
+        validate:
+            function () {
+
+                return validateBeforeMerge();
+
+            }
+
+    };
+
+
+});
+/* =========================================================
+   QUICK TOOLS HUB - PDF TOOLS
+   SCRIPT.JS - PART 4
+   ACTUAL PDF MERGE ENGINE
+========================================================= */
 
 
 /* =========================================================
-   INITIAL PAGE SETUP
-   ========================================================= */
+   50. PDF MERGE ENGINE
+========================================================= */
 
-initializePDFTools();
+document.addEventListener("DOMContentLoaded", function () {
 
-initializeFAQIcons();
+    /* =====================================================
+       51. MERGE ELEMENT SELECTORS
+    ===================================================== */
 
+    const mergePdfButton =
+        document.querySelector("#mergePdfButton");
 
+    const progressContainer =
+        document.querySelector("#mergeProgressContainer");
 
-/* =========================================================
-   CONSOLE STATUS
-   ========================================================= */
+    const progressBar =
+        document.querySelector("#mergeProgressBar");
 
-console.log(
-    "Quick Tools Hub PDF Tools loaded successfully."
-);
+    const progressText =
+        document.querySelector("#mergeProgressText");
 
-console.log(
-    "PDF Tools:",
-    toolCards.length
-);
+    const pdfStatus =
+        document.querySelector("#pdfStatus");
 
-console.log(
-    "Categories:",
-    categoryButtons.length
-);
+    const downloadSection =
+        document.querySelector("#downloadSection");
 
-console.log(
-    "FAQ Items:",
-    faqItems.length
-);
+    const downloadPdfButton =
+        document.querySelector("#downloadPdfButton");
 
 
+    /* =====================================================
+       52. CHECK MERGE BUTTON
+    ===================================================== */
 
-/* =========================================================
-   FINAL INITIALIZATION
-   ========================================================= */
+    if (!mergePdfButton) {
 
-document.body.classList.add(
-    "pdf-tools-ready"
-);
+        console.warn(
+            "Merge PDF button not found."
+        );
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       53. MERGED PDF STORAGE
+    ===================================================== */
+
+    let mergedPdfBlob = null;
+
+    let mergedPdfFileName =
+        "quick-tools-hub-merged.pdf";
+
+
+    /* =====================================================
+       54. SHOW STATUS
+    ===================================================== */
+
+    function setMergeStatus(
+        message,
+        type
+    ) {
+
+        if (!pdfStatus) {
+
+            return;
+
+        }
+
+
+        pdfStatus.textContent =
+            message;
+
+
+        pdfStatus.className =
+            "pdf-status";
+
+
+        if (type) {
+
+            pdfStatus.classList.add(
+                type
+            );
+
+        }
+
+
+        pdfStatus.classList.add(
+            "show"
+        );
+
+    }
+
+
+    /* =====================================================
+       55. UPDATE PROGRESS
+    ===================================================== */
+
+    function updateProgress(
+        percentage,
+        message
+    ) {
+
+        if (progressContainer) {
+
+            progressContainer.classList.add(
+                "show"
+            );
+
+        }
+
+
+        if (progressBar) {
+
+            progressBar.style.width =
+                percentage + "%";
+
+        }
+
+
+        if (progressText) {
+
+            progressText.textContent =
+                message ||
+                percentage + "%";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       56. HIDE PROGRESS
+    ===================================================== */
+
+    function hideProgress() {
+
+        if (progressContainer) {
+
+            progressContainer.classList.remove(
+                "show"
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       57. SHOW DOWNLOAD SECTION
+    ===================================================== */
+
+    function showDownloadSection() {
+
+        if (!downloadSection) {
+
+            return;
+
+        }
+
+
+        downloadSection.classList.add(
+            "show"
+        );
+
+    }
+
+
+    /* =====================================================
+       58. HIDE DOWNLOAD SECTION
+    ===================================================== */
+
+    function hideDownloadSection() {
+
+        if (!downloadSection) {
+
+            return;
+
+        }
+
+
+        downloadSection.classList.remove(
+            "show"
+        );
+
+    }
+
+
+    /* =====================================================
+       59. GET SELECTED PDF FILES
+    ===================================================== */
+
+    function getSelectedFiles() {
+
+        if (
+            window.quickToolsPDF &&
+            typeof window.quickToolsPDF.getFiles ===
+            "function"
+        ) {
+
+            return window.quickToolsPDF.getFiles();
+
+        }
+
+
+        return [];
+
+    }
+
+
+    /* =====================================================
+       60. CHECK PDF-LIB
+    ===================================================== */
+
+    function checkPdfLib() {
+
+        if (
+            typeof PDFLib ===
+            "undefined"
+        ) {
+
+            return false;
+
+        }
+
+
+        if (
+            !PDFLib.PDFDocument
+        ) {
+
+            return false;
+
+        }
+
+
+        return true;
+
+    }
+
+
+    /* =====================================================
+       61. MERGE PDF FILES
+    ===================================================== */
+
+    async function mergePDFs() {
+
+        const files =
+            getSelectedFiles();
+
+
+        /* =================================================
+           VALIDATE FILE COUNT
+        ================================================= */
+
+        if (
+            files.length < 2
+        ) {
+
+            setMergeStatus(
+                "Please select at least 2 PDF files to merge.",
+                "error"
+            );
+
+
+            return;
+
+        }
+
+
+        /* =================================================
+           CHECK PDF-LIB
+        ================================================= */
+
+        if (
+            !checkPdfLib()
+        ) {
+
+            setMergeStatus(
+                "PDF merge engine is not loaded. Please refresh the page and try again.",
+                "error"
+            );
+
+
+            return;
+
+        }
+
+
+        /* =================================================
+           RESET PREVIOUS RESULT
+        ================================================= */
+
+        mergedPdfBlob =
+            null;
+
+
+        hideDownloadSection();
+
+
+        /* =================================================
+           DISABLE MERGE BUTTON
+        ================================================= */
+
+        mergePdfButton.disabled =
+            true;
+
+
+        mergePdfButton.classList.add(
+            "processing"
+        );
+
+
+        try {
+
+            /* =============================================
+               START PROGRESS
+            ============================================= */
+
+            updateProgress(
+                5,
+                "Starting PDF merge..."
+            );
+
+
+            setMergeStatus(
+                "Reading your PDF files...",
+                "success"
+            );
+
+
+            /* =============================================
+               CREATE NEW PDF
+            ============================================= */
+
+            const mergedPdf =
+                await PDFLib.PDFDocument.create();
+
+
+            /* =============================================
+               PROCESS EACH PDF
+            ============================================= */
+
+            for (
+                let i = 0;
+                i < files.length;
+                i++
+            ) {
+
+                const file =
+                    files[i];
+
+
+                const percentage =
+                    Math.round(
+                        10 +
+                        (
+                            i /
+                            files.length
+                        ) *
+                        80
+                    );
+
+
+                updateProgress(
+                    percentage,
+                    "Processing PDF " +
+                    (i + 1) +
+                    " of " +
+                    files.length +
+                    "..."
+                );
+
+
+                setMergeStatus(
+                    "Processing: " +
+                    file.name,
+                    "success"
+                );
+
+
+                /* =========================================
+                   READ FILE
+                ========================================= */
+
+                const fileBytes =
+                    await file.arrayBuffer();
+
+
+                /* =========================================
+                   LOAD SOURCE PDF
+                ========================================= */
+
+                const sourcePdf =
+                    await PDFLib.PDFDocument.load(
+                        fileBytes,
+                        {
+                            ignoreEncryption: false
+                        }
+                    );
+
+
+                /* =========================================
+                   GET ALL PAGES
+                ========================================= */
+
+                const pageIndices =
+                    sourcePdf
+                        .getPageIndices();
+
+
+                /* =========================================
+                   COPY PAGES
+                ========================================= */
+
+                const copiedPages =
+                    await mergedPdf.copyPages(
+                        sourcePdf,
+                        pageIndices
+                    );
+
+
+                /* =========================================
+                   ADD COPIED PAGES
+                ========================================= */
+
+                copiedPages.forEach(
+                    function (page) {
+
+                        mergedPdf.addPage(
+                            page
+                        );
+
+                    }
+                );
+
+
+                /* =========================================
+                   CLEANUP
+                ========================================= */
+
+                await new Promise(
+                    function (resolve) {
+
+                        setTimeout(
+                            resolve,
+                            10
+                        );
+
+                    }
+                );
+
+            }
+
+
+            /* =================================================
+               FINALIZE PDF
+            ================================================= */
+
+            updateProgress(
+                92,
+                "Finalizing merged PDF..."
+            );
+
+
+            setMergeStatus(
+                "Creating your final PDF file...",
+                "success"
+            );
+
+
+            const mergedPdfBytes =
+                await mergedPdf.save();
+
+
+            /* =================================================
+               CREATE BLOB
+            ================================================= */
+
+            mergedPdfBlob =
+                new Blob(
+                    [
+                        mergedPdfBytes
+                    ],
+                    {
+                        type:
+                            "application/pdf"
+                    }
+                );
+
+
+            /* =================================================
+               CREATE FILE NAME
+            ================================================= */
+
+            const currentDate =
+                new Date();
+
+
+            const dateString =
+                currentDate
+                    .toISOString()
+                    .slice(
+                        0,
+                        10
+                    );
+
+
+            mergedPdfFileName =
+                "quick-tools-hub-merged-" +
+                dateString +
+                ".pdf";
+
+
+            /* =================================================
+               COMPLETE PROGRESS
+            ================================================= */
+
+            updateProgress(
+                100,
+                "PDF merge completed successfully!"
+            );
+
+
+            setMergeStatus(
+                "Success! Your PDF files have been merged.",
+                "success"
+            );
+
+
+            /* =================================================
+               SHOW DOWNLOAD
+            ================================================= */
+
+            showDownloadSection();
+
+
+            /* =================================================
+               AUTO SCROLL
+            ================================================= */
+
+            if (
+                downloadSection
+            ) {
+
+                setTimeout(
+                    function () {
+
+                        downloadSection.scrollIntoView({
+                            behavior:
+                                "smooth",
+                            block:
+                                "center"
+                        });
+
+                    },
+                    300
+                );
+
+            }
+
+
+        } catch (error) {
+
+            console.error(
+                "PDF Merge Error:",
+                error
+            );
+
+
+            mergedPdfBlob =
+                null;
+
+
+            hideDownloadSection();
+
+
+            updateProgress(
+                0,
+                "Merge failed."
+            );
+
+
+            let errorMessage =
+                "Unable to merge PDF files. Please try again.";
+
+
+            if (
+                error &&
+                error.message
+            ) {
+
+                const message =
+                    error.message.toLowerCase();
+
+
+                if (
+                    message.includes(
+                        "encrypted"
+                    )
+                ) {
+
+                    errorMessage =
+                        "One of your PDF files is password protected or encrypted.";
+
+                } else if (
+                    message.includes(
+                        "invalid"
+                    )
+                ) {
+
+                    errorMessage =
+                        "One of the selected files appears to be an invalid PDF.";
+
+                }
+
+            }
+
+
+            setMergeStatus(
+                errorMessage,
+                "error"
+            );
+
+
+        } finally {
+
+            /* =============================================
+               ENABLE BUTTON
+            ============================================= */
+
+            mergePdfButton.disabled =
+                false;
+
+
+            mergePdfButton.classList.remove(
+                "processing"
+            );
+
+
+        }
+
+    }
+
+
+    /* =====================================================
+       62. MERGE BUTTON EVENT
+    ===================================================== */
+
+    mergePdfButton.addEventListener(
+        "click",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            await mergePDFs();
+
+        }
+    );
+
+
+    /* =====================================================
+       63. DOWNLOAD MERGED PDF
+    ===================================================== */
+
+    if (downloadPdfButton) {
+
+        downloadPdfButton.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+
+                if (
+                    !mergedPdfBlob
+                ) {
+
+                    setMergeStatus(
+                        "No merged PDF is available yet.",
+                        "error"
+                    );
+
+
+                    return;
+
+                }
+
+
+                try {
+
+                    /* =====================================
+                       CREATE DOWNLOAD URL
+                    ===================================== */
+
+                    const downloadUrl =
+                        URL.createObjectURL(
+                            mergedPdfBlob
+                        );
+
+
+                    /* =====================================
+                       CREATE TEMP LINK
+                    ===================================== */
+
+                    const downloadLink =
+                        document.createElement(
+                            "a"
+                        );
+
+
+                    downloadLink.href =
+                        downloadUrl;
+
+
+                    downloadLink.download =
+                        mergedPdfFileName;
+
+
+                    downloadLink.style.display =
+                        "none";
+
+
+                    document.body.appendChild(
+                        downloadLink
+                    );
+
+
+                    /* =====================================
+                       START DOWNLOAD
+                    ===================================== */
+
+                    downloadLink.click();
+
+
+                    /* =====================================
+                       CLEANUP
+                    ===================================== */
+
+                    setTimeout(
+                        function () {
+
+                            document.body.removeChild(
+                                downloadLink
+                            );
+
+
+                            URL.revokeObjectURL(
+                                downloadUrl
+                            );
+
+                        },
+                        1000
+                    );
+
+
+                    setMergeStatus(
+                        "Your merged PDF download has started.",
+                        "success"
+                    );
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Download Error:",
+                        error
+                    );
+
+
+                    setMergeStatus(
+                        "Unable to download the merged PDF.",
+                        "error"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       64. RESET MERGE RESULT
+    ===================================================== */
+
+    window.resetMergedPdf =
+        function () {
+
+            mergedPdfBlob =
+                null;
+
+
+            hideDownloadSection();
+
+
+            hideProgress();
+
+
+            setMergeStatus(
+                "",
+                ""
+            );
+
+        };
+
+
+    /* =====================================================
+       65. INITIALIZE MERGE ENGINE
+    ===================================================== */
+
+    hideProgress();
+
+
+    hideDownloadSection();
+
+
+    console.log(
+        "Quick Tools Hub PDF Merge Engine initialized."
+    );
+
+});
