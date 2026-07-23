@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <!-- =========================
-         BASIC META
-    ========================== -->
-
     <meta charset="UTF-8">
 
     <meta
@@ -16,257 +10,182 @@
 
     <meta
         name="description"
-        content="Merge multiple PDF files into one document quickly, securely and easily with Quick Tools Hub."
-    >
-
-    <meta
-        name="keywords"
-        content="merge PDF, PDF merger, combine PDF, join PDF, online PDF tools, Quick Tools Hub"
-    >
-
-    <meta
-        name="author"
-        content="Quick Tools Hub"
+        content="Merge multiple PDF files into one PDF quickly and securely with Quick Tools Hub."
     >
 
     <meta
         name="theme-color"
-        content="#0f172a"
+        content="#0b1020"
     >
 
-    <title>
-        Merge PDF Online - Quick Tools Hub
-    </title>
+    <title>Merge PDF | Quick Tools Hub</title>
 
-
-    <!-- =========================
-         GOOGLE FONTS
-    ========================== -->
-
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
+    <!-- =====================================================
+         GOOGLE FONT
+    ====================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
     >
 
-
-    <!-- =========================
+    <!-- =====================================================
          FONT AWESOME
-    ========================== -->
-
+    ====================================================== -->
     <link
         rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     >
 
-
-    <!-- =========================
-         CUSTOM CSS
-    ========================== -->
-
+    <!-- =====================================================
+         TOOL STYLESHEET
+    ====================================================== -->
     <link
         rel="stylesheet"
         href="style.css"
     >
-
 </head>
 
 
 <body>
 
-
-    <!-- =========================
+    <!-- =====================================================
          BACKGROUND EFFECTS
-    ========================== -->
+    ====================================================== -->
 
-    <div class="background-effects">
-
+    <div class="background-effects" aria-hidden="true">
         <div class="glow glow-one"></div>
-
         <div class="glow glow-two"></div>
-
-        <div class="glow glow-three"></div>
-
+        <div class="grid-overlay"></div>
     </div>
 
 
-    <!-- =========================
-         HEADER / NAVBAR
-    ========================== -->
+    <!-- =====================================================
+         HEADER / NAVIGATION
+    ====================================================== -->
 
     <header class="site-header">
 
-        <div class="header-container">
+        <div class="container header-inner">
 
-
-            <!-- LOGO -->
-
+            <!-- Brand -->
             <a
                 href="../../../index.html"
-                class="brand-logo"
+                class="brand"
+                aria-label="Quick Tools Hub Home"
             >
 
-                <span class="logo-icon">
+                <span class="brand-icon">
                     <i class="fa-solid fa-bolt"></i>
                 </span>
 
-                <span class="logo-text">
-                    Quick Tools
-                    <strong>Hub</strong>
+                <span class="brand-text">
+                    <span class="brand-name">Quick Tools</span>
+                    <span class="brand-highlight">Hub</span>
                 </span>
 
             </a>
 
 
-            <!-- DESKTOP NAVIGATION -->
+            <!-- Navigation -->
+            <nav
+                class="main-nav"
+                aria-label="Main Navigation"
+            >
 
-            <nav class="main-nav">
-
-                <a
-                    href="../../../index.html"
-                    class="nav-link"
-                >
+                <a href="../../../index.html">
                     Home
                 </a>
 
-                <a
-                    href="../../index.html"
-                    class="nav-link active"
-                >
-                    PDF Tools
+                <a href="../../index.html">
+                    All Tools
                 </a>
 
-                <a
-                    href="../../../index.html#tools"
-                    class="nav-link"
-                >
-                    All Tools
+                <a href="../../pdf-tools/index.html">
+                    PDF Tools
                 </a>
 
             </nav>
 
 
-            <!-- HEADER ACTION -->
-
-            <div class="header-action">
-
-                <a
-                    href="../../../index.html#tools"
-                    class="header-btn"
-                >
-                    <i class="fa-solid fa-grid-2"></i>
-
-                    <span>
-                        Explore Tools
-                    </span>
-                </a>
-
-            </div>
-
-
-            <!-- MOBILE MENU BUTTON -->
-
+            <!-- Mobile Menu Button -->
             <button
                 type="button"
                 class="mobile-menu-btn"
                 id="mobileMenuBtn"
-                aria-label="Open Menu"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
             >
-
                 <i class="fa-solid fa-bars"></i>
-
             </button>
-
-        </div>
-
-
-        <!-- MOBILE NAVIGATION -->
-
-        <div
-            class="mobile-nav"
-            id="mobileNav"
-        >
-
-            <a href="../../../index.html">
-                <i class="fa-solid fa-house"></i>
-                Home
-            </a>
-
-            <a href="../../index.html">
-                <i class="fa-solid fa-file-pdf"></i>
-                PDF Tools
-            </a>
-
-            <a href="../../../index.html#tools">
-                <i class="fa-solid fa-toolbox"></i>
-                All Tools
-            </a>
 
         </div>
 
     </header>
 
 
-    <!-- =========================
+    <!-- =====================================================
+         MOBILE NAVIGATION
+    ====================================================== -->
+
+    <div
+        class="mobile-nav"
+        id="mobileNav"
+        aria-hidden="true"
+    >
+
+        <a href="../../../index.html">
+            <i class="fa-solid fa-house"></i>
+            Home
+        </a>
+
+        <a href="../../index.html">
+            <i class="fa-solid fa-toolbox"></i>
+            All Tools
+        </a>
+
+        <a href="../../pdf-tools/index.html">
+            <i class="fa-solid fa-file-pdf"></i>
+            PDF Tools
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
          MAIN CONTENT
-    ========================== -->
+    ====================================================== -->
 
-    <main class="main-content">
+    <main>
 
-
-        <!-- =========================
+        <!-- =================================================
              HERO SECTION
-        ========================== -->
+        ================================================== -->
 
-        <section class="hero-section">
+        <section class="tool-hero">
 
+            <div class="container">
 
-            <!-- FLOATING PDF ICONS -->
-
-            <div class="floating-icon floating-icon-one">
-                <i class="fa-solid fa-file-pdf"></i>
-            </div>
-
-            <div class="floating-icon floating-icon-two">
-                <i class="fa-solid fa-file-pdf"></i>
-            </div>
-
-            <div class="floating-icon floating-icon-three">
-                <i class="fa-solid fa-file-pdf"></i>
-            </div>
-
-            <div class="floating-icon floating-icon-four">
-                <i class="fa-solid fa-file-pdf"></i>
-            </div>
-
-
-            <!-- HERO CONTENT -->
-
-            <div class="hero-content">
-
+                <!-- Breadcrumb -->
                 <div class="breadcrumb">
 
                     <a href="../../../index.html">
                         Home
                     </a>
 
-                    <i class="fa-solid fa-chevron-right"></i>
+                    <span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </span>
 
-                    <a href="../../index.html">
+                    <a href="../../pdf-tools/index.html">
                         PDF Tools
                     </a>
 
-                    <i class="fa-solid fa-chevron-right"></i>
+                    <span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </span>
 
                     <span>
                         Merge PDF
@@ -275,78 +194,25 @@
                 </div>
 
 
-                <!-- BADGE -->
+                <!-- Hero Content -->
+                <div class="hero-content">
 
-                <div class="hero-badge">
-
-                    <span class="badge-dot"></span>
-
-                    <span>
-                        Free Online PDF Tool
-                    </span>
-
-                </div>
-
-
-                <!-- TITLE -->
-
-                <h1>
-
-                    Merge PDF Files
-
-                    <span>
-                        Quickly & Easily
-                    </span>
-
-                </h1>
-
-
-                <!-- DESCRIPTION -->
-
-                <p class="hero-description">
-
-                    Combine multiple PDF documents into one professional
-                    file in seconds. Upload, arrange, merge and download
-                    your PDF — completely hassle-free.
-
-                </p>
-
-
-                <!-- HERO FEATURES -->
-
-                <div class="hero-features">
-
-                    <div class="hero-feature">
-
-                        <i class="fa-solid fa-bolt"></i>
-
-                        <span>
-                            Fast Processing
-                        </span>
-
+                    <div class="tool-badge">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        PDF TOOL
                     </div>
 
+                    <h1>
+                        Merge
+                        <span>PDF Files</span>
+                    </h1>
 
-                    <div class="hero-feature">
-
-                        <i class="fa-solid fa-shield-halved"></i>
-
-                        <span>
-                            Secure & Private
-                        </span>
-
-                    </div>
-
-
-                    <div class="hero-feature">
-
-                        <i class="fa-solid fa-mobile-screen-button"></i>
-
-                        <span>
-                            Mobile Friendly
-                        </span>
-
-                    </div>
+                    <p>
+                        Combine multiple PDF documents into one
+                        organized file. Upload your PDFs, arrange
+                        them in the order you want, and merge them
+                        in seconds.
+                    </p>
 
                 </div>
 
@@ -355,64 +221,67 @@
         </section>
 
 
-        <!-- =========================
-             TOOL WORKSPACE
-        ========================== -->
+        <!-- =================================================
+             MERGE PDF WORKSPACE
+        ================================================== -->
 
-        <section class="tool-workspace">
+        <section class="workspace-section">
 
-            <div class="workspace-container">
+            <div class="container">
 
+                <div class="workspace-card">
 
-                <!-- TOOL HEADER -->
+                    <!-- =====================================
+                         WORKSPACE HEADER
+                    ====================================== -->
 
-                <div class="workspace-header">
+                    <div class="workspace-header">
 
-                    <div class="workspace-title">
+                        <div class="workspace-title">
 
-                        <div class="workspace-icon">
+                            <div class="workspace-icon">
+                                <i class="fa-solid fa-file-pdf"></i>
+                            </div>
 
-                            <i class="fa-solid fa-file-pdf"></i>
+                            <div>
+
+                                <span class="workspace-label">
+                                    PDF MERGER
+                                </span>
+
+                                <h2>
+                                    Combine Your PDF Files
+                                </h2>
+
+                            </div>
 
                         </div>
 
-                        <div>
 
-                            <span class="workspace-label">
-                                PDF MERGER
+                        <!-- Security Badge -->
+                        <div class="security-badge">
+
+                            <i class="fa-solid fa-shield-halved"></i>
+
+                            <span>
+                                Secure Processing
                             </span>
 
-                            <h2>
-                                Combine Your PDF Documents
-                            </h2>
-
                         </div>
 
                     </div>
 
 
-                    <div class="security-badge">
-
-                        <i class="fa-solid fa-lock"></i>
-
-                        <span>
-                            Secure Processing
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <!-- =========================
-                     UPLOAD SECTION
-                ========================== -->
-
-                <section class="upload-section">
+                    <!-- =====================================
+                         UPLOAD AREA
+                    ====================================== -->
 
                     <div
-                        class="upload-card"
-                        id="uploadCard"
+                        class="upload-area"
+                        id="uploadArea"
+                        tabindex="0"
+                        role="button"
+                        aria-label="Upload PDF files"
                     >
 
                         <div class="upload-icon">
@@ -422,477 +291,276 @@
                         </div>
 
 
-                        <h2>
-                            Drop Your PDF Files Here
-                        </h2>
+                        <h3>
+                            Drop your PDF files here
+                        </h3>
 
 
                         <p>
-                            Drag & drop your PDF documents here,
-                            or browse files from your device.
+                            or click to browse files from your device
                         </p>
 
 
+                        <span class="upload-limit">
+                            PDF files only
+                        </span>
+
+
+                        <!-- Hidden File Input -->
                         <input
                             type="file"
                             id="pdfInput"
-                            accept="application/pdf"
+                            accept="application/pdf,.pdf"
                             multiple
                             hidden
                         >
 
-
-                        <button
-                            type="button"
-                            class="upload-btn"
-                            id="browseBtn"
-                        >
-
-                            <i class="fa-solid fa-folder-open"></i>
-
-                            Choose PDF Files
-
-                        </button>
-
-
-                        <div class="upload-limit">
-
-                            <i class="fa-solid fa-circle-info"></i>
-
-                            <span>
-                                Select multiple PDF files to merge
-                            </span>
-
-                        </div>
-
                     </div>
 
-                </section>
 
-
-                <!-- =========================
-                     FILES SECTION START
-                ========================== -->
-
-                <section
-                    class="files-section"
-                    id="filesSection"
-                    style="display: none;"
-                >
-
-                    <div class="section-heading">
-
-                        <div>
-
-                            <span class="section-label">
-                                SELECTED FILES
-                            </span>
-
-                            <h2>
-                                Your PDF Documents
-                            </h2>
-
-                        </div>
-
-
-                        <div class="file-counter">
-
-                            <span id="fileCount">
-                                0
-                            </span>
-
-                            <small>
-                                Files
-                            </small>
-
-                        </div>
-
-                    </div>
-
+                    <!-- =====================================
+                         FILES SECTION
+                    ====================================== -->
 
                     <div
-                        class="file-list"
-                        id="fileList"
+                        class="files-section"
+                        id="filesSection"
+                        hidden
                     >
 
-                        <!-- Files will be inserted by JavaScript -->
+                        <!-- Files Header -->
+
+                        <div class="files-header">
+
+                            <div class="files-heading">
+
+                                <h3>
+                                    Selected PDF Files
+                                </h3>
+
+                                <span
+                                    class="file-count"
+                                    id="fileCount"
+                                >
+                                    0 files
+                                </span>
 
                             </div>
-                                        <!-- =========================
-                         FILE ACTIONS
-                    ========================== -->
 
-                    <div class="file-actions">
+
+                            <button
+                                type="button"
+                                class="clear-all-btn"
+                                id="clearAllBtn"
+                            >
+
+                                <i class="fa-solid fa-trash-can"></i>
+
+                                Clear All
+
+                            </button>
+
+                        </div>
+
+
+                        <!-- Files List -->
+
+                        <div
+                            class="files-list"
+                            id="filesList"
+                        >
+                            <!--
+                                PDF file cards will be created
+                                dynamically by script.js
+                            -->
+                        </div>
+
+
+                        <!-- Add More Files -->
 
                         <button
                             type="button"
-                            class="secondary-btn"
+                            class="add-more-btn"
                             id="addMoreBtn"
                         >
 
                             <i class="fa-solid fa-plus"></i>
 
-                            Add More Files
-
-                        </button>
-
-
-                        <button
-                            type="button"
-                            class="danger-btn"
-                            id="clearAllBtn"
-                        >
-
-                            <i class="fa-solid fa-trash-can"></i>
-
-                            Clear All
+                            Add More PDF Files
 
                         </button>
 
                     </div>
 
-                </section>
 
+                    <!-- =====================================
+                         EMPTY STATE
+                    ====================================== -->
 
-                <!-- =========================
-                     MERGE CONTROL PANEL
-                ========================== -->
+                    <div
+                        class="empty-state"
+                        id="emptyState"
+                    >
 
-                <section
-                    class="merge-panel"
-                    id="mergePanel"
-                    style="display: none;"
-                >
-
-                    <div class="merge-panel-inner">
-
-
-                        <div class="merge-info">
-
-                            <div class="merge-info-icon">
-
-                                <i class="fa-solid fa-object-group"></i>
-
-                            </div>
-
-
-                            <div class="merge-info-text">
-
-                                <span class="panel-label">
-                                    READY TO MERGE
-                                </span>
-
-                                <h3>
-                                    Combine Your PDF Files
-                                </h3>
-
-                                <p>
-                                    Your selected documents will be merged
-                                    into one PDF file in the order shown above.
-                                </p>
-
-                            </div>
-
+                        <div class="empty-icon">
+                            <i class="fa-regular fa-file-pdf"></i>
                         </div>
 
+                        <h3>
+                            No PDF files selected
+                        </h3>
+
+                        <p>
+                            Add two or more PDF files to merge them
+                            into a single document.
+                        </p>
+
+                    </div>
+
+
+                    <!-- =====================================
+                         ACTION AREA
+                    ====================================== -->
+
+                    <div class="action-area">
 
                         <button
                             type="button"
                             class="merge-btn"
                             id="mergeBtn"
+                            disabled
                         >
 
-                            <span class="merge-btn-icon">
+                            <span class="merge-btn-content">
 
                                 <i class="fa-solid fa-layer-group"></i>
 
+                                <span>
+                                    Merge PDF Files
+                                </span>
+
                             </span>
 
 
-                            <span class="merge-btn-text">
-                                Merge PDF Files
+                            <span
+                                class="merge-btn-loader"
+                                id="mergeBtnLoader"
+                                hidden
+                            >
+
+                                <i class="fa-solid fa-spinner fa-spin"></i>
+
+                                <span>
+                                    Merging...
+                                </span>
+
                             </span>
-
-
-                            <i class="fa-solid fa-arrow-right"></i>
 
                         </button>
 
                     </div>
 
-                </section>
 
+                    <!-- =====================================
+                         PROGRESS AREA
+                    ====================================== -->
 
-                <!-- =========================
-                     PROGRESS SECTION
-                ========================== -->
+                    <div
+                        class="progress-area"
+                        id="progressArea"
+                        hidden
+                    >
 
-                <section
-                    class="progress-section"
-                    id="progressSection"
-                    style="display: none;"
-                >
+                        <div class="progress-header">
 
-                    <div class="progress-card">
+                            <span>
+                                Preparing your merged PDF...
+                            </span>
 
-
-                        <div class="progress-animation">
-
-                            <div class="progress-spinner">
-
-                                <i class="fa-solid fa-file-pdf"></i>
-
-                            </div>
+                            <span id="progressPercent">
+                                0%
+                            </span>
 
                         </div>
 
 
-                        <div class="progress-content">
+                        <div class="progress-bar">
 
-                            <span class="progress-label">
-                                PROCESSING
-                            </span>
+                            <div
+                                class="progress-fill"
+                                id="progressFill"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =====================================
+                         STATUS MESSAGE
+                    ====================================== -->
+
+                    <div
+                        class="status-message"
+                        id="statusMessage"
+                        role="status"
+                        aria-live="polite"
+                        hidden
+                    >
+
+                        <i
+                            class="status-icon"
+                            id="statusIcon"
+                        ></i>
+
+                        <span id="statusText"></span>
+
+                    </div>
+
+
+                    <!-- =====================================
+                         DOWNLOAD RESULT
+                    ====================================== -->
+
+                    <div
+                        class="result-area"
+                        id="resultArea"
+                        hidden
+                    >
+
+                        <div class="result-icon">
+
+                            <i class="fa-solid fa-circle-check"></i>
+
+                        </div>
+
+
+                        <div class="result-content">
 
                             <h3>
-                                Merging Your PDF Files
+                                Your PDF is Ready!
                             </h3>
 
-                            <p id="progressText">
-                                Please wait while your documents
-                                are being combined...
+                            <p>
+                                Your PDF files have been successfully
+                                merged into one document.
                             </p>
 
                         </div>
 
 
-                        <div class="progress-bar-wrapper">
+                        <a
+                            href="#"
+                            class="download-btn"
+                            id="downloadBtn"
+                            download="merged-pdf.pdf"
+                        >
 
-                            <div class="progress-bar">
+                            <i class="fa-solid fa-download"></i>
 
-                                <div
-                                    class="progress-fill"
-                                    id="progressFill"
-                                ></div>
+                            Download Merged PDF
 
-                            </div>
-
-
-                            <div class="progress-status">
-
-                                <span>
-                                    Processing
-                                </span>
-
-                                <strong id="progressPercent">
-                                    0%
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </section>
-
-
-                <!-- =========================
-                     RESULT / SUCCESS SECTION
-                ========================== -->
-
-                <section
-                    class="result-section"
-                    id="resultSection"
-                    style="display: none;"
-                >
-
-                    <div class="result-card">
-
-
-                        <div class="success-icon">
-
-                            <i class="fa-solid fa-check"></i>
-
-                        </div>
-
-
-                        <span class="success-label">
-                            MERGE COMPLETE
-                        </span>
-
-
-                        <h2>
-                            Your PDF Is Ready!
-                        </h2>
-
-
-                        <p>
-                            All your selected PDF documents have been
-                            successfully combined into one file.
-                        </p>
-
-
-                        <div class="result-actions">
-
-
-                            <button
-                                type="button"
-                                class="download-btn"
-                                id="downloadBtn"
-                            >
-
-                                <i class="fa-solid fa-download"></i>
-
-                                Download Merged PDF
-
-                            </button>
-
-
-                            <button
-                                type="button"
-                                class="new-merge-btn"
-                                id="newMergeBtn"
-                            >
-
-                                <i class="fa-solid fa-rotate-right"></i>
-
-                                Merge New Files
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </section>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             FEATURES SECTION
-        ========================== -->
-
-        <section class="features-section">
-
-            <div class="section-container">
-
-
-                <div class="section-heading center">
-
-                    <span class="section-label">
-                        WHY QUICK TOOLS HUB
-                    </span>
-
-                    <h2>
-                        Everything You Need
-                    </h2>
-
-                    <p>
-                        Merge your PDF documents with a fast,
-                        secure and easy-to-use online tool.
-                    </p>
-
-                </div>
-
-
-                <div class="features-grid">
-
-
-                    <!-- FEATURE 1 -->
-
-                    <div class="feature-card">
-
-                        <div class="feature-icon">
-
-                            <i class="fa-solid fa-bolt"></i>
-
-                        </div>
-
-
-                        <h3>
-                            Lightning Fast
-                        </h3>
-
-
-                        <p>
-                            Combine your PDF files quickly without
-                            complicated steps or unnecessary waiting.
-                        </p>
-
-                    </div>
-
-
-                    <!-- FEATURE 2 -->
-
-                    <div class="feature-card">
-
-                        <div class="feature-icon">
-
-                            <i class="fa-solid fa-shield-halved"></i>
-
-                        </div>
-
-
-                        <h3>
-                            Secure & Private
-                        </h3>
-
-
-                        <p>
-                            Your documents are processed securely,
-                            helping keep your files private.
-                        </p>
-
-                    </div>
-
-
-                    <!-- FEATURE 3 -->
-
-                    <div class="feature-card">
-
-                        <div class="feature-icon">
-
-                            <i class="fa-solid fa-mobile-screen-button"></i>
-
-                        </div>
-
-
-                        <h3>
-                            Fully Responsive
-                        </h3>
-
-
-                        <p>
-                            Use the PDF merger comfortably on mobile,
-                            tablet, laptop or desktop.
-                        </p>
-
-                    </div>
-
-
-                    <!-- FEATURE 4 -->
-
-                    <div class="feature-card">
-
-                        <div class="feature-icon">
-
-                            <i class="fa-solid fa-wand-magic-sparkles"></i>
-
-                        </div>
-
-
-                        <h3>
-                            Easy To Use
-                        </h3>
-
-
-                        <p>
-                            Upload your files, arrange them and merge
-                            everything with just a few clicks.
-                        </p>
+                        </a>
 
                     </div>
 
@@ -903,27 +571,26 @@
         </section>
 
 
-        <!-- =========================
-             HOW IT WORKS SECTION
-        ========================== -->
+        <!-- =================================================
+             HOW IT WORKS
+        ================================================== -->
 
         <section class="how-it-works">
 
-            <div class="section-container">
+            <div class="container">
 
-
-                <div class="section-heading center">
+                <div class="section-heading">
 
                     <span class="section-label">
-                        SIMPLE PROCESS
+                        SIMPLE & FAST
                     </span>
 
                     <h2>
-                        How It Works
+                        How to Merge PDF Files
                     </h2>
 
                     <p>
-                        Merge your PDF documents in four simple steps.
+                        Merge your documents in just three simple steps.
                     </p>
 
                 </div>
@@ -932,7 +599,7 @@
                 <div class="steps-grid">
 
 
-                    <!-- STEP 1 -->
+                    <!-- Step 1 -->
 
                     <div class="step-card">
 
@@ -940,28 +607,23 @@
                             01
                         </div>
 
-
                         <div class="step-icon">
-
                             <i class="fa-solid fa-cloud-arrow-up"></i>
-
                         </div>
 
-
                         <h3>
-                            Upload Files
+                            Upload PDFs
                         </h3>
 
-
                         <p>
-                            Select two or more PDF files
-                            from your device.
+                            Select or drag and drop the PDF files
+                            you want to combine.
                         </p>
 
                     </div>
 
 
-                    <!-- STEP 2 -->
+                    <!-- Step 2 -->
 
                     <div class="step-card">
 
@@ -969,28 +631,23 @@
                             02
                         </div>
 
-
                         <div class="step-icon">
-
-                            <i class="fa-solid fa-arrow-down-up-across-line"></i>
-
+                            <i class="fa-solid fa-arrows-up-down"></i>
                         </div>
-
 
                         <h3>
                             Arrange Files
                         </h3>
 
-
                         <p>
-                            Drag and drop your documents
-                            into your preferred order.
+                            Drag your PDF files to arrange them
+                            in your preferred order.
                         </p>
 
                     </div>
 
 
-                    <!-- STEP 3 -->
+                    <!-- Step 3 -->
 
                     <div class="step-card">
 
@@ -998,54 +655,21 @@
                             03
                         </div>
 
-
                         <div class="step-icon">
-
-                            <i class="fa-solid fa-object-group"></i>
-
+                            <i class="fa-solid fa-file-circle-check"></i>
                         </div>
 
-
                         <h3>
-                            Merge PDFs
+                            Merge & Download
                         </h3>
 
-
                         <p>
-                            Click the merge button to combine
-                            your selected documents.
+                            Click merge and download your
+                            combined PDF document.
                         </p>
 
                     </div>
 
-
-                    <!-- STEP 4 -->
-
-                    <div class="step-card">
-
-                        <div class="step-number">
-                            04
-                        </div>
-
-
-                        <div class="step-icon">
-
-                            <i class="fa-solid fa-download"></i>
-
-                        </div>
-
-
-                        <h3>
-                            Download
-                        </h3>
-
-
-                        <p>
-                            Download your newly merged PDF
-                            instantly to your device.
-                        </p>
-
-                    </div>
 
                 </div>
 
@@ -1054,406 +678,67 @@
         </section>
 
 
-        <!-- =========================
-             FAQ SECTION
-        ========================== -->
+        <!-- =================================================
+             FEATURES SECTION
+        ================================================== -->
 
-        <section class="faq-section">
+        <section class="features-section">
 
-            <div class="section-container">
+            <div class="container">
 
-
-                <div class="section-heading center">
+                <div class="section-heading">
 
                     <span class="section-label">
-                        FAQ
+                        WHY USE OUR TOOL
                     </span>
 
                     <h2>
-                        Frequently Asked Questions
+                        Fast, Simple & Secure
                     </h2>
 
-                    <p>
-                        Find answers to common questions
-                        about merging PDF files.
-                    </p>
-
                 </div>
 
 
-                <div class="faq-container">
+                <div class="features-grid">
 
 
-                    <!-- FAQ 1 -->
+                    <div class="feature-card">
 
-                    <div class="faq-item">
-
-                        <button
-                            type="button"
-                            class="faq-question"
-                        >
-
-                            <span>
-                                How many PDF files can I merge?
-                            </span>
-
-                            <i class="fa-solid fa-plus"></i>
-
-                        </button>
-
-
-                        <div class="faq-answer">
-
-                            <p>
-                                You can select multiple PDF files
-                                and combine them into one document.
-                            </p>
-
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-bolt"></i>
                         </div>
+
+                        <h3>
+                            Fast Processing
+                        </h3>
+
+                        <p>
+                            Merge your PDF documents quickly
+                            without complicated steps.
+                        </p>
 
                     </div>
 
 
-                    <!-- FAQ 2 -->
+                    <div class="feature-card">
 
-                    <div class="faq-item">
-
-                        <button
-                            type="button"
-                            class="faq-question"
-                        >
-
-                            <span>
-                                Can I change the order of my files?
-                            </span>
-
-                            <i class="fa-solid fa-plus"></i>
-
-                        </button>
-
-
-                        <div class="faq-answer">
-
-                            <p>
-                                Yes. You can drag and drop the uploaded
-                                PDF files to arrange them in your preferred order.
-                            </p>
-
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-lock"></i>
                         </div>
+
+                        <h3>
+                            Privacy Focused
+                        </h3>
+
+                        <p>
+                            Your PDF files are processed directly
+                            in your browser.
+                        </p>
 
                     </div>
 
 
-                    <!-- FAQ 3 -->
+                    <div class="feature-card">
 
-                    <div class="faq-item">
-
-                        <button
-                            type="button"
-                            class="faq-question"
-                        >
-
-                            <span>
-                                Is the PDF merger free to use?
-                            </span>
-
-                            <i class="fa-solid fa-plus"></i>
-
-                        </button>
-
-
-                        <div class="faq-answer">
-
-                            <p>
-                                Yes. Quick Tools Hub provides an easy
-                                way to merge PDF files without complicated
-                                software installation.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- FAQ 4 -->
-
-                    <div class="faq-item">
-
-                        <button
-                            type="button"
-                            class="faq-question"
-                        >
-
-                            <span>
-                                Can I use this tool on my phone?
-                            </span>
-
-                            <i class="fa-solid fa-plus"></i>
-
-                        </button>
-
-
-                        <div class="faq-answer">
-
-                            <p>
-                                Yes. The tool is designed to work across
-                                smartphones, tablets and desktop devices.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             CTA SECTION
-        ========================== -->
-
-        <section class="cta-section">
-
-            <div class="cta-container">
-
-                <div class="cta-icon">
-
-                    <i class="fa-solid fa-file-circle-plus"></i>
-
-                </div>
-
-
-                <div class="cta-content">
-
-                    <h2>
-                        Ready to Merge Your PDFs?
-                    </h2>
-
-                    <p>
-                        Combine your documents quickly and
-                        get your final PDF in seconds.
-                    </p>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="cta-btn"
-                    id="ctaUploadBtn"
-                >
-
-                    <i class="fa-solid fa-upload"></i>
-
-                    Upload PDF Files
-
-                </button>
-
-            </div>
-
-        </section>
-
-                                </main>
-        <!-- =========================
-         FOOTER
-    ========================== -->
-
-    <footer class="site-footer">
-
-        <div class="footer-container">
-
-
-            <!-- FOOTER BRAND -->
-
-            <div class="footer-brand">
-
-                <a
-                    href="../../../index.html"
-                    class="footer-logo"
-                >
-
-                    <span class="logo-icon">
-
-                        <i class="fa-solid fa-bolt"></i>
-
-                    </span>
-
-
-                    <span class="logo-text">
-
-                        Quick Tools
-                        <strong>Hub</strong>
-
-                    </span>
-
-                </a>
-
-
-                <p>
-
-                    Powerful, simple and professional
-                    online tools for your everyday needs.
-
-                </p>
-
-            </div>
-
-
-            <!-- FOOTER LINKS -->
-
-            <div class="footer-column">
-
-                <h3>
-                    Quick Links
-                </h3>
-
-
-                <a href="../../../index.html">
-
-                    <i class="fa-solid fa-house"></i>
-
-                    Home
-
-                </a>
-
-
-                <a href="../../index.html">
-
-                    <i class="fa-solid fa-file-pdf"></i>
-
-                    PDF Tools
-
-                </a>
-
-
-                <a href="../../../index.html#tools">
-
-                    <i class="fa-solid fa-toolbox"></i>
-
-                    All Tools
-
-                </a>
-
-            </div>
-
-
-            <!-- FOOTER TOOL LINKS -->
-
-            <div class="footer-column">
-
-                <h3>
-                    PDF Tools
-                </h3>
-
-
-                <a href="../index.html">
-
-                    <i class="fa-solid fa-file-lines"></i>
-
-                    PDF Tools Hub
-
-                </a>
-
-
-                <a href="index.html">
-
-                    <i class="fa-solid fa-object-group"></i>
-
-                    Merge PDF
-
-                </a>
-
-
-                <a href="#top">
-
-                    <i class="fa-solid fa-arrow-up"></i>
-
-                    Back To Top
-
-                </a>
-
-            </div>
-
-
-            <!-- FOOTER INFO -->
-
-            <div class="footer-column">
-
-                <h3>
-                    Quick Tools Hub
-                </h3>
-
-
-                <p class="footer-description">
-
-                    Your all-in-one destination for fast,
-                    useful and easy-to-use online tools.
-
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- FOOTER BOTTOM -->
-
-        <div class="footer-bottom">
-
-            <div class="footer-bottom-inner">
-
-                <p>
-
-                    © 2026
-                    <strong>Quick Tools Hub</strong>.
-                    All rights reserved.
-
-                </p>
-
-
-                <div class="footer-status">
-
-                    <span class="status-dot"></span>
-
-                    <span>
-                        All Systems Operational
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </footer>
-
-
-    <!-- =========================
-         PDF-LIB
-         PDF MERGING LIBRARY
-    ========================== -->
-
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"
-        defer
-    ></script>
-
-
-    <!-- =========================
-         CUSTOM JAVASCRIPT
-    ========================== -->
-
-    <script
-        src="script.js"
-        defer
-    ></script>
-
-
-</body>
-
-</html>
-
-        
+                        <div class="feature-icon">
+                 
