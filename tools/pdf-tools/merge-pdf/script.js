@@ -9,7 +9,20 @@
 document.addEventListener(
     "DOMContentLoaded",
     () => {
+console.log("SCRIPT LOADED");
 
+const testButton = document.getElementById("browseBtn");
+const testInput = document.getElementById("pdfInput");
+
+console.log("Browse Button:", testButton);
+console.log("PDF Input:", testInput);
+
+if (testButton && testInput) {
+    testButton.addEventListener("click", function () {
+        console.log("BUTTON CLICKED");
+        testInput.click();
+    });
+}
 
         /* =========================
            ELEMENTS
