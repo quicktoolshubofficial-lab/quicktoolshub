@@ -1,1 +1,193 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Free online Word Counter to count words, characters, sentences and reading time.">
+  <title>Word Counter | Quick Tools Official</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #f8fafc;
+      background: linear-gradient(135deg, #0f172a, #24104b, #111827);
+      min-height: 100vh;
+    }
+    header {
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #ffffff20;
+    }
+    header a { color: #c4b5fd; text-decoration: none; }
+    header h1 { margin: 12px 0 6px; font-size: 27px; }
+    header p { color: #cbd5e1; margin: 0; }
+    main { width: min(900px, 92%); margin: 30px auto; }
+    .panel {
+      padding: 22px;
+      border: 1px solid #ffffff20;
+      border-radius: 20px;
+      background: #ffffff0b;
+      box-shadow: 0 15px 45px #00000025;
+    }
+    textarea {
+      display: block;
+      width: 100%;
+      min-height: 230px;
+      resize: vertical;
+      margin: 16px 0;
+      padding: 16px;
+      color: #f8fafc;
+      background: #0f172a;
+      border: 1px solid #64748b;
+      border-radius: 12px;
+      font: inherit;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    textarea:focus {
+      outline: 2px solid #a78bfa;
+      border-color: transparent;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+    .stat {
+      padding: 17px 8px;
+      text-align: center;
+      background: #ffffff0d;
+      border: 1px solid #ffffff15;
+      border-radius: 14px;
+    }
+    .stat strong {
+      display: block;
+      font-size: 25px;
+      color: #c4b5fd;
+      overflow-wrap: anywhere;
+    }
+    .stat span { display: block; margin-top: 7px; color: #cbd5e1; font-size: 13px; }
+    .buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+    button {
+      padding: 12px 18px;
+      border: 0;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .primary { background: #8b5cf6; color: white; }
+    .secondary { background: #334155; color: white; }
+    button:active { transform: scale(.98); }
+    .note { color: #cbd5e1; line-height: 1.6; font-size: 14px; }
+    footer { text-align: center; padding: 25px; color: #cbd5e1; }
+    @media (max-width: 480px) {
+      .panel { padding: 15px; }
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      header h1 { font-size: 23px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="../../index.html">← Back to Quick Tools Official</a>
+    <h1>📝 Word Counter</h1>
+    <p>Count words, characters and reading time instantly.</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Enter Your Text</h2>
+      <p class="note">Type or paste your text below. Results update automatically.</p>
+
+      <textarea id="textInput" placeholder="Start typing or paste your text here..." aria-label="Text to count"></textarea>
+
+      <div class="stats" aria-live="polite">
+        <div class="stat"><strong id="words">0</strong><span>Words</span></div>
+        <div class="stat"><strong id="characters">0</strong><span>Characters</span></div>
+        <div class="stat"><strong id="noSpaces">0</strong><span>Characters (no spaces)</span></div>
+        <div class="stat"><strong id="sentences">0</strong><span>Sentences</span></div>
+        <div class="stat"><strong id="paragraphs">0</strong><span>Paragraphs</span></div>
+        <div class="stat"><strong id="reading">0 sec</strong><span>Estimated reading time</span></div>
+      </div>
+
+      <div class="buttons">
+        <button class="primary" id="copyBtn" type="button">Copy Text</button>
+        <button class="secondary" id="clearBtn" type="button">Clear Text</button>
+      </div>
+      <p class="note" id="message" role="status"></p>
+    </section>
+  </main>
+
+  <footer>© <span id="year"></span> Quick Tools Official</footer>
+
+  <script>
+    const input = document.getElementById("textInput");
+    const $ = id => document.getElementById(id);
+
+    function countText() {
+      const text = input.value;
+      const trimmed = text.trim();
+
+      const words = trimmed
+        ? trimmed.split(/\s+/u).length
+        : 0;
+
+      const sentences = trimmed
+        ? (trimmed.match(/[^.!?。！？]+[.!?。！？]*/gu) || [])
+            .filter(part => part.trim()).length
+        : 0;
+
+      const paragraphs = text
+        .split(/\n\s*\n/u)
+        .filter(part => part.trim()).length;
+
+      const seconds = Math.ceil(words / 200 * 60);
+
+      $("words").textContent = words;
+      $("characters").textContent = text.length;
+      $("noSpaces").textContent = text.replace(/\s/gu, "").length;
+      $("sentences").textContent = sentences;
+      $("paragraphs").textContent = paragraphs;
+      $("reading").textContent =
+        seconds < 60 ? seconds + " sec" :
+        Math.floor(seconds / 60) + " min " +
+        (seconds % 60) + " sec";
+    }
+
+    input.addEventListener("input", countText);
+
+    $("clearBtn").addEventListener("click", () => {
+      input.value = "";
+      countText();
+      $("message").textContent = "Text cleared.";
+      input.focus();
+    });
+
+    $("copyBtn").addEventListener("click", async () => {
+      if (!input.value) {
+        $("message").textContent = "Please enter some text first.";
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(input.value);
+        $("message").textContent = "Text copied successfully!";
+      } catch (error) {
+        input.focus();
+        input.select();
+        const copied = document.execCommand("copy");
+        $("message").textContent = copied
+          ? "Text copied successfully!"
+          : "Please select and copy the text manually.";
+      }
+    });
+
+    $("year").textContent = new Date().getFullYear();
+    countText();
+  </script>
+</body>
+</html>
